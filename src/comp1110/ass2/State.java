@@ -1,6 +1,28 @@
 package comp1110.ass2;
 
 public class State {
+    private Deck crossDeck;
+    private Deck squareDeck;
+    private Deck circleDeck;
+    private Deck triangleDeck;
+    private Island boardState;
+
+    public void placePathwayCard(PathwayCard card, int row, int col) {
+        boardState.placePathwayCard(card, row, col);
+    }
+
+    public void placeFireTile(int row, int col) {
+        boardState.placeFireTile(row, col);
+    }
+
+    public void moveCat(Cat cat, int newRow, int newCol) {
+        boardState.moveCat(cat, newRow, newCol);
+    }
+
+    // Method to check win condition
+    public boolean checkWin() {
+        return boardState.areAllCatsOnRaft();
+    }
     //Fields
     //Card[] hand;
 
