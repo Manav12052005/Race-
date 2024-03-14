@@ -2,8 +2,8 @@ package comp1110.ass2;
 
 public class Location {
     /**
-     *deckState()
-     *boardState()
-     *checkWin()
+     *getLocation()
+     *setLocation()
+     *isOnBoard()
      */
 }
