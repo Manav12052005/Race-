@@ -2,7 +2,8 @@
 
 For each task or sub-task, record who is responsible, the deadline, and any dependencies.
 Use the entries below as an example.
-Record your weekly meeting time (outside of the lab) here:
+Record your weekly meeting time (outside of the lab) here: 
+Thursday 11:00 AM
 
 ## Week 4
 
