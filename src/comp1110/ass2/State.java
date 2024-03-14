@@ -5,7 +5,10 @@ public class State {
     //Card[] hand;
 
     //Methods
+    //deckState()
+    //boardState()
+    //checkWin()
     //drawCards(Deck[] decks)
-    //playCard
-    //discardCard
+    //playCard()
+    //discardCard()
 }
