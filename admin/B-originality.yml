@@ -53,7 +53,7 @@ declaration: >-
 # Sign *your* name and uids here. (Remove entries if you have fewer
 # than three members.)
 signatures:
-  - name: Simon Liu
+  - name: Ximeng Liu
     uid: u7761758
   - name:
     uid:
