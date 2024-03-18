@@ -7,7 +7,7 @@ Thursday 11:00 AM
 
 ## Week 4
 
-Everyone: create application skeleton - meeting 14:00 19 Mar
+Everyone: create application skeleton - meeting 11:00 AM 14 Mar
 
 ## Week 5
 
