@@ -67,7 +67,7 @@ questions.
 ## Challenges
 
 Race to the Raft comes with pre-defined challenges which define the layout of the island, the starting location of each
-cat, and the extent to which the fire has already consumed the island.
+cat, the location of the raft, and the extent to which the fire has already consumed the island.
 
 Below is an example challenge setup:
 
@@ -250,12 +250,11 @@ Because you will be asked to convert from these Strings into your own state repr
 into these Strings to return answers to unit tests, it's worth spending some time going over how they represent the
 game.
 
-## Marking FAQ and Per-Task Hints
+## Marking FAQ
 
-In this section we provide answers to some frequently asked questions about the marking of the assignment, as well as
-some specific guidance for some of the more open-ended tasks. This section may be updated throughout the semester in
-response to questions from other students, so make sure to do an upstream pull of this assignment repo at least once per
-week.
+In this section we provide answers to some frequently asked questions about the marking of the assignment. This 
+section may be updated throughout the semester in response to questions from other students, so make sure to do an 
+upstream pull of this assignment repo at least once per week.
 
 ### What does "appropriate use of object-oriented programming features" mean?
 
