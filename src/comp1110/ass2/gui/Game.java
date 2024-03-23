@@ -8,8 +8,11 @@ import javafx.stage.Stage;
 public class Game extends Application {
 
     private final Group root = new Group();
-    private static final int WINDOW_WIDTH = 1200;
-    private static final int WINDOW_HEIGHT = 700;
+    private static final int WINDOW_WIDTH = 1100;
+    private static final int WINDOW_HEIGHT = 650;
+
+    // FIXME TASK 11 Basic game
+    // FIXME TASK 13 Fully working game
 
     @Override
     public void start(Stage stage) throws Exception {

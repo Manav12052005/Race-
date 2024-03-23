@@ -46,12 +46,45 @@ build:
       - src/
       - src-dev/
 
-placeholderTask3:
+task2:
   tags:
     - comp1110
   stage: test
   script:
-    - $JUNIT -c=comp1110.ass2.PlaceholderMethodTest
+    - $JUNIT -c=comp1110.ass2.IsBoardStringWellFormedTest
+  allow_failure: true
+  artifacts:
+    reports:
+      junit: junit-reports/TEST-junit-jupiter.xml
+
+task5:
+  tags:
+    - comp1110
+  stage: test
+  script:
+    - $JUNIT -c=comp1110.ass2.DrawFireTileTest
+  allow_failure: true
+  artifacts:
+    reports:
+      junit: junit-reports/TEST-junit-jupiter.xml
+
+task6:
+  tags:
+    - comp1110
+  stage: test
+  script:
+    - $JUNIT -c=comp1110.ass2.ChooseChallengeTest
+  allow_failure: true
+  artifacts:
+    reports:
+      junit: junit-reports/TEST-junit-jupiter.xml
+
+task7:
+  tags:
+    - comp1110
+  stage: test
+  script:
+    - $JUNIT -c=comp1110.ass2.DrawHandTest
   allow_failure: true
   artifacts:
     reports:
