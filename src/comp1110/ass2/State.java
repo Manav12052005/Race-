@@ -6,6 +6,23 @@ public class State {
     private Deck circleDeck;
     private Deck triangleDeck;
     private Island boardState;
+    public Deck fireTileBag;
+
+    public Deck getFireTileBag() {
+        return fireTileBag;
+    }
+
+    public Card drawCard(Deck deck) {
+        if (deck.isEmpty()) {
+            return null;
+        }
+        // Remove and return a random tile
+        Random random = new Random();
+        int randomIndex = random.nextInt(deck.size());
+        Card drawnCard = deck.remove(randomIndex);
+        return drawnCard;
+    }
+}
 
     public void placePathwayCard(PathwayCard card, int row, int col) {
         boardState.placePathwayCard(card, row, col);
