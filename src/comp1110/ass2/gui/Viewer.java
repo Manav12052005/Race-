@@ -20,6 +20,13 @@ public class Viewer extends Application {
     private TextArea handTextField;
     private TextArea boardTextField;
 
+    /**
+     * Draw the given board and hand in the window, removing any previously drawn boards/hands.
+     *
+     * @param boardstate newline separated string representing each row of the board (the board string, see the STRING-REPRESENTATION.md for more details
+     * @param hand A string representing the cards in a player's hand (the hand string, see the STRING-REPRESENTATION.md for more details)
+     *
+     */
     void displayState(String boardstate, String hand) {
         // FIXME TASK 4
     }
