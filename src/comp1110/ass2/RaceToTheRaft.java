@@ -52,9 +52,19 @@ public class RaceToTheRaft {
      * empty string.
      */
     public static String drawFireTile(String[] gameState) {
-        return ""; // FIXME TASK 5
+        // Tom task
+        String fireTileBag = gameState[4]; //gets fireTileBag from gameState
+
+        // Checks if there are any tiles left
+        if (fireTileBag.isEmpty()) {
+            return "";
+        }
+
+        // Convert to game version fire tile bag?
+
+
+            // FIXME TASK 5
     }
-    // Tom task
     /**
      * Chooses a random challenge from those available in the Utility class according
      * to the given difficulty.
@@ -87,7 +97,7 @@ public class RaceToTheRaft {
      * @param gameState   the current state of the game, including the current state of the decks
      * @param drawRequest A string representing the decks to draw from and the number of cards to draw from each respective
      *                    deck.
-     * @return The updated gameState array after the cards have been drawn. (Remove all cards drawn from decks and
+     * @return The updated gameState array after the cards have     been drawn. (Remove all cards drawn from decks and
      * add them to the Hand string). If it is not possible
      * to draw all the specified cards, you should return the original gameState.
      */
