@@ -38,12 +38,12 @@ public class RaceToTheRaft {
     public static boolean isBoardStringWellFormed(String boardString) {
         return false; // FIXME TASK 2
     }
-
+    //Simon Task
     /**
      * Make Constructors for each of your objects.
      */
     // FIXME TASK 3
-
+    //Manav task
     /**
      * Draws a random fire tile from those remaining in the bag.
      *
@@ -54,7 +54,7 @@ public class RaceToTheRaft {
     public static String drawFireTile(String[] gameState) {
         return ""; // FIXME TASK 5
     }
-
+    // Tom task
     /**
      * Chooses a random challenge from those available in the Utility class according
      * to the given difficulty.
@@ -65,7 +65,7 @@ public class RaceToTheRaft {
     public static String chooseChallenge(int difficulty) {
         return ""; // FIXME TASK 6
     }
-
+    //Simon task
     /**
      * Draw random cards from the specified decks.
      * The decks string denotes what decks to draw from and how many cards to draw from that deck.
@@ -94,7 +94,7 @@ public class RaceToTheRaft {
     public static String[] drawHand(String[] gameState, String drawRequest) {
         return new String[0]; // FIXME TASK 7
     }
-
+    // Tom task
     /**
      * Place the given card or fire tile as described by the placement string and return the updated gameState array.
      * See the README for details on these two strings.
