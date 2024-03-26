@@ -1,6 +1,7 @@
 package comp1110.ass2;
 
 import java.util.List;
+import java.util.Random;
 
 public class Deck {
     private final char id; // Deck identifier (A, B, C, D)
@@ -11,7 +12,16 @@ public class Deck {
         this.id = id;
         this.cards = cards;
     }
-
+    public String drawCard(Deck deck) {
+        if (deck.getCards().isEmpty()) {
+            return null;
+        }
+        // Remove and return a random card
+        Random random = new Random();
+        int randomIndex = random.nextInt(deck.getCards().size());
+        String drawnCard = deck.removeCard(randomIndex);
+        return drawnCard;
+    }
     // Getters
     public char getId() {
         return id;
@@ -27,6 +37,5 @@ public class Deck {
         } else {
             return null; // Or throw an exception
         }
-    }
     }
 }

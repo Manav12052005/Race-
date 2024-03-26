@@ -13,17 +13,6 @@ public class State {
     public Deck getFireTileBag() {
         return fireTileBag;
     }
-
-    public String drawCard(Deck deck) {
-        if (deck.getCards().isEmpty()) {
-            return null;
-        }
-        // Remove and return a random card
-        Random random = new Random();
-        int randomIndex = random.nextInt(deck.getCards().size());
-        String drawnCard = deck.removeCard(randomIndex);
-        return drawnCard;
-    }
 }
 
     public void placePathwayCard(PathwayCard card, int row, int col) {
