@@ -1,11 +1,13 @@
 package comp1110.ass2;
 
+import java.util.List;
+
 public class Deck {
     private final char id; // Deck identifier (A, B, C, D)
-    private final String[] cards; // Array to store card representations
+    private final List<String> cards; // Array to store card representations
 
     // Constructor
-    public Deck(char id, String[] cards) {
+    public Deck(char id, List<String> cards) {
         this.id = id;
         this.cards = cards;
     }
@@ -15,17 +17,16 @@ public class Deck {
         return id;
     }
 
-    public String[] getCards() {
+    public List<String> getCards() {
         return cards;
     }
 
-    // Returns the number of cards remaining in the deck
-    public int size() {
-        return cards.length;
+    public String removeCard(int index) {
+        if (index >= 0 && index < cards.size()) {
+            return cards.remove(index);
+        } else {
+            return null; // Or throw an exception
+        }
     }
-
-    // Checks if the deck is empty
-    public boolean isEmpty() {
-        return size() == 0;
     }
 }

@@ -14,14 +14,14 @@ public class State {
         return fireTileBag;
     }
 
-    public Card drawCard(Deck deck) {
-        if (deck.isEmpty()) {
+    public String drawCard(Deck deck) {
+        if (deck.getCards().isEmpty()) {
             return null;
         }
         // Remove and return a random card
         Random random = new Random();
-        int randomIndex = random.nextInt(deck.size());
-        Card drawnCard = deck.remove(randomIndex);
+        int randomIndex = random.nextInt(deck.getCards().size());
+        String drawnCard = deck.removeCard(randomIndex);
         return drawnCard;
     }
 }
