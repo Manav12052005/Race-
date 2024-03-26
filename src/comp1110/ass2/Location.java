@@ -30,6 +30,6 @@ public class Location {
     }
 
     public boolean isOnBoard() {
-        // check if the location is on board
+        return false; // check if the location is on board
     }
 }

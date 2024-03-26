@@ -63,7 +63,6 @@ public class RaceToTheRaft {
         }
         else return pickFire(fireTileBag);
 
-        // Convert to game version fire tile bag?
 
             // FIXME TASK 5
     }

@@ -15,7 +15,9 @@ public class State {
     }
 
 
-    public void placePathwayCard(PathwayCard card, int row, int col) {
+    /** Spec methods
+     *
+     * public void placePathwayCard(PathwayCard card, int row, int col) {
         boardState.placePathwayCard(card, row, col);
     }
 
@@ -40,5 +42,5 @@ public class State {
     //checkWin()
     //drawCards(Deck[] decks)
     //playCard()
-    //discardCard()
+    //discardCard()*/
 }

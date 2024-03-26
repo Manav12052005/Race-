@@ -9,8 +9,7 @@ public class FireTile {
     public boolean isEmpty(String thing){
         return thing == "";
     }
-    public void parseFromString(String){
-    }
+
     public static String pickFire(String stringBag){
         Random random = new Random();
         int randomIndex = random.nextInt(stringBag.length());
@@ -20,7 +19,6 @@ public class FireTile {
             if(fireTile.charAt(0)==randomChar){
                 return fireTile; // returns the unique fireTile based on the ID
             }
-            else return null; // invalid character?
         }
         return null;
     }
