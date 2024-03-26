@@ -102,9 +102,12 @@ public class RaceToTheRaft {
      * to draw all the specified cards, you should return the original gameState.
      */
     public static String[] drawHand(String[] gameState, String drawRequest) {
-        return new String[0]; // FIXME TASK 7
+        // Tom task
+        String decks = gameState[1]; // Gets deck string representation
+        String hand = gameState[2]; // Gets hand string representation
+
+        return new String[0];// FIXME TASK 7
     }
-    // Tom task
     /**
      * Place the given card or fire tile as described by the placement string and return the updated gameState array.
      * See the README for details on these two strings.

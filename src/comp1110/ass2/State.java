@@ -18,7 +18,7 @@ public class State {
         if (deck.isEmpty()) {
             return null;
         }
-        // Remove and return a random tile
+        // Remove and return a random card
         Random random = new Random();
         int randomIndex = random.nextInt(deck.size());
         Card drawnCard = deck.remove(randomIndex);
