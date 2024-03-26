@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+import static comp1110.ass2.FireTile.pickFire;
+
 /**
  * This class is for testing purposes only. You should create and use your own objects to solve the tasks below
  * instead of directly using the strings provided. Note that Task 2 is the only task you are expected to use string
@@ -59,9 +61,9 @@ public class RaceToTheRaft {
         if (fireTileBag.isEmpty()) {
             return "";
         }
+        else return pickFire(fireTileBag);
 
         // Convert to game version fire tile bag?
-
 
             // FIXME TASK 5
     }
