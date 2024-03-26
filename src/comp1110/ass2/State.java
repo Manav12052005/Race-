@@ -13,7 +13,7 @@ public class State {
     public Deck getFireTileBag() {
         return fireTileBag;
     }
-}
+
 
     public void placePathwayCard(PathwayCard card, int row, int col) {
         boardState.placePathwayCard(card, row, col);
