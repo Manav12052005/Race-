@@ -1,6 +1,7 @@
 package comp1110.ass2;
 
 import static comp1110.ass2.FireTile.pickFire;
+import static comp1110.ass2.PathwayCard.cardPickUp;
 
 /**
  * This class is for testing purposes only. You should create and use your own objects to solve the tasks below
@@ -107,7 +108,22 @@ public class RaceToTheRaft {
         String decks = gameState[1]; // Gets deck string representation
         String hand = gameState[2]; // Gets hand string representation
 
-        return new String[0];// FIXME TASK 7
+        String[] modCards = cardPickUp(decks, hand, drawRequest);
+
+        String modDecks = modCards[0];
+        String modHand = modCards[1];
+
+        String[] updatedGameState = new String[gameState.length];
+        for (int i = 0; i < gameState.length; i++) {
+            if (i == 1) {
+                updatedGameState[i] = modDecks;
+            } else if (i == 2) {
+                updatedGameState[i] = modHand;
+            } else {
+                updatedGameState[i] = gameState[i];
+            }
+        }
+        return updatedGameState;// FIXME TASK 7
     }
     /**
      * Place the given card or fire tile as described by the placement string and return the updated gameState array.
