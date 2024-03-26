@@ -1,17 +1,17 @@
 package comp1110.ass2;
 
 public class Deck {
-    private final String id; // Deck identifier (A, B, C, D)
+    private final char id; // Deck identifier (A, B, C, D)
     private final String[] cards; // Array to store card representations
 
     // Constructor
-    public Deck(String id, String[] cards) {
+    public Deck(char id, String[] cards) {
         this.id = id;
         this.cards = cards;
     }
 
     // Getters
-    public String getId() {
+    public char getId() {
         return id;
     }
 
