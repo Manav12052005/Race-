@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static comp1110.ass2.FireTile.pickFire;
 import static comp1110.ass2.PathwayCard.cardPickUp;
 
@@ -38,10 +40,31 @@ public class RaceToTheRaft {
      * @param boardString A string representing the boardState
      * @return True if the boardState is well-formed, otherwise false.
      */
-    public static boolean isBoardStringWellFormed(String boardString) {
-        return false; // FIXME TASK 2
-    }
     //Simon Task
+    public static boolean isBoardStringWellFormed(String boardString) {
+        if (!boardString.endsWith("\n")) return false;
+        if (boardString.lines().count() != 12 && boardString.lines().count() != 15 &&
+                boardString.lines().count() != 18) {
+            return false;
+        }
+
+        AtomicBoolean isValid = new AtomicBoolean(true);
+        boardString.lines().forEach(line -> {
+            if (line.length() != 9 && line.length() != 18) {
+                isValid.set(false);
+                return;
+            }
+            for (char ch : line.toCharArray()) {
+                if (ch != 'b' && ch != 'B' && ch != 'f' && ch != 'g' && ch != 'G' && ch != 'n' && ch != 'o' && ch != 'p'
+                && ch != 'P' && ch != 'r' && ch != 'R' && ch != 'w' && ch != 'W' && ch != 'y' && ch != 'Y') {
+                    isValid.set(false);
+                    return;
+                }
+            }
+        });
+
+        return isValid.get(); // FIXME TASK 2
+    }
     /**
      * Make Constructors for each of your objects.
      */
