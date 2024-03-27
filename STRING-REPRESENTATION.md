@@ -254,9 +254,8 @@ Cat cards are 3 x 3 placement cards containing terrain, fire, and the starting
 location of at least one cat. Cat cards are denoted by a six-letter string.
 - The first character of the string is `C`, stating that it is a cat card.
 - The second character is number between `0` and `6` representing the ID of the cat card.
-- The third and fourth characters represent the row coordinate of the top-left square of the cat card
-- The fifth and sixth characters represent the row coordinate of the cat card of the top-left
-  square of the cat card.
+- The third and fourth characters represent the row coordinate of the top-left square of the cat card.
+- The fifth and sixth characters represent the column coordinate of the top-left square of the cat card.
 
 For example: the string `"C00211` tells us that Cat card `0` is placed at row 2, column 11, `(2,11)`.
 
