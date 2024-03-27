@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static comp1110.ass2.FireTile.pickFire;
@@ -98,7 +99,31 @@ public class RaceToTheRaft {
      * @return a random challenge of the given difficulty
      */
     public static String chooseChallenge(int difficulty) {
-        return ""; // FIXME TASK 6
+        int index = 0; // The index of string in Utility.CHALLENGES that will be returned
+        Random rand = new Random();
+        switch (difficulty) {
+            case 0:
+                index = rand.nextInt(4) + 0;
+                break;
+            case 1:
+                index = rand.nextInt(4) + 4;
+                break;
+            case 2:
+                index = rand.nextInt(7) + 8;
+                break;
+            case 3:
+                index = rand.nextInt(7) + 16;
+                break;
+            case 4:
+                index = rand.nextInt(5) + 26;
+                break;
+            case 5:
+                index = rand.nextInt(7) + 32;
+                break;
+            default:
+                break;
+        }
+        return Utility.CHALLENGES[index]; // FIXME TASK 6
     }
     //Simon task
     /**
