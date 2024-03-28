@@ -254,9 +254,8 @@ Cat cards are 3 x 3 placement cards containing terrain, fire, and the starting
 location of at least one cat. Cat cards are denoted by a six-letter string.
 - The first character of the string is `C`, stating that it is a cat card.
 - The second character is number between `0` and `6` representing the ID of the cat card.
-- The third and fourth characters represent the row coordinate of the top-left square of the cat card
-- The fifth and sixth characters represent the row coordinate of the cat card of the top-left
-  square of the cat card.
+- The third and fourth characters represent the row coordinate of the top-left square of the cat card.
+- The fifth and sixth characters represent the column coordinate of the top-left square of the cat card.
 
 For example: the string `"C00211` tells us that Cat card `0` is placed at row 2, column 11, `(2,11)`.
 
@@ -335,10 +334,10 @@ apply any rotation.
 
 For example: 
 
-`"k0003TW"` tells us that the tile `k` is placed at `(0,3)` in the `West` orientation and has been flipped. Whilst 
-`"k0003FW"` tells us that the tile `k` hasn't been flipped, and is in the `West` orientation. 
+`"l0003TW"` tells us that the tile `l` is placed at `(0,3)` in the `West` orientation and has been flipped. Whilst 
+`"l0003FW"` tells us that the tile `l` hasn't been flipped, and is in the `West` orientation. 
 
-Below is an example of the tile `k` in all un-flipped `F` orientations, and all flipped `T` orientations.
+Below is an example of the tile `l` in all un-flipped `F` orientations, and all flipped `T` orientations.
 
 <img src="assets/fire-tiles-flipped.png" alt="fire tile orientations" />
 

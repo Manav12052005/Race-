@@ -159,7 +159,7 @@ There are several ways that the game can be lost:
 
 The island is made up of several connected island boards, which have dimensions of either 9 x 6 or 9 x 9 squares.
 The layout of the island will depend on the challenge that is being completed.
-Each island can optionally have a strip of fire along one of its edges
+Each island board can optionally have a strip of fire along one of its edges
 (for the 9 x 6 island boards, this is always along the shorter edge).
 
 Island boards are chosen randomly, and rotated randomly, so long as they match the specifications of the challenge.
@@ -207,7 +207,7 @@ Observe raft card A:
 
 Because there are no cat icons on this raft card, any cat can move onto the raft from any orthogonal direction (north,
 south, east, or west).
-A cat may not be moved again after it has arrived at one of the nine outer squares of the raft.
+A cat may not be moved again after it has arrived at one of the eight outer squares of the raft.
 
 Let's compare raft card A with raft card B:
 

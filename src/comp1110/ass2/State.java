@@ -1,13 +1,23 @@
 package comp1110.ass2;
 
+import java.util.Random;
+
 public class State {
     private Deck crossDeck;
     private Deck squareDeck;
     private Deck circleDeck;
     private Deck triangleDeck;
     private Island boardState;
+    public Deck fireTileBag;
 
-    public void placePathwayCard(PathwayCard card, int row, int col) {
+    public Deck getFireTileBag() {
+        return fireTileBag;
+    }
+
+
+    /** Spec methods
+     *
+     * public void placePathwayCard(PathwayCard card, int row, int col) {
         boardState.placePathwayCard(card, row, col);
     }
 
@@ -32,5 +42,5 @@ public class State {
     //checkWin()
     //drawCards(Deck[] decks)
     //playCard()
-    //discardCard()
+    //discardCard()*/
 }

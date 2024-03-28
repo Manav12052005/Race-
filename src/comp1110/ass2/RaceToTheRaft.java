@@ -1,5 +1,11 @@
 package comp1110.ass2;
 
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static comp1110.ass2.FireTile.pickFire;
+import static comp1110.ass2.PathwayCard.cardPickUp;
+
 /**
  * This class is for testing purposes only. You should create and use your own objects to solve the tasks below
  * instead of directly using the strings provided. Note that Task 2 is the only task you are expected to use string
@@ -35,15 +41,36 @@ public class RaceToTheRaft {
      * @param boardString A string representing the boardState
      * @return True if the boardState is well-formed, otherwise false.
      */
+    //Simon Task
     public static boolean isBoardStringWellFormed(String boardString) {
-        return false; // FIXME TASK 2
-    }
+        if (!boardString.endsWith("\n")) return false;
+        if (boardString.lines().count() != 12 && boardString.lines().count() != 15 &&
+                boardString.lines().count() != 18) {
+            return false;
+        }
 
+        AtomicBoolean isValid = new AtomicBoolean(true);
+        boardString.lines().forEach(line -> {
+            if (line.length() != 9 && line.length() != 18) {
+                isValid.set(false);
+                return;
+            }
+            for (char ch : line.toCharArray()) {
+                if (ch != 'b' && ch != 'B' && ch != 'f' && ch != 'g' && ch != 'G' && ch != 'n' && ch != 'o' && ch != 'p'
+                && ch != 'P' && ch != 'r' && ch != 'R' && ch != 'w' && ch != 'W' && ch != 'y' && ch != 'Y') {
+                    isValid.set(false);
+                    return;
+                }
+            }
+        });
+
+        return isValid.get(); // FIXME TASK 2
+    }
     /**
      * Make Constructors for each of your objects.
      */
     // FIXME TASK 3
-
+    //Manav task
     /**
      * Draws a random fire tile from those remaining in the bag.
      *
@@ -52,9 +79,18 @@ public class RaceToTheRaft {
      * empty string.
      */
     public static String drawFireTile(String[] gameState) {
-        return ""; // FIXME TASK 5
-    }
+        // Tom task
+        String fireTileBag = gameState[4]; //gets fireTileBag from gameState
 
+        // Checks if there are any tiles left
+        if (fireTileBag.isEmpty()) {
+            return "";
+        }
+        else return pickFire(fireTileBag);
+
+
+            // FIXME TASK 5
+    }
     /**
      * Chooses a random challenge from those available in the Utility class according
      * to the given difficulty.
@@ -63,9 +99,33 @@ public class RaceToTheRaft {
      * @return a random challenge of the given difficulty
      */
     public static String chooseChallenge(int difficulty) {
-        return ""; // FIXME TASK 6
+        int index = 0; // The index of string in Utility.CHALLENGES that will be returned
+        Random rand = new Random();
+        switch (difficulty) {
+            case 0:
+                index = rand.nextInt(4) + 0;
+                break;
+            case 1:
+                index = rand.nextInt(4) + 4;
+                break;
+            case 2:
+                index = rand.nextInt(7) + 8;
+                break;
+            case 3:
+                index = rand.nextInt(7) + 16;
+                break;
+            case 4:
+                index = rand.nextInt(5) + 26;
+                break;
+            case 5:
+                index = rand.nextInt(7) + 32;
+                break;
+            default:
+                break;
+        }
+        return Utility.CHALLENGES[index]; // FIXME TASK 6
     }
-
+    //Simon task
     /**
      * Draw random cards from the specified decks.
      * The decks string denotes what decks to draw from and how many cards to draw from that deck.
@@ -87,14 +147,32 @@ public class RaceToTheRaft {
      * @param gameState   the current state of the game, including the current state of the decks
      * @param drawRequest A string representing the decks to draw from and the number of cards to draw from each respective
      *                    deck.
-     * @return The updated gameState array after the cards have been drawn. (Remove all cards drawn from decks and
+     * @return The updated gameState array after the cards have     been drawn. (Remove all cards drawn from decks and
      * add them to the Hand string). If it is not possible
      * to draw all the specified cards, you should return the original gameState.
      */
     public static String[] drawHand(String[] gameState, String drawRequest) {
-        return new String[0]; // FIXME TASK 7
-    }
+        // Tom task
+        String decks = gameState[1]; // Gets deck string representation
+        String hand = gameState[2]; // Gets hand string representation
 
+        String[] modCards = cardPickUp(decks, hand, drawRequest);
+
+        String modDecks = modCards[0];
+        String modHand = modCards[1];
+
+        String[] updatedGameState = new String[gameState.length];
+        for (int i = 0; i < gameState.length; i++) {
+            if (i == 1) {
+                updatedGameState[i] = modDecks;
+            } else if (i == 2) {
+                updatedGameState[i] = modHand;
+            } else {
+                updatedGameState[i] = gameState[i];
+            }
+        }
+        return updatedGameState;// FIXME TASK 7
+    }
     /**
      * Place the given card or fire tile as described by the placement string and return the updated gameState array.
      * See the README for details on these two strings.
