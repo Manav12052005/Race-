@@ -3,6 +3,8 @@ package comp1110.ass2;
 import java.util.ArrayList;
 
 public class Hand {
+    private static final double SQUARE_WIDTH = 40;
+
     private ArrayList<Square> squares;
     private ArrayList<String> cards;
 
@@ -12,10 +14,10 @@ public class Hand {
 
         for (int i = 0; i < cards.size(); i++) {
             char[] chars = cards.get(i).toCharArray();
-            double outerX = (i % 2) * 180 , outerY = (i / 2) * 180;
+            double outerX = (i % 2) * 4 * SQUARE_WIDTH, outerY = (i / 2) * 4 * SQUARE_WIDTH;
             for (int j = 0; j < chars.length; j++) {
-                double x = (j % 3) * 45 + outerX;
-                double y = (j / 3) * 45 + outerY;
+                double x = (j % 3) * SQUARE_WIDTH + outerX;
+                double y = (j / 3) * SQUARE_WIDTH + outerY;
                 Square current = new Square(x, y, chars[j]);
                 System.out.println(chars[j]);
                 squares.add(current);

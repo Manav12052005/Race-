@@ -19,6 +19,7 @@ public class Viewer extends Application {
     private static final int VIEWER_HEIGHT = 650;
     private static final int MARGIN_X = 20;
     private static final int MARGIN_Y = 20;
+    private static final double SQUARE_WIDTH = 40;
 
     private final Group controls = new Group();
     private Group DrawBoard = new Group();
@@ -36,15 +37,15 @@ public class Viewer extends Application {
     void displayState(String boardstate, String hand) {
         // Draw the game board with given boardstate string
         Board board = new Board(boardstate);
-        DrawBoard.setLayoutX(VIEWER_WIDTH - 38 * 18);
+        DrawBoard.setLayoutX(VIEWER_WIDTH - 18 * SQUARE_WIDTH);
         DrawBoard.setLayoutY(0);
         DrawBoard.getChildren().clear();
         for (Square square : board.getSquares()) {
             square.setLayoutX(square.getValueX());
             square.setLayoutY(square.getValueY());
             square.setImage(square.getImg());
-            square.setFitWidth(38);
-            square.setFitHeight(38);
+            square.setFitWidth(SQUARE_WIDTH);
+            square.setFitHeight(SQUARE_WIDTH);
 
             // For debugging use
 //            System.out.println("Adding square of type: " + square.getT());
@@ -57,13 +58,13 @@ public class Viewer extends Application {
         Hand hands = new Hand(hand);
         DrawHand.setLayoutX(MARGIN_X);
         DrawHand.setLayoutY(MARGIN_Y);
-        DrawBoard.getChildren().clear();
+        DrawHand.getChildren().clear();
         for (Square square : hands.getSquares()) {
             square.setLayoutX(square.getValueX());
             square.setLayoutY(square.getValueY());
             square.setImage(square.getImg());
-            square.setFitWidth(45);
-            square.setFitHeight(45);
+            square.setFitWidth(SQUARE_WIDTH);
+            square.setFitHeight(SQUARE_WIDTH);
 
             DrawHand.getChildren().add(square);
         }
