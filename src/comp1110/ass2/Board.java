@@ -12,14 +12,16 @@ public class Board {
         ArrayList<Square> squares = new ArrayList<>();
         boardString.lines().forEach(line -> {
             int x = 0, y = (squares.size() / line.length()) * 38;
-            int index = 0;
             for (char ch : line.toCharArray()) {
-                Square current = new Square(x, y, line.charAt(index));
+                Square current = new Square(x, y, ch);
                 squares.add(current);
-                index ++;
                 x += 38;
             }
         });
         this.squares = squares;
+    }
+
+    public ArrayList<Square> getSquares() {
+        return squares;
     }
 }

@@ -1,5 +1,7 @@
 package comp1110.ass2.gui;
 
+import comp1110.ass2.Board;
+import comp1110.ass2.Square;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -17,6 +19,7 @@ public class Viewer extends Application {
     private static final int MARGIN_X = 20;
 
     private final Group controls = new Group();
+    private Group DrawBoard = new Group();
     private TextArea handTextField;
     private TextArea boardTextField;
 
@@ -28,6 +31,23 @@ public class Viewer extends Application {
      *
      */
     void displayState(String boardstate, String hand) {
+        Board board = new Board(boardstate);
+        DrawBoard.setLayoutX(300);
+        DrawBoard.setLayoutY(0);
+        DrawBoard.getChildren().clear();
+        for (Square square : board.getSquares()) {
+            square.setLayoutX(square.getValueX());
+            square.setLayoutY(square.getValueY());
+            square.setImage(square.getImg());
+            square.setFitWidth(50);
+            square.setFitHeight(50);
+
+            // For debugging use
+            System.out.println("Adding square of type: " + square.getT());
+            System.out.println("Image: " + square.getImage());
+
+            DrawBoard.getChildren().add(square);
+        }
         // FIXME TASK 4
     }
 
@@ -76,8 +96,25 @@ public class Viewer extends Application {
         stage.setTitle("Race to the Raft Viewer");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
         makeControls();
-        displayState("", "");
+        displayState("""
+            fffffffffrrfffffff
+            fffffffffrRfffffff
+            fffffffffrrfffffff
+            fffgffyrgpygyrygbr
+            fffgGfggyygprbprpg
+            fffgggbgprbpygbpyb
+            ffffffbpbpgrbrrbgy
+            ffffffgygybpgygprb
+            ffffffbrrrybgygybg
+            ffffffgpbbyrprgbbp
+            ffffffbyrbpybgpryg
+            ffffffpgyrggrbgyby
+            fffffybgbpryybpgyp
+            ffffYyybpgbprygrow
+            fffyyyyryygbygybww"""
+            , "");
         root.getChildren().add(controls);
+        root.getChildren().add(DrawBoard);
         makeControls();
         stage.setScene(scene);
         stage.show();
