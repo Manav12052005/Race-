@@ -1,6 +1,7 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.Board;
+import comp1110.ass2.Hand;
 import comp1110.ass2.Square;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -17,6 +18,7 @@ public class Viewer extends Application {
     private static final int VIEWER_WIDTH = 1100;
     private static final int VIEWER_HEIGHT = 650;
     private static final int MARGIN_X = 20;
+    private static final int MARGIN_Y = 20;
 
     private final Group controls = new Group();
     private Group DrawBoard = new Group();
@@ -32,8 +34,9 @@ public class Viewer extends Application {
      *
      */
     void displayState(String boardstate, String hand) {
+        // Draw the game board with given boardstate string
         Board board = new Board(boardstate);
-        DrawBoard.setLayoutX(300);
+        DrawBoard.setLayoutX(VIEWER_WIDTH - 38 * 18);
         DrawBoard.setLayoutY(0);
         DrawBoard.getChildren().clear();
         for (Square square : board.getSquares()) {
@@ -44,14 +47,26 @@ public class Viewer extends Application {
             square.setFitHeight(38);
 
             // For debugging use
-            System.out.println("Adding square of type: " + square.getT());
-            System.out.println("Image: " + square.getImage());
+//            System.out.println("Adding square of type: " + square.getT());
+//            System.out.println("Image: " + square.getImage());
 
             DrawBoard.getChildren().add(square);
         }
 
-        DrawHand.setLayoutX(100);
-        DrawHand.setLayoutY(50);
+        // Darw the cards in hand with given hand string
+        Hand hands = new Hand(hand);
+        DrawHand.setLayoutX(MARGIN_X);
+        DrawHand.setLayoutY(MARGIN_Y);
+        DrawBoard.getChildren().clear();
+        for (Square square : hands.getSquares()) {
+            square.setLayoutX(square.getValueX());
+            square.setLayoutY(square.getValueY());
+            square.setImage(square.getImg());
+            square.setFitWidth(45);
+            square.setFitHeight(45);
+
+            DrawHand.getChildren().add(square);
+        }
         // FIXME TASK 4
     }
 
@@ -116,9 +131,10 @@ public class Viewer extends Application {
             fffffybgbpryybpgyp
             ffffYyybpgbprygrow
             fffyyyyryygbygybww"""
-            , "");
+            , "AfhkDahw");
         root.getChildren().add(controls);
         root.getChildren().add(DrawBoard);
+        root.getChildren().add(DrawHand);
         makeControls();
         stage.setScene(scene);
         stage.show();

@@ -7,13 +7,69 @@ public class Hand {
     private ArrayList<String> cards;
 
     public Hand(String handString) {
+        cards = handToCards(handString);
         ArrayList<Square> squares = new ArrayList<>();
-        for (char ch : handString.toCharArray()) {
-            if (ch == 'A' || ch == 'B' || ch == 'C' || ch == 'D') {
 
+        for (int i = 0; i < cards.size(); i++) {
+            char[] chars = cards.get(i).toCharArray();
+            double outerX = (i % 2) * 180 , outerY = (i / 2) * 180;
+            for (int j = 0; j < chars.length; j++) {
+                double x = (j % 3) * 45 + outerX;
+                double y = (j / 3) * 45 + outerY;
+                Square current = new Square(x, y, chars[j]);
+                System.out.println(chars[j]);
+                squares.add(current);
             }
         }
+
+        this.squares = squares;
     }
 
-    public String getCardsFromHand
+    /**
+     *
+     * @param hand given hand string (see the STRING_REPRESENTATION.md)
+     * @return ret an ArrayList of Strings with each card in hand represented as a String element
+     */
+    public static ArrayList<String> handToCards(String hand) {
+        ArrayList<String> ret = new ArrayList<>();
+        char[] handChar = hand.toCharArray();
+        String[] deck;
+
+        for (int i = 0; i < handChar.length; i++) {
+            if (handChar[i] == 'A' || handChar[i] == 'B' || handChar[i] == 'C' || handChar[i] == 'D') {
+                deck = switch (handChar[i]) {
+                    case 'A' -> Utility.DECK_A;
+                    case 'B' -> Utility.DECK_B;
+                    case 'C' -> Utility.DECK_C;
+                    case 'D' -> Utility.DECK_D;
+                    default -> throw new IllegalStateException("Unexpected value: " + handChar[i]);
+                };
+                int j = i + 1;
+                while (j < handChar.length && handChar[j] != 'A' && handChar[j] != 'B' &&
+                        handChar[j] != 'C' && handChar[j] != 'D') {
+                    for (String str : deck) {
+                        if (str.charAt(0) == handChar[j]) {
+                            ret.add(str.substring(1));
+                        }
+                    }
+                    j++;
+                }
+            }
+        }
+        return ret;
+    }
+
+    public ArrayList<Square> getSquares() {
+        return squares;
+    }
+
+    // for debugging use
+//    public static void main(String[] args) {
+//        String hand = "AfhkDahw";
+//        ArrayList<String> list = new ArrayList<>();
+//        list = handToCards(hand);
+//        for (String str : list) {
+//            System.out.println(str);
+//        }
+//    }
 }

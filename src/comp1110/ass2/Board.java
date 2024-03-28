@@ -11,7 +11,7 @@ public class Board {
     public Board(String boardString) {
         ArrayList<Square> squares = new ArrayList<>();
         boardString.lines().forEach(line -> {
-            int x = 0, y = (squares.size() / line.length()) * 38;
+            double x = 0, y = (squares.size() / line.length()) * 38;
             for (char ch : line.toCharArray()) {
                 Square current = new Square(x, y, ch);
                 squares.add(current);
