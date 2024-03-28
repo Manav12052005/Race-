@@ -5,27 +5,18 @@ import java.util.ArrayList;
 public class Hand {
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
 
-    private ArrayList<Square> squares;
-    private ArrayList<String> cards;
+    private ArrayList<Card> cards;
 
     public Hand(String handString) {
-        cards = handToCards(handString);
-        ArrayList<Square> squares = new ArrayList<>();
+        ArrayList<String> hands = handToCards(handString);
+        ArrayList<Card> cards = new ArrayList<>();
 
-        for (int i = 0; i < cards.size(); i++) {
-            char[] chars = cards.get(i).toCharArray();
-            double outerX = (i % 2) * 3 * SQUARE_WIDTH + (i % 2) * 10,
-                    outerY = (i / 2) * 3 * SQUARE_WIDTH + (i / 2) * 10;
-            for (int j = 0; j < chars.length; j++) {
-                double x = (j % 3) * SQUARE_WIDTH + outerX;
-                double y = (j / 3) * SQUARE_WIDTH + outerY;
-                Square current = new Square(x, y, chars[j]);
-                System.out.println(chars[j]);
-                squares.add(current);
-            }
+        for (int i = 0; i < hands.size(); i++) {
+            Card card = new Card(hands.get(i));
+            cards.add(card);
         }
 
-        this.squares = squares;
+        this.cards = cards;
     }
 
     /**
@@ -62,8 +53,8 @@ public class Hand {
         return ret;
     }
 
-    public ArrayList<Square> getSquares() {
-        return squares;
+    public ArrayList<Card> getCards() {
+        return cards;
     }
 
     // for debugging use

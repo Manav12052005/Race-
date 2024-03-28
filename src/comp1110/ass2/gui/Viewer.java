@@ -1,6 +1,7 @@
 package comp1110.ass2.gui;
 
 import comp1110.ass2.Board;
+import comp1110.ass2.Card;
 import comp1110.ass2.Hand;
 import comp1110.ass2.Square;
 import javafx.application.Application;
@@ -46,27 +47,32 @@ public class Viewer extends Application {
             square.setImage(square.getImg());
             square.setFitWidth(SQUARE_WIDTH);
             square.setFitHeight(SQUARE_WIDTH);
-
-            // For debugging use
-//            System.out.println("Adding square of type: " + square.getT());
-//            System.out.println("Image: " + square.getImage());
-
             DrawBoard.getChildren().add(square);
         }
 
-        // Darw the cards in hand with given hand string
+        // Draw the cards in hand with given hand string
         Hand hands = new Hand(hand);
         DrawHand.setLayoutX(MARGIN_X);
         DrawHand.setLayoutY(MARGIN_Y);
         DrawHand.getChildren().clear();
-        for (Square square : hands.getSquares()) {
-            square.setLayoutX(square.getValueX());
-            square.setLayoutY(square.getValueY());
-            square.setImage(square.getImg());
-            square.setFitWidth(SQUARE_WIDTH);
-            square.setFitHeight(SQUARE_WIDTH);
+        int i = 0;
+        for (Card card : hands.getCards()) {
+            double outerX = (i % 2) * 3 * SQUARE_WIDTH + (i % 2) * 10,
+                    outerY = (i / 2) * 3 * SQUARE_WIDTH + (i / 2) * 10;
+            for (Square square : card.getCard()) {
+                square.setLayoutX(square.getValueX() + outerX);
+                square.setLayoutY(square.getValueY() + outerY);
+                square.setImage(square.getImg());
+                square.setFitWidth(SQUARE_WIDTH);
+                square.setFitHeight(SQUARE_WIDTH);
 
-            DrawHand.getChildren().add(square);
+//             For debugging use
+//                System.out.println("Adding square of type: " + square.getT());
+//                System.out.println("Image: " + square.getImage());
+
+                DrawHand.getChildren().add(square);
+            }
+            i++;
         }
         // FIXME TASK 4
     }
