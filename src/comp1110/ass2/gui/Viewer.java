@@ -20,6 +20,7 @@ public class Viewer extends Application {
 
     private final Group controls = new Group();
     private Group DrawBoard = new Group();
+    private Group DrawHand = new Group();
     private TextArea handTextField;
     private TextArea boardTextField;
 
@@ -39,8 +40,8 @@ public class Viewer extends Application {
             square.setLayoutX(square.getValueX());
             square.setLayoutY(square.getValueY());
             square.setImage(square.getImg());
-            square.setFitWidth(50);
-            square.setFitHeight(50);
+            square.setFitWidth(38);
+            square.setFitHeight(38);
 
             // For debugging use
             System.out.println("Adding square of type: " + square.getT());
@@ -48,6 +49,9 @@ public class Viewer extends Application {
 
             DrawBoard.getChildren().add(square);
         }
+
+        DrawHand.setLayoutX(100);
+        DrawHand.setLayoutY(50);
         // FIXME TASK 4
     }
 
