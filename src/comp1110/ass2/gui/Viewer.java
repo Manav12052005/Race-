@@ -19,11 +19,11 @@ public class Viewer extends Application {
     private static final int VIEWER_HEIGHT = 650;
     private static final int MARGIN_X = 20;
     private static final int MARGIN_Y = 10;
-    private static final double SQUARE_WIDTH = 40;
+    private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
 
     private final Group controls = new Group();
-    private Group DrawBoard = new Group();
-    private Group DrawHand = new Group();
+    private final Group DrawBoard = new Group();
+    private final Group DrawHand = new Group();
     private TextArea handTextField;
     private TextArea boardTextField;
 
