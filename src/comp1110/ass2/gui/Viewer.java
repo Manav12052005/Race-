@@ -18,7 +18,7 @@ public class Viewer extends Application {
     private static final int VIEWER_WIDTH = 1100;
     private static final int VIEWER_HEIGHT = 650;
     private static final int MARGIN_X = 20;
-    private static final int MARGIN_Y = 20;
+    private static final int MARGIN_Y = 10;
     private static final double SQUARE_WIDTH = 40;
 
     private final Group controls = new Group();

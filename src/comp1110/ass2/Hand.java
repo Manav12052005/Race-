@@ -14,7 +14,8 @@ public class Hand {
 
         for (int i = 0; i < cards.size(); i++) {
             char[] chars = cards.get(i).toCharArray();
-            double outerX = (i % 2) * 4 * SQUARE_WIDTH, outerY = (i / 2) * 4 * SQUARE_WIDTH;
+            double outerX = (i % 2) * 3 * SQUARE_WIDTH + (i % 2) * 10,
+                    outerY = (i / 2) * 3 * SQUARE_WIDTH + (i / 2) * 10;
             for (int j = 0; j < chars.length; j++) {
                 double x = (j % 3) * SQUARE_WIDTH + outerX;
                 double y = (j / 3) * SQUARE_WIDTH + outerY;
