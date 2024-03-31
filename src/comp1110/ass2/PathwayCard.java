@@ -3,6 +3,27 @@ package comp1110.ass2;
 import java.util.Random;
 
 public class PathwayCard {
+
+    private Square[][] tiles;
+
+    public void rotate(String direction) {
+
+        Square[][] rotatedCard = new Square[3][3];
+
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (direction.equals("east")) {
+                    // Rotate 90 degrees clockwise
+                    rotatedCard[col][2 - row] = tiles[row][col];
+                } else {
+                    // Rotate 90 degrees counter-clockwise
+                    rotatedCard[2 - col][row] = tiles[row][col];
+                }
+            }
+        }
+
+        tiles = rotatedCard; // Update the card's tiles
+    }
     public static String[] cardPickUp(String decks, String hand, String drawRequest) {
 
         //Creating individual deck strings
