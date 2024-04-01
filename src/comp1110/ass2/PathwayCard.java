@@ -32,14 +32,43 @@ public class PathwayCard {
         String deckC = decks.substring(decks.indexOf('C'), decks.indexOf('D'));
         String deckD = decks.substring(decks.indexOf('D'));
 
-        //Creating corresponding individual draw requests
-        int reqA = Integer.parseInt(drawRequest.substring(drawRequest.indexOf('A') + 1, drawRequest.indexOf('B')));
-        int reqB = Integer.parseInt(drawRequest.substring(drawRequest.indexOf('B') + 1, drawRequest.indexOf('C')));
-        int reqC = Integer.parseInt(drawRequest.substring(drawRequest.indexOf('C') + 1, drawRequest.indexOf('D')));
-        int reqD = Integer.parseInt(drawRequest.substring(drawRequest.indexOf('D') + 1));
+        int[] requests = new int[]{0, 0, 0, 0}; // Default: 0 for each deck (A, B, C, D)
 
-        if((deckA.length()-1) < reqA || (deckB.length()-1) < reqB || (deckC.length()-1) < reqC ||
-                (deckD.length()-1) < reqD){
+        for (int i = 0; i < drawRequest.length(); i++) {
+            char currentChar = drawRequest.charAt(i);
+
+            if (Character.isDigit(currentChar)) { // Skip any non-digit characters
+                continue;
+            }
+
+            int nextIndex = i + 1;
+            while (nextIndex < drawRequest.length() && Character.isDigit(drawRequest.charAt(nextIndex))) {
+                nextIndex++;
+            }
+
+            String valueStr = drawRequest.substring(i + 1, nextIndex);
+            int value = Integer.parseInt(valueStr);
+
+            switch (currentChar) {
+                case 'A':
+                    requests[0] = value;
+                    break;
+                case 'B':
+                    requests[1] = value;
+                    break;
+                case 'C':
+                    requests[2] = value;
+                    break;
+                case 'D':
+                    requests[3] = value;
+                    break;
+            }
+
+            i = nextIndex - 1; // Move the index to the last digit parsed
+        }
+
+        if((deckA.length()-1) < requests[0] || (deckB.length()-1) < requests[1] || (deckC.length()-1) < requests[2] ||
+                (deckD.length()-1) < requests[3]){
             return new String[]{decks, hand};
         }
 
@@ -47,10 +76,10 @@ public class PathwayCard {
         String modifiedDecks = ""; // Will hold all modified decks
 
         // Get the results for each deck
-        String[] deckA_results = cardPick(reqA, deckA);
-        String[] deckB_results = cardPick(reqB, deckB);
-        String[] deckC_results = cardPick(reqC, deckC);
-        String[] deckD_results = cardPick(reqD, deckD);
+        String[] deckA_results = cardPick(requests[0], deckA);
+        String[] deckB_results = cardPick(requests[1], deckB);
+        String[] deckC_results = cardPick(requests[2], deckC);
+        String[] deckD_results = cardPick(requests[3], deckD);
 
         // Add picked cards to newHand
         newHand += deckA_results[1];
