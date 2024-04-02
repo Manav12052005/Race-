@@ -130,12 +130,12 @@ public class RaceToTheRaft {
      * Draw random cards from the specified decks.
      * The decks string denotes what decks to draw from and how many cards to draw from that deck.
      * <p>
-     * For example the drawRequest string "4A1B1D" tells us that we should draw 4 cards from deck A, 1 card from deck B
+     * For example the drawRequest string "A4B1D1" tells us that we should draw 4 cards from deck A, 1 card from deck B
      * and
      * 1 card from deck D.
      * <p>
-     * If I draw cards a, b, d, from deck A, card a from deck B and card s from deck D, I would return the string:
-     * "AabdBaDs".
+     * If I draw cards a, b, d, l, from deck A, card a from deck B and card s from deck D, I would return the string:
+     * "AabdlBaCDs".
      * Decks should be listed in alphabetical order, with cards drawn from that deck also listed in alphabetical order.
      * </p>
      * Recall the mapping between deck and char:

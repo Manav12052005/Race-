@@ -94,7 +94,7 @@ only
 hold up to 6 cards at once. 
 
 For example: 
-`"AfhkDahw"` tells us that we have cards `f`, `h`, `k` from Deck `A` and `a`, `h`, `w` from Deck `D` in hand. 
+`"AfhkBCDahw"` tells us that we have cards `f`, `h`, `k` from Deck `A` and `a`, `h`, `w` from Deck `D` in hand. 
 
 *Note:* We list only the cards that we have in hand.
 
@@ -203,9 +203,9 @@ that the side of the island board without fire should be used. As a result, the
 island board can be rotated in any direction.
 
 *Note*: because of the layout of the game, the 9 x 6 island boards can only
-ever have the rotations `E`, `W`, or `A`. If a 9 x 6 island board has rotation
+ever have the rotations `N`, `S`, or `A`. If a 9 x 6 island board has rotation
 `A` (that is, for the two-character string `"SA"`), then it can only be rotated
-east or west.
+north or south.
 
 The ordering of each two-letter string determines where each island board
 should be placed. 
@@ -243,8 +243,8 @@ Fire cards are 3 x 3 cards containing only fire.
 The Fire substring starts with `F` and is followed by zero or more fire location substrings. 
 
 Each location substring is defined as follows:
-- The first two characters represent the row coordinate of the fire card. For example: `04` represents row 4. 
-- The second two characters represent the column coordinate of the fire card. For example: `14` represents column 14. 
+- The first two characters represent the row coordinate of top-left square of the fire card. For example: `04` represents row 4. 
+- The second two characters represent the column coordinate of the top-left square of the fire card. For example: `14` represents column 14. 
 
 For example: the string `"F03100409"` would tell us that there is a fire card placed at row 3, column 10 `(3,10)` and 
 another at row 4, column 9 `(4,9)`.
@@ -308,13 +308,14 @@ Pathway card placement strings are defined as follows:
 `{Deck}{ID}{row}{column}{orientation}`
 - The first character is a letter from `A` to `D` that represents the Deck this card is from.
 - The second character is a letter from `a` to `y` that represents the ID of the card.
-- The fourth and fifth characters represent the row-coordinate where this card should be placed.
-- The sixth and seventh characters represent the column-coordinate where this card should be placed.
+- The fourth and fifth characters represent the row-coordinate where the top-left square of this card should be placed.
+- The sixth and seventh characters represent the column-coordinate where the top-left square of this card should be placed.
 - The eighth character is a letter `N`, `E`, `S`, or `W` representing the orientation in which this card should be 
   placed. 
 
 For example: `"Ab1208S` tells us that card `b` from deck `A` should be placed at `(12,8)` in the `SOUTH` orientation.
-
+The position of the top-left square already takes into account the card's orientation, that is, given the same coordinates,
+a card always covers the same squares on the island, regardless of its orientation.
 
 ### Fire Tile Placement String
 
@@ -323,8 +324,8 @@ Fire tile placement strings are defined as follows:
 `{ID}{row}{column}{flipped}{orientation}`
 
 - The first character is a letter `a` to `z` or `A` to `E`, case sensitive that represents the ID of this fire tile.
-- The second and third characters represent the row-coordinate where this card should be placed.
-- The fourth and fifth characters represent the column-coordinate where this card should be placed.
+- The second and third characters represent the row-coordinate of the top-left square of the bounding box of the fire tile when placed
+- The fourth and fifth characters represent the column-coordinate of the top-left square of the bounding box of the fire tile when placed
 - The sixth character is a letter `T` for true or `F` for false, representing whether a tile has been flipped 
   across the vertical axis.
 - The seventh character is a letter `N`, `E`, `S` or `W` representing the orientation of this tile.
@@ -338,6 +339,9 @@ For example:
 `"l0003FW"` tells us that the tile `l` hasn't been flipped, and is in the `West` orientation. 
 
 Below is an example of the tile `l` in all un-flipped `F` orientations, and all flipped `T` orientations.
+As for all other placements, the position of the top-left square takes into account the tile's orientation and flip-status.
+That is, regardless of how the tile has been rotated or flipped, the resulting bounding box's top-left corner always matches
+the given coordinates.
 
 <img src="assets/fire-tiles-flipped.png" alt="fire tile orientations" />
 

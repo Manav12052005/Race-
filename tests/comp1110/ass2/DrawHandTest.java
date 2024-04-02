@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
@@ -13,11 +14,11 @@ public class DrawHandTest {
         for (char c = 'A'; c < 'D'; c++) {
             String oldDeck = oldDecks.substring(oldDecks.indexOf(c), oldDecks.indexOf(c + 1));
             String newDeck = newDecks.substring(newDecks.indexOf(c), newDecks.indexOf(c + 1));
-            Assertions.assertEquals(oldDeck.length() - newDeck.length(), numCardsDrawn[c - 'A']);
+            Assertions.assertEquals(numCardsDrawn[c - 'A'],oldDeck.length() - newDeck.length(), "Wrong number of cards removed from Deck "+c);
         }
         String oldDeck = oldDecks.substring(oldDecks.indexOf('D'));
         String newDeck = newDecks.substring(newDecks.indexOf('D'));
-        Assertions.assertEquals(oldDeck.length() - newDeck.length(), numCardsDrawn['D' - 'A']);
+        Assertions.assertEquals(numCardsDrawn['D' - 'A'], oldDeck.length() - newDeck.length(), "Wrong number of cards removed from Deck D");
     }
 
     private void testCardsInHand(String[] oldState, String newHand, String drawRequest) {
@@ -29,7 +30,7 @@ public class DrawHandTest {
                 deckString.substring(deckString.indexOf('D'))
         };
         // Hand string is six (one character for each card) plus one for each deck that is present (test allows mentioning a deck without cards, but does not require it)
-        Assertions.assertEquals(newHand.length(), 6+(newHand.contains("A")?1:0)+(newHand.contains("B")?1:0)+(newHand.contains("C")?1:0)+(newHand.contains("D")?1:0));
+        Assertions.assertEquals(6+(newHand.contains("A")?1:0)+(newHand.contains("B")?1:0)+(newHand.contains("C")?1:0)+(newHand.contains("D")?1:0), newHand.length(), "Wrong length of hand string");
         newHand=newHand+'E';
         char c='A';
         while(c!='E') {
@@ -42,16 +43,21 @@ public class DrawHandTest {
                 }
                 int end = newHand.indexOf(nextChar);
                 String hand = newHand.substring(start, end);
-                Assertions.assertEquals(hand.charAt(0), c);
+                Assertions.assertEquals(c, hand.charAt(0), "Invalid Deck character in hand string");
                 for (int i = 1; i < hand.length(); i++) {
                     String card = String.valueOf(hand.charAt(i));
-                    Assertions.assertTrue(oldDecks[c - 'A'].contains(card));
+                    Assertions.assertTrue(oldDecks[c - 'A'].contains(card), "New hand contains card that was not in Deck "+c);
                 }
                 c=nextChar;
             } else {
                 c++;
             }
         }
+    }
+    
+    private static String[] callDrawHand(String[] gameState, String drawRequest) {
+        String[] gameStateCopy = Arrays.copyOf(gameState, gameState.length);
+        return RaceToTheRaft.drawHand(gameStateCopy, drawRequest);
     }
 
     @Test
@@ -64,7 +70,7 @@ public class DrawHandTest {
                 "abcdefghijklmnopqrstuvwxyzABCDE"
         };
         String drawRequest = "A1C2D3";
-        String[] nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+        String[] nextState = callDrawHand(gameState, drawRequest);
         testCardsRemove(gameState[1], nextState[1], new int[]{1, 0, 2, 3});
 
         gameState = new String[]{
@@ -75,7 +81,7 @@ public class DrawHandTest {
                 "bcdefghijklmnpqrstuvwxyzACDE"
         };
         drawRequest = "A2B1C1D2";
-        nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+        nextState = callDrawHand(gameState, drawRequest);
         testCardsRemove(gameState[1], nextState[1], new int[]{2, 1, 1, 2});
 
         gameState = new String[]{
@@ -86,7 +92,7 @@ public class DrawHandTest {
                 "bcdefghjklnopqruvwyzCDE"
         };
         drawRequest = "A2C1D3";
-        nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+        nextState = callDrawHand(gameState, drawRequest);
         testCardsRemove(gameState[1], nextState[1], new int[]{2, 0, 1, 3});
     }
 
@@ -100,7 +106,7 @@ public class DrawHandTest {
                 "abcdefghijklmnopqrstuvwxyzABCDE"
         };
         String drawRequest = "A1B3C1D1";
-        String[] nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+        String[] nextState = callDrawHand(gameState, drawRequest);
         testCardsInHand(gameState, nextState[2], drawRequest);
 
          gameState = new String[]{
@@ -111,7 +117,7 @@ public class DrawHandTest {
                  "abdefghijlmnopqrstvxyzABCDE"
          };
          drawRequest = "A3B1C1D1";
-         nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+         nextState = callDrawHand(gameState, drawRequest);
          testCardsInHand(gameState, nextState[2], drawRequest);
 
          gameState = new String[]{
@@ -122,7 +128,7 @@ public class DrawHandTest {
                  "abefghijkmnopqrstuvwxyzABDE"
          };
          drawRequest = "A1B2C1D2";
-         nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+         nextState = callDrawHand(gameState, drawRequest);
          testCardsInHand(gameState, nextState[2], drawRequest);
     }
 
@@ -143,7 +149,7 @@ public class DrawHandTest {
                 "abcdeghilmprstuvwxyzBCE"
         };
         String drawRequest = "A1B3D2";
-        String[] nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+        String[] nextState = callDrawHand(gameState, drawRequest);
         testCardsRemove(gameState[1], nextState[1], new int[]{1, 3, 0, 2});
         testCardsInHand(gameState, nextState[2], drawRequest);
 
@@ -156,7 +162,7 @@ public class DrawHandTest {
                 "abcdfghjklmnopqrstuvwxyzBCE"
         };
         drawRequest = "A1C2D4";
-        nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+        nextState = callDrawHand(gameState, drawRequest);
         Assertions.assertArrayEquals(gameState, nextState); // nothing should change because the draw is invalid
 
         // Three cards from deck A in the draw request, only two cards in the deck
@@ -168,7 +174,7 @@ public class DrawHandTest {
                 "adefghiklmnoqrstuwxyABD"
         };
         drawRequest = "A3B1C1D1";
-        nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+        nextState = callDrawHand(gameState, drawRequest);
         Assertions.assertArrayEquals(gameState, nextState);
     }
 
@@ -183,21 +189,21 @@ public class DrawHandTest {
                 "abcdefghijklmnopqrstuvwxyzABCDE"
         };
         String drawRequest = "A1B2C1D2";
-        String[] nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+        String[] nextState = callDrawHand(gameState, drawRequest);
         testCardsRemove(gameState[1], nextState[1], new int[]{1, 2, 1, 2});
         testCardsInHand(gameState, nextState[2], drawRequest);
         // Turn 2
         gameState = nextState;
         gameState[2] = "ABCD"; // remove cards from the hand
         drawRequest = "B1C1D4";
-        nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+        nextState = callDrawHand(gameState, drawRequest);
         testCardsRemove(gameState[1], nextState[1], new int[]{0, 1, 1, 4});
         testCardsInHand(gameState, nextState[2], drawRequest);
         // Turn 3
         gameState = nextState;
         gameState[2] = "ABCD"; // remove cards from the hand
         drawRequest = "A1B2C1D2";
-        nextState = RaceToTheRaft.drawHand(gameState, drawRequest);
+        nextState = callDrawHand(gameState, drawRequest);
         testCardsRemove(gameState[1], nextState[1], new int[]{1, 2, 1, 2});
         testCardsInHand(gameState, nextState[2], drawRequest);
     }
