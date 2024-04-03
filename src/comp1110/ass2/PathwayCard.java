@@ -13,10 +13,10 @@ public class PathwayCard {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 if (direction.equals("east")) {
-                    // Rotate 90 degrees clockwise
+                    // Rotate card 90 degrees clockwise
                     rotatedCard[col][2 - row] = tiles[row][col];
                 } else {
-                    // Rotate 90 degrees counter-clockwise
+                    // Rotate card 90 degrees counter-clockwise
                     rotatedCard[2 - col][row] = tiles[row][col];
                 }
             }
@@ -75,19 +75,19 @@ public class PathwayCard {
         String newHand = "";
         String modifiedDecks = ""; // Will hold all modified decks
 
-        // Get the results for each deck
+        // Sends each deck and its associated request to our cardPick function
         String[] deckA_results = cardPick(requests[0], deckA);
         String[] deckB_results = cardPick(requests[1], deckB);
         String[] deckC_results = cardPick(requests[2], deckC);
         String[] deckD_results = cardPick(requests[3], deckD);
 
-        // Add picked cards to newHand
+        // Adds picked cards to complete hand
         newHand += deckA_results[1];
         newHand += deckB_results[1];
         newHand += deckC_results[1];
         newHand += deckD_results[1];
 
-        // Concatenate the modified decks
+        // Reform the full decks string with removed cards
         modifiedDecks += deckA_results[0];
         modifiedDecks += deckB_results[0];
         modifiedDecks += deckC_results[0];
@@ -97,21 +97,21 @@ public class PathwayCard {
 
     }
 
-    private static String[] cardPick(int request, String deck) {
+    private static String[] cardPick(int request, String deck) { //receives seperated decks and requests
         StringBuilder pickedCards = new StringBuilder();
-        pickedCards.append(deck.charAt(0));
+        pickedCards.append(deck.charAt(0)); //adds deck ID to our picked cards
         StringBuilder modDeck = new StringBuilder(deck);
         Random random = new Random();
 
         for (int i = 0; i < request; i++) {
             int randomIndex = random.nextInt(modDeck.length() - 1) + 1;
-            char pickedCard = modDeck.charAt(randomIndex);
-            pickedCards.append(pickedCard);
+            char pickedCard = modDeck.charAt(randomIndex); //Chooses random card from deck
+            pickedCards.append(pickedCard); //adds chosen card to picked cards
 
-            modDeck.deleteCharAt(randomIndex);
+            modDeck.deleteCharAt(randomIndex); //removes chosen card from deck
         }
 
-        return new String[]{modDeck.toString(), pickedCards.toString()};
+        return new String[]{modDeck.toString(), pickedCards.toString()}; //returns modified deck and full hand.
 
     }
 }
