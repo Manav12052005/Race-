@@ -7,6 +7,7 @@ public class Hand {
 
     private ArrayList<Card> cards;
 
+    // Constructor
     public Hand(String handString) {
         ArrayList<String> hands = handToCards(handString);
         ArrayList<Card> cards = new ArrayList<>();

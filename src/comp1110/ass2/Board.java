@@ -9,6 +9,7 @@ public class Board {
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
     private ArrayList<Square> squares;
 
+    // Constructor
     public Board(String boardString) {
         ArrayList<Square> squares = new ArrayList<>();
         boardString.lines().forEach(line -> {
