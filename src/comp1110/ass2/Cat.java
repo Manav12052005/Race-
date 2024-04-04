@@ -11,10 +11,10 @@ public class Cat {
         this.location = location;
         this.exhausted = false;
     }
-    public boolean isExhausted(){
-        return false;
+    public boolean getExhausted(){
+        return this.exhausted;
     }
     public boolean setExhausted(){
-        return false;
+        return this.exhausted;
     }
 }
