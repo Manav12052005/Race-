@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class Island {
     private String island;
 
-    // Constructor
     public Island(String island){
         if (!(island.length() == 4 || island.length() == 8)) {
             throw new IllegalArgumentException("Island length invalid!");
@@ -22,10 +21,17 @@ public class Island {
             sb.add(board);
         }
 
+        // Will need further instructions to continue
         for (String s : sb) {
-            
+            switch (s.charAt(0)) {
+                case 'L':
+                    break;
+                case 'S':
+                    break;
+            }
         }
 
         this.island = island;
     }
+
 }
