@@ -4,7 +4,7 @@
 # This is your statement of your submitted work being your own.
 # Incorrectly filling out this statement could lead to charges
 # of academic misconduct.
-# 
+#
 # For information on how to fill this out correctly, see
 # https://cs.anu.edu.au/courses/comp1110/help/faq/09-originality/
 #
@@ -16,16 +16,16 @@ declaration: >-
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-   - Board
-   - Card
-   - Hand
-   - Square
+   - Board (https://gitlab.cecs.anu.edu.au/u7761758/comp1110-ass2/-/blob/main/src/comp1110/ass2/Board.java?ref_type=heads)
+   - Card (https://gitlab.cecs.anu.edu.au/u7761758/comp1110-ass2/-/blob/main/src/comp1110/ass2/Card.java?ref_type=heads)
+   - Hand (https://gitlab.cecs.anu.edu.au/u7761758/comp1110-ass2/-/blob/main/src/comp1110/ass2/Hand.java?ref_type=heads)
+   - Square (https://gitlab.cecs.anu.edu.au/u7761758/comp1110-ass2/-/blob/main/src/comp1110/ass2/Square.java?ref_type=heads)
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-   - isBoardStringWellFormed
-   - chooseChallenge
+   - isBoardStringWellFormed (https://gitlab.cecs.anu.edu.au/u7761758/comp1110-ass2/-/blob/main/src/comp1110/ass2/RaceToTheRaft.java?ref_type=heads#L45-68)
+   - chooseChallenge (https://gitlab.cecs.anu.edu.au/u7761758/comp1110-ass2/-/blob/main/src/comp1110/ass2/RaceToTheRaft.java?ref_type=heads#L154-175)
 
 # sign *your* name and uid here
 name: Simon Liu
