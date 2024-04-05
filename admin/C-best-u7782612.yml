@@ -39,8 +39,8 @@ code:
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-   - Challenge
-   - Location
+   - Challenge https://gitlab.cecs.anu.edu.au/u7761758/comp1110-ass2/-/blob/main/src/comp1110/ass2/Challenge.java?ref_type=heads#L3-32
+   - Location  https://gitlab.cecs.anu.edu.au/u7761758/comp1110-ass2/-/blob/main/src/comp1110/ass2/Location.java?ref_type=heads#L3-34
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
