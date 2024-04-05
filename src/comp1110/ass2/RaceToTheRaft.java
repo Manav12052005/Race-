@@ -70,7 +70,8 @@ public class RaceToTheRaft {
      * Make Constructors for each of your objects.
      */
     // FIXME TASK 3
-    //Manav task
+    //Manav Task - Done in respective classes
+
     /**
      * Draws a random fire tile from those remaining in the bag.
      *
