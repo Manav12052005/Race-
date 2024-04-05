@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 @Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
@@ -35,6 +36,10 @@ public class DrawFireTileTest {
         Assertions.assertTrue(comesFromBag(id, bag));
     }
 
+    private static String callDrawFireTile(String[] gameState) {
+        String[] gameStateCopy = Arrays.copyOf(gameState, gameState.length);
+        return RaceToTheRaft.drawFireTile(gameStateCopy);
+    }
     @Test
     public void testFullBag() {
         final String bag = "abcdefghijklmnopqrstuvwxyzABCDE";
@@ -46,7 +51,7 @@ public class DrawFireTileTest {
                 "",
                 "abcdefghijklmnopqrstuvwxyzABCDE"
         };
-        String fireTile = RaceToTheRaft.drawFireTile(gameState);
+        String fireTile = callDrawFireTile(gameState);
         testIsFireTile(fireTile, bag);
 
         gameState = new String[]{
@@ -56,7 +61,7 @@ public class DrawFireTileTest {
                 "",
                 "abcdefghijklmnopqrstuvwxyzABCDE"
         };
-        fireTile = RaceToTheRaft.drawFireTile(gameState);
+        fireTile = callDrawFireTile(gameState);
         testIsFireTile(fireTile, bag);
 
         gameState = new String[]{
@@ -66,7 +71,7 @@ public class DrawFireTileTest {
                 "",
                 "abcdefghijklmnopqrstuvwxyzABCDE"
         };
-        fireTile = RaceToTheRaft.drawFireTile(gameState);
+        fireTile = callDrawFireTile(gameState);
         testIsFireTile(fireTile, bag);
     }
 
@@ -79,7 +84,7 @@ public class DrawFireTileTest {
                 "",
                 "abcdefgijklmnopqrstuvwxyzABC"
         };
-        String fireTile = RaceToTheRaft.drawFireTile(gameState);
+        String fireTile = callDrawFireTile(gameState);
         testIsFireTile(fireTile, gameState[4]);
 
         gameState = new String[]{
@@ -89,7 +94,7 @@ public class DrawFireTileTest {
                 "",
                 "bdefgiklmoqrsuvwxyzABCDE"
         };
-        fireTile = RaceToTheRaft.drawFireTile(gameState);
+        fireTile = callDrawFireTile(gameState);
         testIsFireTile(fireTile, gameState[4]);
 
         // Empty fire tile bag
@@ -100,7 +105,7 @@ public class DrawFireTileTest {
                 "",
                 ""
         };
-        fireTile = RaceToTheRaft.drawFireTile(gameState);
+        fireTile = callDrawFireTile(gameState);
         Assertions.assertEquals(fireTile, "");
     }
 

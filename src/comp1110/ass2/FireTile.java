@@ -3,8 +3,37 @@ package comp1110.ass2;
 import java.util.Random;
 
 public class FireTile {
+    private Square[][] tiles;
+    private Boolean isHorizontal;
 
-    private String bag;
+    public void rotate(String direction){
+
+        Square[][] rotatedTiles;
+        boolean newIsHorizontal = isHorizontal;
+
+        if(isHorizontal){
+            rotatedTiles = new Square[3][4];
+        }
+        else {
+            rotatedTiles = new Square[4][3];
+
+        }
+        for(int row = 0; row < tiles.length; row++){
+            for(int col = 0; col < tiles[0].length; col++){
+                if(direction.equals("east")){ //flip 90 degrees clockwise
+                    rotatedTiles[col][tiles.length - 1 - row] = tiles[row][col];
+                }
+                else if (direction.equals("west")){ //flip 90 degrees counterclockwise
+                    rotatedTiles[tiles[0].length - 1 - col][row] = tiles[row][col];
+                }
+                else{ //flip tile across the vertical axis
+                    rotatedTiles[row][tiles[0].length - 1 - col] = tiles[row][col];
+                }
+            }
+            tiles = rotatedTiles;
+            isHorizontal = newIsHorizontal;
+        }
+    }
 
     public boolean isEmpty(String thing){
         return thing == "";
