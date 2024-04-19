@@ -13,7 +13,7 @@ public class Square extends ImageView {
     public static final double SQUARE_WIDTH = 40;
     private double x;
     private double y;
-    private enum type {
+    public enum type {
         BLUE, GREEN, PURPLE, RED, YELLOW,
         blueCAT, greenCAT, purpleCAT, redCAT, yellowCAT,
         FIRE, OBJECTIVE, WILD, wildOCCUPIED, NONE
