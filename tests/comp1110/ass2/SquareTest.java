@@ -14,6 +14,7 @@ class SquareTest {
     @BeforeAll
     public static void setup() throws InterruptedException {
         // Launch JavaFX application
+
         Thread t = new Thread("JavaFX Init Thread") {
             public void run() {
                 Application.launch(TestApp.class, new String[0]);
