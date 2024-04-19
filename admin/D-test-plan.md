@@ -1,10 +1,10 @@
 ## Test Plan
-The following is a list of classes and their associated methods that will be tested.
+The following is a list of classes, methods, and their associated tests.
 ### Class - Method
-FireTile - rotate
+FireTile - rotate - RotateTest
 
-PathwayCard - rotate
+PathwayCard - rotate - RotateTest
 
-Hand - handToCards
+Hand - handToCards - HandTest
 
-Square - constructor and getters
+Square - constructor and getters - SquareTest
