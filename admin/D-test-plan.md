@@ -1,5 +1,6 @@
 ## Test Plan
-Make tests for object oriented code we have made so far.
+The following is a list of classes and their associated methods that will be tested 
 ### Classes - Methods 
 FireTile - rotate
+
 PathwayCard - rotate
