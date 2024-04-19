@@ -6,3 +6,5 @@ FireTile - rotate
 PathwayCard - rotate
 
 Hand - handToCards
+
+Square - constructor and getters
