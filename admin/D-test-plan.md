@@ -4,3 +4,5 @@ The following is a list of classes and their associated methods that will be tes
 FireTile - rotate
 
 PathwayCard - rotate
+
+Hand - handToCards
