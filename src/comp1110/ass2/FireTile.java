@@ -3,19 +3,26 @@ package comp1110.ass2;
 import java.util.Random;
 
 public class FireTile {
-    private Square[][] tiles;
+//    the final implementation will be Square[][] but to test rotate we will use int[][].
+//    private Square[][] tiles;
+    private int[][] tiles;
     private Boolean isHorizontal;
+
+    public FireTile(int[][] tiles, boolean isHorizontal){
+        this.tiles = tiles;
+        this.isHorizontal = isHorizontal;
+    }
 
     public void rotate(String direction){
 
-        Square[][] rotatedTiles;
+        int[][] rotatedTiles;
         boolean newIsHorizontal = isHorizontal;
 
         if(isHorizontal){
-            rotatedTiles = new Square[3][4];
+            rotatedTiles = new int[3][4];
         }
         else {
-            rotatedTiles = new Square[4][3];
+            rotatedTiles = new int[4][3];
 
         }
         for(int row = 0; row < tiles.length; row++){
@@ -52,5 +59,11 @@ public class FireTile {
         return null;
     }
 
+    public int[][] getTiles() {
+        return tiles;
+    }
 
+    public boolean getIsHorizontal() {
+        return isHorizontal;
+    }
 }

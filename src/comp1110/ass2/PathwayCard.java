@@ -3,12 +3,14 @@ package comp1110.ass2;
 import java.util.Random;
 
 public class PathwayCard {
-
-    private Square[][] tiles;
-
+//    the final implementation will be Square[][] but to test rotate we will use int[][].
+//    private Square[][] tiles;
+    private int[][] tiles;
     public void rotate(String direction) {
 
-        Square[][] rotatedCard = new Square[3][3];
+//        Square[][] rotatedCard = new Square[3][3];
+
+        int[][] rotatedCard = new int[3][3];
 
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
