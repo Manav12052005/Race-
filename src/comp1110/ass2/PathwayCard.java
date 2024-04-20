@@ -6,20 +6,27 @@ public class PathwayCard {
 //    the final implementation will be Square[][] but to test rotate we will use int[][].
 //    private Square[][] tiles;
     private int[][] tiles;
+
+    public PathwayCard(int[][] tiles){
+        this.tiles = tiles;
+    }
+    public int[][] getTiles() {
+        return tiles;
+    }
     public void rotate(String direction) {
 
 //        Square[][] rotatedCard = new Square[3][3];
 
         int[][] rotatedCard = new int[3][3];
 
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 if (direction.equals("east")) {
                     // Rotate card 90 degrees clockwise
-                    rotatedCard[col][2 - row] = tiles[row][col];
+                    rotatedCard[j][2 - i] = tiles[i][j];
                 } else {
                     // Rotate card 90 degrees counter-clockwise
-                    rotatedCard[2 - col][row] = tiles[row][col];
+                    rotatedCard[2 - j][i] = tiles[i][j];
                 }
             }
         }
