@@ -8,7 +8,7 @@ import java.nio.file.Path;
 public class RotateTest {
     //tests whether the FireTile and PathwayCard rotate functions works properly
     @Test
-    void testRotateEastPC(){
+    void testRotateEastPC(){ //PathwayCard rotation east test
         int[][] sArray = new int[][]{
                 {0, 1, 2},
                 {3, 4, 5},
@@ -26,7 +26,7 @@ public class RotateTest {
         Assertions.assertArrayEquals(expectedResult, wayCard.getTiles());
     }
     @Test
-    void testRotateWestPC(){
+    void testRotateWestPC(){ //PathwayCard rotation west test
         int[][] sArray = new int[][]{
                 {0, 1, 2},
                 {3, 4, 5},
@@ -44,7 +44,7 @@ public class RotateTest {
         Assertions.assertArrayEquals(expectedResult, wayCard.getTiles());
     }
     @Test
-    void testRotateEastFT() {
+    void testRotateEastFT() { //FireTile rotation east test
         int[][] sArray = new int[][]{
                 {0, 1, 2, 3},
                 {4, 5, 6, 7},
@@ -65,7 +65,7 @@ public class RotateTest {
         Assertions.assertEquals(expectedIsHorizontal, fireTile.getIsHorizontal());
     }
     @Test
-    void testRotateWestFT() {
+    void testRotateWestFT() { //FireTile rotation west test
         int[][] sArray = new int[][]{
                 {0, 1, 2, 3},
                 {4, 5, 6, 7},
@@ -87,7 +87,7 @@ public class RotateTest {
     }
 
     @Test
-    void testRotateFlipFT() {
+    void testRotateFlipFT() { //FireTile flip test
         int[][] sArray = new int[][]{
                 {0, 1, 2, 3},
                 {4, 5, 6, 7},

@@ -36,7 +36,7 @@ public class FireTile {
             }
         } else for (int i = 0; i < tiles.length; i++) { //flips card about the y axis
                     for (int j = 0; j < tiles[i].length; j++) {
-                        rotatedTiles[i][tiles.length - 1 - j] = tiles[i][j];
+                        rotatedTiles[i][tiles[i].length - 1 - j] = tiles[i][j];
                     }}
         tiles = rotatedTiles;
         isHorizontal = !isHorizontal;
