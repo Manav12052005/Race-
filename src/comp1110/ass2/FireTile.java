@@ -29,8 +29,7 @@ public class FireTile {
                 for (int j = 0; j < tiles[i].length; j++) {
                     if (direction.equals("east")) { // rotate 90 degrees clockwise
                         rotatedTiles[j][tiles.length - 1 - i] = tiles[i][j];
-                    } else if (direction.equals("west")) { // rotate 90 degrees counterclockwise
-                        rotatedTiles[tiles[0].length - 1 - j][i] = tiles[i][j];
+                    } else {rotatedTiles[tiles[0].length - 1 - j][i] = tiles[i][j];// rotate 90 degrees counterclockwise
                     }
                 }
             }
