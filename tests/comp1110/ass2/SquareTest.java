@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import javafx.scene.image.Image;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,6 +39,12 @@ class SquareTest {
     @Test
     void testT() {
         assertEquals(test.getT(), Square.type.PURPLE);
+    }
+
+    @Test
+    void testImg() {
+        Image expectedImage = new Image("comp1110/ass2/gui/assets/purple.png");
+        assertEquals(test.getImg(), expectedImage);
     }
 
     public static class TestApp extends Application {
