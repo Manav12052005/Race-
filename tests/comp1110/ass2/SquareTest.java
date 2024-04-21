@@ -43,9 +43,11 @@ class SquareTest {
 
     @Test
     void testImg() {
-        Image expectedImage = new Image("comp1110/ass2/gui/assets/purple.png");
-        assertEquals(test.getImg(), expectedImage);
+        String expectedImageUrl = getClass().getResource("/comp1110/ass2/gui/assets/purple.png").toExternalForm();
+        String actualImageUrl = test.getImg().getUrl();
+        assertEquals(expectedImageUrl, actualImageUrl);
     }
+
 
     public static class TestApp extends Application {
         @Override
