@@ -14,3 +14,58 @@ Square - getImg() - SquareTest
 Square - getValueX() - SquareTest
 
 Square - getValueY() - SquareTest
+
+### GUI test
+
+Test board with different strings:
+
+```
+fffffffffrrfffffff
+fffffffffrRfffffff
+fffffffffrrfffffff
+fffgffyrgpygyrygbr
+fffgGfggyygprbprpg
+fffgggbgprbpygbpyb
+ffffffbpbpgrbrrbgy
+ffffffgygybpgygprb
+ffffffbrrrybgygybg
+ffffffgpbbyrprgbbp
+ffffffbyrbpybgpryg
+ffffffpgyrggrbgyby
+fffffybgbpryybpgyp
+ffffYyybpgbprygrow
+fffyyyyryygbygybww
+```
+
+```
+fffgygbyrgrgpybygr
+fffgygpbygyprpgbyb
+fffrrbrgpbrbbrbgyr
+fffbgypbrgypgpypbg
+fffpbrpgypbrrbgpry
+fffyrygypygppyrygb
+fffgbbrpbbpyrggbpg
+fffpggbygbrypbyryb
+fffpypgrrgybgybrgy
+fffbrgprgyypbrgprg
+fffrbpybybpgrbpyby
+fffpgybrrgbypgybrr
+fffbybgypgrgbybgyp
+fffbrgyggrypbrgygg
+fffybpbrybpgybpbry
+```
+
+
+Test hand with different strings:
+
+```
+AiBfgCsDay ->
+
+rbyrbyrry
+bbybpybpp
+ggggpggpr
+yyyygyygy
+ppbgpbgpp
+pprppyryy
+
+```

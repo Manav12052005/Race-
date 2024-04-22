@@ -16,10 +16,4 @@ class HandTest {
             "ppbgpbgpp", "yypgypgyy", "rpbrpbrpb"));
         assertEquals(result, actual, "Hand of \"AfhkBCDahw\" doesn't match! Should be " + actual);
     }
-
-    @Test
-    void handToCardsIllegal() {
-        ArrayList<String> result = Hand.handToCards("");
-    }
-
 }
