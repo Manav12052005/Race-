@@ -10,9 +10,10 @@
 #
 
 declaration: >-
-  I declare that everything I have submitted for stage D of this assignment
-  and all stages before it is entirely my own work, with the following
-  exceptions:
+  We declare that everything we have submitted for Stage D of this assignment
+  and all stages before it is entirely our own work, with the following
+  exceptions for stage D (and the exceptions for the other stages described
+  in their own originality statements):
 
 # Use this to list names of people who you collaborated with, and a
 # comment about what you collaborated on.
@@ -50,6 +51,12 @@ declaration: >-
 #    licence:
 
 
-# sign *your* name and uid here
-name: Manav Singh
-uid: u7782612
+# Sign *your* name and uids here. (Remove entries if you have fewer
+# than three members.)
+signatures:
+  - name: Thomas Downes
+    uid: u7568037
+  - name: Manav Singh
+    uid: u7782612
+  - name: Simon Liu
+    uid: u7761758

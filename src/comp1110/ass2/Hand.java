@@ -58,7 +58,7 @@ public class Hand {
         return cards;
     }
 
-    // for debugging use
+    // for testing use
 //    public static void main(String[] args) {
 //        String hand = "AfhkDahw";
 //        ArrayList<String> list = new ArrayList<>();
