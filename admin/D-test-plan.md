@@ -15,6 +15,18 @@ Square - getValueX() - SquareTest
 
 Square - getValueY() - SquareTest
 
+Challenge - getDifficulty() - ChallengeTest
+
+Challenge - getName() - ChallengeTest
+
+Challenge - getFireSubstring() - ChallengeTest
+
+Challenge - getIslandSubstring() - ChallengeTest
+
+Challenge - getCatSubstring() - ChallengeTest
+
+Challenge - getRaftSubstring() - ChallengeTest
+
 ### GUI test
 
 Test board with different strings:
