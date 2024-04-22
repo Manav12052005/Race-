@@ -32,10 +32,10 @@ declaration: >-
 code:
   - comment: Asked code implementation examples from ChatGPT
     url: https://chat.openai.com/share/8ff79135-c3e5-4979-98b3-fe9732505500
-#    licence:
+    licence:
   - comment: Took inspiration from Assignment 1 for defining location
     url: https://gitlab.cecs.anu.edu.au/comp1110/comp1110-ass1
-#    licence:
+    licence:
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
