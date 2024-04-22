@@ -1,27 +1,39 @@
 package comp1110.ass2;
 
 import java.util.Random;
+import static comp1110.ass2.PathwayCard.Direction.EAST;
+import static comp1110.ass2.Square.type.*;
 
-public class PathwayCard {
-//    the final implementation will be Square[][] but to test rotate we will use int[][].
-//    private Square[][] tiles;
-    private int[][] tiles;
 
-    public PathwayCard(int[][] tiles){
+public class PathwayCard { ;
+    private Square.type[][] tiles;
+
+    public PathwayCard(Square.type[][] tiles){
         this.tiles = tiles;
     }
-    public int[][] getTiles() {
+    public Square.type[][] getTiles() {
         return tiles;
     }
-    public void rotate(String direction) {
+
+    enum Direction{
+        EAST, WEST
+    }
+    public static PathwayCard stringToPWC(String string){
+        char deckID = string.charAt(0);
+        char cardID = string.charAt(1);
+        int loc = Integer.parseInt(string.substring(2,5));
+        char direction = string.charAt(6);
+        return null;
+    }
+    public void rotate(Direction direction) {
 
 //        Square[][] rotatedCard = new Square[3][3];
 
-        int[][] rotatedCard = new int[3][3];
+        Square.type[][] rotatedCard = new Square.type[3][3];
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (direction.equals("east")) {
+                if (direction.equals(EAST)) {
                     // Rotate card 90 degrees clockwise
                     rotatedCard[j][2 - i] = tiles[i][j];
                 } else {

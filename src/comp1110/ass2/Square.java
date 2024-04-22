@@ -82,6 +82,24 @@ public class Square extends ImageView {
         };
     }
 
+    public static type charToType(char t){
+        return switch (t) {
+            case 'b' -> type.BLUE;
+            case 'g' -> type.GREEN;
+            case 'p' -> type.PURPLE;
+            case 'r' -> type.RED;
+            case 'y' -> type.YELLOW;
+            case 'B' -> type.blueCAT;
+            case 'G' -> type.greenCAT;
+            case 'P' -> type.purpleCAT;
+            case 'R' -> type.redCAT;
+            case 'Y' -> type.yellowCAT;
+            case 'f' -> type.FIRE;
+            case 'o', 'w', 'W' -> type.OBJECTIVE;
+            default -> type.NONE;
+        };
+    }
+
     public type getT() {
         return this.t;
     }
