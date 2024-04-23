@@ -2,7 +2,7 @@ package comp1110.ass2;
 
 import java.nio.file.Path;
 import java.util.Random;
-import static comp1110.ass2.PathwayCard.Direction.EAST;
+import static comp1110.ass2.PathwayCard.Direction.*;
 
 
 public class PathwayCard { ;
@@ -15,14 +15,24 @@ public class PathwayCard { ;
     }
 
     enum Direction{
-        EAST, WEST
+        NORTH, EAST, SOUTH, WEST
+    }
+
+    public static Direction charToDirection(char c){
+        switch(c){
+            case 'N' -> NORTH;
+            case 'E' -> EAST;
+            case 'S' -> SOUTH;
+            case 'W' -> WEST;
+            default -> throw new IllegalArgumentException("charToDirection input invalid");
+        }
     }
     public static PathwayCard actionStringToPWC(String string){
         char deckID = string.charAt(0);
         char cardID = string.charAt(1);
         int xx = Integer.parseInt(string.substring(2,3));
         int yy = Integer.parseInt(string.substring(4,5));
-        char direction = string.charAt(6);
+        Direction direction = charToDirection(string.charAt(6));
         String[] deck;
         deck = switch (deckID){
             case 'A' -> Utility.DECK_A;
@@ -33,6 +43,18 @@ public class PathwayCard { ;
         };
         String card = cardFinder(deck, cardID);
         PathwayCard cardArray = cardBuilder(card);
+
+        if (direction == EAST){
+            cardArray.rotate(EAST);
+        }
+        if (direction == WEST){
+            cardArray.rotate(WEST);
+        }
+        if (direction == SOUTH) {
+            cardArray.rotate(EAST);
+            cardArray.rotate(EAST);
+        }
+        String properCard = cardArray.charArrayToString();
         return null;
     }
 
@@ -55,9 +77,16 @@ public class PathwayCard { ;
         char[][] array = {row1, row2, row3};
         return new PathwayCard(array);
     };
-    public void rotate(Direction direction) {
 
-//        Square[][] rotatedCard = new Square[3][3];
+    public String charArrayToString() {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < tiles.length; i++) {
+            sb.append(tiles[i].toString());
+        }
+        return sb.toString();
+    }
+
+    public void rotate(Direction direction) {
 
         char[][] rotatedCard = new char[3][3];
 
