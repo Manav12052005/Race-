@@ -6,12 +6,12 @@ import static comp1110.ass2.FireTile.Direction.EAST;
 import static comp1110.ass2.FireTile.Direction.FLIP
 
 public class FireTile {
-    private Square.type[][] tiles; //Proper implementation
+    private char[][] tiles; //Proper implementation
 
     //private int[][] tiles; Made for testing
     private Boolean isHorizontal;
 
-    public FireTile(Square.type[][] tiles, boolean isHorizontal) {
+    public FireTile(char[][] tiles, boolean isHorizontal) {
         this.tiles = tiles;
         this.isHorizontal = isHorizontal;
     }
@@ -20,19 +20,19 @@ public class FireTile {
         EAST, WEST, FLIP
     }
 
-    public FireTile stringToFT(String string){
+    public FireTile actionStringToFT(String string){
         return null;
     }
 
     public void rotate(Direction direction) {
-        Square.type[][] rotatedTiles;
+        char[][] rotatedTiles;
         if (isHorizontal & direction != FLIP) {
-            rotatedTiles = new Square.type[4][3];
+            rotatedTiles = new char[4][3];
         } else if(!isHorizontal & direction != FLIP){
-            rotatedTiles = new Square.type[3][4];
+            rotatedTiles = new char[3][4];
         } else if(isHorizontal & direction == FLIP){
-            rotatedTiles = new Square.type[3][4];
-        } else {rotatedTiles = new Square.type[4][3];
+            rotatedTiles = new char[3][4];
+        } else {rotatedTiles = new char[4][3];
         }
 
         if (direction == Direction.WEST || direction == Direction.WEST) {
@@ -71,7 +71,7 @@ public class FireTile {
         return null;
         }
 
-    public Square.type[][] getTiles () {
+    public char[][] getTiles () {
         return tiles;
         }
 

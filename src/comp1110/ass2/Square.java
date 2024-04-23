@@ -96,7 +96,8 @@ public class Square extends ImageView {
             case 'Y' -> type.yellowCAT;
             case 'f' -> type.FIRE;
             case 'o', 'w', 'W' -> type.OBJECTIVE;
-            default -> type.NONE;
+            case 'N' -> type.NONE;
+            default -> throw new IllegalArgumentException("type char ID not valid");
         };
     }
 

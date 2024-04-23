@@ -191,10 +191,10 @@ public class RaceToTheRaft {
         String hand = gameState[2];
 
         if (placementString.charAt(0) == 'f') {//FireTile Placement
-            FireTile fireTile = new FireTile(placementString.stringToFT); // Create FireTile object
+            FireTile fireTile = new FireTile(placementString.actionStringToFT); // Create FireTile object
             board = fireTile.placeOnBoard(board); // Modify the board
         } else { //PathwayCard Placement
-            PathwayCard card = new PathwayCard(placementString.stringToPWC); // Create PathwayCard object
+            PathwayCard card = new PathwayCard(placementString.actionStringToPWC); // Create PathwayCard object
             board = card.placeOnBoard(board); // Modify the board
             hand = hand.replace(placementString.substring(0, 3), ""); // Remove card from hand
         }

@@ -1,35 +1,65 @@
 package comp1110.ass2;
 
+import java.nio.file.Path;
 import java.util.Random;
 import static comp1110.ass2.PathwayCard.Direction.EAST;
-import static comp1110.ass2.Square.type.*;
 
 
 public class PathwayCard { ;
-    private Square.type[][] tiles;
-
-    public PathwayCard(Square.type[][] tiles){
+    private char[][] tiles;
+    public PathwayCard(char[][] tiles){
         this.tiles = tiles;
     }
-    public Square.type[][] getTiles() {
+    public char[][] getTiles() {
         return tiles;
     }
 
     enum Direction{
         EAST, WEST
     }
-    public static PathwayCard stringToPWC(String string){
+    public static PathwayCard actionStringToPWC(String string){
         char deckID = string.charAt(0);
         char cardID = string.charAt(1);
-        int loc = Integer.parseInt(string.substring(2,5));
+        int xx = Integer.parseInt(string.substring(2,3));
+        int yy = Integer.parseInt(string.substring(4,5));
         char direction = string.charAt(6);
+        String[] deck;
+        deck = switch (deckID){
+            case 'A' -> Utility.DECK_A;
+            case 'B' -> Utility.DECK_B;
+            case 'C' -> Utility.DECK_C;
+            case 'D' -> Utility.DECK_D;
+            default -> throw new IllegalStateException("Unexpected DECK ID");
+        };
+        String card = cardFinder(deck, cardID);
+        PathwayCard cardArray = cardBuilder(card);
         return null;
     }
+
+    public static String cardFinder(String[] deck, char c){
+        for (String card : deck) {
+            if (card.charAt(0) == c) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public static PathwayCard cardBuilder(String string){
+        if (string.isEmpty()){
+            throw new IllegalArgumentException("card to cardBuilder is empty");
+        }
+        char[] row1 = {string.charAt(0), string.charAt(1), string.charAt(2)};
+        char[] row2 = {string.charAt(3), string.charAt(4), string.charAt(5)};
+        char[] row3 = {string.charAt(6), string.charAt(7), string.charAt(8)};
+        char[][] array = {row1, row2, row3};
+        return new PathwayCard(array);
+    };
     public void rotate(Direction direction) {
 
 //        Square[][] rotatedCard = new Square[3][3];
 
-        Square.type[][] rotatedCard = new Square.type[3][3];
+        char[][] rotatedCard = new char[3][3];
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

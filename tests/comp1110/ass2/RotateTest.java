@@ -12,56 +12,56 @@ public class RotateTest {
     //tests whether the FireTile and PathwayCard rotate functions works properly
     @Test
     void testRotateEastPC(){ //PathwayCard rotation east test
-        Square.type[][] sArray = new Square.type[][]{
-                {BLUE, RED, GREEN},
-                {YELLOW, PURPLE, RED},
-                {GREEN, YELLOW, PURPLE}
+        char[][] sArray = new char[][]{
+                {'b', 'r', 'g'},
+                {'y', 'p', 'r'},
+                {'g', 'y', 'p'}
         };
 
         PathwayCard wayCard = new PathwayCard(sArray);
         wayCard.rotate(EAST);
 
-        Square.type[][] expectedResult = new Square.type[][]{
-                {GREEN, YELLOW, BLUE},
-                {YELLOW, PURPLE, RED},
-                {PURPLE, RED, GREEN}
+        char[][] expectedResult = new char[][]{
+                {'g', 'y', 'b'},
+                {'y', 'p', 'r'},
+                {'p', 'r', 'g'}
         };
         Assertions.assertArrayEquals(expectedResult, wayCard.getTiles());
     }
     @Test
     void testRotateWestPC(){ //PathwayCard rotation west test
-        Square.type[][] sArray = new Square.type[][]{
-                {BLUE, RED, GREEN},
-                {YELLOW, PURPLE, RED},
-                {GREEN, YELLOW, PURPLE}
+        char[][] sArray = new char][]{
+                {'b', 'r', 'g'},
+                {'y', 'p', 'r'},
+                {'g', 'p', 'p'}
         };
 
         PathwayCard wayCard = new PathwayCard(sArray);
         wayCard.rotate(WEST);
 
-        Square.type[][] expectedResult = new Square.type[][]{
-                {GREEN, RED, PURPLE},
-                {RED, PURPLE, YELLOW},
-                {BLUE, YELLOW, GREEN}
+        char[][] expectedResult = new char[][]{
+                {'g', 'r', 'p'},
+                {'r', 'p', 'y'},
+                {'b', 'y', 'g'}
         };
         Assertions.assertArrayEquals(expectedResult, wayCard.getTiles());
     }
     @Test
     void testRotateEastFT() { //FireTile rotation east test
-        Square.type[][] sArray = new Square.type[][]{
-                {FIRE, FIRE, FIRE, NONE},
-                {NONE, FIRE, NONE, FIRE},
-                {FIRE, NONE, FIRE, NONE}
+        char[][] sArray = new char[][]{
+                {'f', 'f', 'f', 'N'},
+                {'f', 'f', 'N', 'f'},
+                {'f', 'N', 'f', 'N'}
         };
 
         FireTile fireTile = new FireTile(sArray, true);
         fireTile.rotate("east");
 
-        Square.type[][] expectedResult = new Square.type[][]{
-                {FIRE, NONE, FIRE},
-                {NONE, FIRE, FIRE},
-                {FIRE, NONE, FIRE},
-                {NONE, FIRE, NONE}
+        char[][] expectedResult = new char[][]{
+                {'f', 'N', 'f'},
+                {'N', 'f', 'f'},
+                {'f', 'N', 'f'},
+                {'N', 'f', 'N'}
         };
         boolean expectedIsHorizontal = false;
         Assertions.assertArrayEquals(expectedResult, fireTile.getTiles());
@@ -69,20 +69,20 @@ public class RotateTest {
     }
     @Test
     void testRotateWestFT() { //FireTile rotation west test
-        Square.type[][] sArray = new Square.type[][]{
-                {FIRE, FIRE, FIRE, FIRE},
-                {NONE, NONE, FIRE, NONE},
-                {FIRE, FIRE, FIRE, FIRE}
+        char[][] sArray = new char[][]{
+                {'f', 'f', 'f', 'f'},
+                {'N', 'N', 'f', 'N'},
+                {'f', 'f', 'f', 'f'}
         };
 
         FireTile fireTile = new FireTile(sArray, true);
         fireTile.rotate("west");
 
-        Square.type[][] expectedResult = new Square.type[][]{
-                {FIRE, NONE, FIRE},
-                {FIRE, FIRE, FIRE},
-                {FIRE, NONE, FIRE},
-                {FIRE, NONE, FIRE}
+        char[][] expectedResult = new char[][]{
+                {'f', 'N', 'f'},
+                {'f', 'f', 'f'},
+                {'f', 'N', 'f'},
+                {'f', 'N', 'f'}
         };
         boolean expectedIsHorizontal = false;
         Assertions.assertArrayEquals(expectedResult, fireTile.getTiles());
@@ -91,19 +91,19 @@ public class RotateTest {
 
     @Test
     void testRotateFlipFT() { //FireTile flip test
-        Square.type[][] sArray = new Square.type[][]{
-                {FIRE, NONE, FIRE, FIRE},
-                {NONE, NONE, NONE, FIRE},
-                {FIRE, FIRE, NONE, NONE}
+        char[][] sArray = new char[][]{
+                {'f', 'N', 'f', 'f'},
+                {'N', 'N', 'N', 'f'},
+                {'f', 'f', 'N', 'N'}
         };
 
         FireTile fireTile = new FireTile(sArray, true);
-        fireTile.rotate("flip");
+        fireTile.rotate(FireTile.Direction.FLIP);
 
-        Square.type[][] expectedResult = new Square.type[][]{
-                {FIRE, FIRE, NONE, FIRE},
-                {FIRE, NONE, NONE, NONE},
-                {NONE, NONE, FIRE, FIRE}
+        char[][] expectedResult = new char[][]{
+                {'f', 'f', 'N', 'f'},
+                {'f', 'N', 'N', 'N'},
+                {'N', 'N', 'f', 'f'}
         };
         boolean expectedIsHorizontal = false;
         Assertions.assertArrayEquals(expectedResult, fireTile.getTiles());
