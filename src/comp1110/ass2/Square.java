@@ -2,6 +2,8 @@ package comp1110.ass2;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+
 
 /**
  *determines the possible square conditions
@@ -11,15 +13,16 @@ import javafx.scene.image.ImageView;
  */
 public class Square extends ImageView {
     public static final double SQUARE_WIDTH = 40;
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
+    private double mouseX, mouseY;
     public enum type {
         BLUE, GREEN, PURPLE, RED, YELLOW,
         blueCAT, greenCAT, purpleCAT, redCAT, yellowCAT,
         FIRE, OBJECTIVE, WILD, wildOCCUPIED, NONE
     }
-    private type t;
-    private Image img;
+    private final type t;
+    private final Image img;
 
     public Square(double x, double y, char t) {
         this.x = x;
@@ -79,7 +82,39 @@ public class Square extends ImageView {
                 this.t = type.NONE;
                 img = null;
                 break;
-        };
+        }
+
+        setOnMousePressed((MouseEvent event) -> {
+            if (isCat()) {
+                mouseX = event.getSceneX();
+                mouseY = event.getSceneY();
+            }
+        });
+
+        setOnMouseDragged((MouseEvent event) -> {
+            if (isCat()) {
+                double deltaX = event.getSceneX() - mouseX;
+                double deltaY = event.getSceneY() - mouseY;
+                setLayoutX(getValueX() + deltaX);
+                setLayoutY(getValueY() + deltaY);
+            }
+        });
+
+//        setOnMouseReleased((MouseEvent event) -> {
+//            double newX = Math.round(getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
+//            double newY = Math.round(getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
+//            setLayoutX(newX);
+//            setLayoutY(newY);
+//        });
+
+        setOnMouseReleased((MouseEvent event) -> {
+            if (isCat()) {
+                double newX = Math.round((getLayoutX() + SQUARE_WIDTH / 2) / SQUARE_WIDTH) * SQUARE_WIDTH;
+                double newY = Math.round((getLayoutY() + SQUARE_WIDTH / 2) / SQUARE_WIDTH) * SQUARE_WIDTH;
+                setLayoutX(newX);
+                setLayoutY(newY);
+            }
+        });
     }
 
     public type getT() {
@@ -96,5 +131,9 @@ public class Square extends ImageView {
 
     public double getValueY() {
         return y;
+    }
+
+    private boolean isCat() {
+        return t == type.blueCAT || t == type.greenCAT || t == type.purpleCAT || t == type.redCAT || t == type.yellowCAT;
     }
 }
