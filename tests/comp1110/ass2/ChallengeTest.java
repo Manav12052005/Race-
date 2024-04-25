@@ -30,4 +30,32 @@ public class ChallengeTest {
         // Assert the expected name value
         assertEquals("First steps", challenge.getName());
     }
+
+    // Test parsing of island substring
+    @Test
+    void testGetIsland() {
+        // Assert the expected island substring
+        assertEquals("LNSNLASA", challenge.getIsland());
+    }
+
+    // Test parsing of fire substring
+    @Test
+    void testGetFireSubstring() {
+        // Assert the expected fire substring
+        assertEquals("000300060012001503030903", challenge.getFireSubstring());
+    }
+
+    // Test parsing of cat substring
+    @Test
+    void testGetCatSubstring() {
+        // Assert the expected cat substring
+        assertEquals("112033060340009", challenge.getCatSubstring());
+    }
+
+    // Test parsing of raft substring
+    @Test
+    void testGetRaftSubstring() {
+        // Assert the expected raft substring
+        assertEquals("01215", challenge.getRaftSubstring());
+    }
 }
