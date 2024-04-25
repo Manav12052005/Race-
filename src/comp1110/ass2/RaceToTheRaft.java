@@ -187,6 +187,22 @@ public class RaceToTheRaft {
      * @return the updated gameState array after this placement has been made
      */
     public static String[] applyPlacement(String[] gameState, String placementString) {
+        String board = gameState[0];
+        String hand = gameState[2];
+
+        if (placementString.charAt(0) == 'f') {//FireTile Placement
+            FireTile fireTile = new FireTile(placementString.actionStringToFT); // Create FireTile object
+            board = fireTile.placeOnBoard(board); // Modify the board
+        } else { //PathwayCard Placement
+            PathwayCard card = new PathwayCard(placementString.actionStringToPWC); // Create PathwayCard object
+            board = card.placeOnBoard(board); // Modify the board
+            hand = hand.replace(placementString.substring(0, 3), ""); // Remove card from hand
+        }
+
+        // Update gameState
+        gameState[0] = board;
+        gameState[2] = hand;
+        return gameState;
         return new String[0]; // FIXME TASK 8
     }
 

@@ -1,27 +1,98 @@
 package comp1110.ass2;
 
+import java.nio.file.Path;
 import java.util.Random;
+import static comp1110.ass2.PathwayCard.Direction.*;
 
-public class PathwayCard {
-//    the final implementation will be Square[][] but to test rotate we will use int[][].
-//    private Square[][] tiles;
-    private int[][] tiles;
 
-    public PathwayCard(int[][] tiles){
+public class PathwayCard { ;
+    private char[][] tiles;
+    public PathwayCard(char[][] tiles){
         this.tiles = tiles;
     }
-    public int[][] getTiles() {
+    public char[][] getTiles() {
         return tiles;
     }
-    public void rotate(String direction) {
 
-//        Square[][] rotatedCard = new Square[3][3];
+    enum Direction{
+        NORTH, EAST, SOUTH, WEST
+    }
 
-        int[][] rotatedCard = new int[3][3];
+    public static Direction charToDirection(char c){
+        switch(c){
+            case 'N' -> NORTH;
+            case 'E' -> EAST;
+            case 'S' -> SOUTH;
+            case 'W' -> WEST;
+            default -> throw new IllegalArgumentException("charToDirection input invalid");
+        }
+    }
+    public static PathwayCard actionStringToPWC(String string){
+        char deckID = string.charAt(0);
+        char cardID = string.charAt(1);
+        int xx = Integer.parseInt(string.substring(2,3));
+        int yy = Integer.parseInt(string.substring(4,5));
+        Direction direction = charToDirection(string.charAt(6));
+        String[] deck;
+        deck = switch (deckID){
+            case 'A' -> Utility.DECK_A;
+            case 'B' -> Utility.DECK_B;
+            case 'C' -> Utility.DECK_C;
+            case 'D' -> Utility.DECK_D;
+            default -> throw new IllegalStateException("Unexpected DECK ID");
+        };
+        String card = cardFinder(deck, cardID);
+        PathwayCard cardArray = cardBuilder(card);
+
+        if (direction == EAST){
+            cardArray.rotate(EAST);
+        }
+        if (direction == WEST){
+            cardArray.rotate(WEST);
+        }
+        if (direction == SOUTH) {
+            cardArray.rotate(EAST);
+            cardArray.rotate(EAST);
+        }
+        String properCard = cardArray.charArrayToString();
+        return null;
+    }
+
+    public static String cardFinder(String[] deck, char c){
+        for (String card : deck) {
+            if (card.charAt(0) == c) {
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public static PathwayCard cardBuilder(String string){
+        if (string.isEmpty()){
+            throw new IllegalArgumentException("card to cardBuilder is empty");
+        }
+        char[] row1 = {string.charAt(0), string.charAt(1), string.charAt(2)};
+        char[] row2 = {string.charAt(3), string.charAt(4), string.charAt(5)};
+        char[] row3 = {string.charAt(6), string.charAt(7), string.charAt(8)};
+        char[][] array = {row1, row2, row3};
+        return new PathwayCard(array);
+    };
+
+    public String charArrayToString() {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < tiles.length; i++) {
+            sb.append(tiles[i].toString());
+        }
+        return sb.toString();
+    }
+
+    public void rotate(Direction direction) {
+
+        char[][] rotatedCard = new char[3][3];
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (direction.equals("east")) {
+                if (direction.equals(EAST)) {
                     // Rotate card 90 degrees clockwise
                     rotatedCard[j][2 - i] = tiles[i][j];
                 } else {
