@@ -39,6 +39,7 @@ public class Viewer extends Application {
         // Draw the game board with given boardstate string
         Board board = new Board(boardstate);
         DrawBoard.setLayoutX(VIEWER_WIDTH - 18 * SQUARE_WIDTH);
+//        DrawBoard.setLayoutX(300);
         DrawBoard.setLayoutY(0);
         DrawBoard.getChildren().clear();
         for (Square square : board.getSquares()) {
