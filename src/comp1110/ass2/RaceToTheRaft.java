@@ -3,8 +3,9 @@ package comp1110.ass2;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static comp1110.ass2.FireTile.pickFire;
-import static comp1110.ass2.PathwayCard.cardPickUp;
+import static comp1110.ass2.Board.*;
+import static comp1110.ass2.FireTile.*;
+import static comp1110.ass2.PathwayCard.*;
 
 /**
  * This class is for testing purposes only. You should create and use your own objects to solve the tasks below
@@ -191,19 +192,20 @@ public class RaceToTheRaft {
         String hand = gameState[2];
 
         if (placementString.charAt(0) == 'f') {//FireTile Placement
-            FireTile fireTile = new FireTile(placementString.actionStringToFT); // Create FireTile object
-            board = fireTile.placeOnBoard(board); // Modify the board
+            FireTile fireTile = actionStringToFT(placementString); // Create FireTile object
+            int[] loc = new int[]{Integer.parseInt(placementString.substring(1,2)),
+                    Integer.parseInt(placementString.substring(3,4))};
+            board = fireTile.placeOnBoard(fireTile, charBoard(board), loc); // Modify the board
         } else { //PathwayCard Placement
-            PathwayCard card = new PathwayCard(placementString.actionStringToPWC); // Create PathwayCard object
-            board = card.placeOnBoard(board); // Modify the board
+            PathwayCard card = actionStringToPWC(placementString); // Create PathwayCard object
+            board = placeOnBoard(card, charBoard(board)); // Modify the board
             hand = hand.replace(placementString.substring(0, 3), ""); // Remove card from hand
         }
 
         // Update gameState
         gameState[0] = board;
         gameState[2] = hand;
-        return gameState;
-        return new String[0]; // FIXME TASK 8
+        return gameState;// FIXME TASK 8
     }
 
     /**
