@@ -3,7 +3,6 @@ package comp1110.ass2;
 import java.util.Random;
 
 import static comp1110.ass2.Board.charBoardToString;
-import static comp1110.ass2.FireTile.rotate;
 import static comp1110.ass2.PathwayCard.Direction.*;
 
 public class FireTile {
