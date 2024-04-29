@@ -120,7 +120,7 @@ public class Viewer extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Race to the Raft Viewer");
+        stage.setTitle("Race to the Raft Game - Group Mon15A3");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
         makeControls();
         displayState("""
