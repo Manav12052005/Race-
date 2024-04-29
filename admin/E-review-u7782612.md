@@ -14,7 +14,7 @@ Best Features:
 
 Documentation:
 
-- The code should have comments for methods to explain the function of the code snippet which it is lacking.
+- The code should have comments for methods to explain the function of the code snippet which it is lacking in pretty much the whole class.
 
 Conventions:
 - The code is properly structured with appropriate indentations.
@@ -22,7 +22,7 @@ Conventions:
 
 Code improvement suggestions:
 - Using constants for the image file path, to make the code more readable, a constructor file that uses constants instead of hardcoding the file path url may be more appropriate here.
-- Handling errors when loading image files can be useful in displaying error images and pinpointing the position of the error
+- Handling errors when loading image files can be useful in displaying error images and pinpointing the position of the error. This will help in unknown files being loaded on to the game page.
 
 
 
