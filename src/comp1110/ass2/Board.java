@@ -26,4 +26,26 @@ public class Board {
     public ArrayList<Square> getSquares() {
         return squares;
     }
+
+
+    public static char[][] charBoard(String boardGameState) { // A simple character representation of board
+        String[] lines = boardGameState.split("\n");
+        int rows = lines.length;
+        int cols = lines[0].length();
+        char[][] tiles = new char[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            tiles[i] = lines[i].toCharArray();
+        }
+        return tiles;
+    }
+    public static String charBoardToString(char[][] tiles) {
+        StringBuilder boardString = new StringBuilder();
+        for (int i = 0; i < tiles.length; i++) {
+            boardString.append(new String(tiles[i]));
+            if (i < tiles.length - 1) {
+                boardString.append("\n");
+            }
+        }
+        return boardString.toString();
+    }
 }

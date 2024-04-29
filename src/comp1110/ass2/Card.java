@@ -22,7 +22,7 @@ public class Card extends ImageView {
             double x = (i % 3) * SQUARE_WIDTH;
             double y = (i / 3) * SQUARE_WIDTH;
             Square current = new Square(x, y, chars[i]);
-            System.out.println(chars[i]);
+//            System.out.println(chars[i]);
             card.add(current);
         }
 

@@ -1,95 +1,150 @@
 package comp1110.ass2;
 
 public class Challenge {
+
     private int difficulty;
     private String name;
 
-    public Challenge(String challengeString) {
-        // Set difficulty and name based on the challengeString
-        if (challengeString.startsWith("LNSNLASAF000300060012001503030903C112033060340009R01215")) {
-            this.difficulty = 0;
-            this.name = "First steps";
-        } else if (challengeString.startsWith("LNSNLASAF000300090015030309031203C106033000650012R11215")) {
-            this.difficulty = 0;
-            this.name = "Ancient trail";
-        } else if (challengeString.startsWith("LNSNLASAF000300060012001506030903C000093030341203R11215")) {
-            this.difficulty = 0;
-            this.name = "Crossed paths";
-        } else if (challengeString.startsWith("LNSNLASAF00030006001203030903C00015100091120350603R21215")) {
-            this.difficulty = 0;
-            this.name = "Down the river";
+    private String island;
+    private String fireSubstring;
+    private String catSubstring;
+    private String raftSubstring;
+    // Add constants or enums for challenge identifiers
+    private enum ChallengeId {
+        FIRST_STEPS("LNSNLASAF000300060012001503030903C112033060340009R01215", "First steps"),
+        ANCIENT_TRAIL("LNSNLASAF000300090015030309031203C106033000650012R11215", "Ancient trail"),
+        CROSSED_PATHS("LNSNLASAF000300060012001506030903C000093030341203R11215", "Crossed paths"),
+        DOWN_THE_RIVER("LNSNLASAF00030006001203030903C00015100091120350603R21215", "Down the river"),
+        EARLY_MORNING("SNSNSASAF00030015C00006000094030350012R30909", "Early morning"),
+        THE_PROTECTOR("SASASASAF0009001203000600C10006300154000050900R10915", "The protector"),
+        WET_PAWS("SNSNSASAF000300060012C00303100094090350015R30915", "Wet paws"),
+        MIND_THE_GAP("SNSASASAF000600090012C10015306004000350900R10915", "Mind the gap"),
+        WAITING_FOR_FRIENDS("LASALASAF000000030009001503000900C00012312004060050006R20915", "Waiting for friends"),
+        IN_THE_WAY("LNSNLASAF0003000600120903120312061215C00303100094001551212R10915", "In the way"),
+        THE_OLD_TERUVIAN("LNSALASAF000300090015C00012100061120050900R20915", "The old Teruvian"),
+        LIKE_A_RAINBOW("LNSNLASAF0003000600090303C0060311203303064001250015R11215", "Like a rainbow"),
+        CLOSING_IN("LESALESAF1200120912121215C109003060040300R10615", "Closing in"),
+        FUSSY_CATS("SNSASASAF0003000600090015C109003001240600R20315", "Fussy cats"),
+        RIVER_RAFTS("LNSNLASAF0003000600090303090309121215C0001211203309153121240015R00603", "River rafts"),
+        ME_FIRST("LASNLASAF00000003000903000909C30006300154001250600R31209", "Me first!"),
+        DOWN_IN_THE_VALLEY("SNSNSASAF0003000903030903C00006100153060340012R30906", "Down in the valley"),
+        NARROW_SPACES("SNSNSASAFC1000930003300154000650012R30909", "Narrow spaces"),
+        TRICKY_WATERS("LNSNLASAF000300060009001203030903C00912100151060351203R21215", "Tricky waters"),
+        ALL_OVER_THE_PLACE("SNSNSASAF00030009001503030915C10012306034000650903R10615", "All over the place"),
+        STUCK_IN_THE_FOREST("SNSNSASAF00030006000906030915C00015109033001240303R10912", "Stuck in the forest"),
+        MEET_THE_TWINS("SNSNSASAF000300150303C0000600009300123090340603R30912", "Meet the twins"),
+        BURNING_TREES("LESNLASAF00090015060009060909C01209103003001251212R20615", "Burning trees"),
+        YANNAS_CHILDREN("LNSNLASAF00030006000903030603C00012200153090351203R11215", "Yanna's children"),
+        RUNNING_INTO_FIRE("LALAF1500C000032000630000R11506", "Running into fire"),
+        HOT_SANDS("LNSNLASAF000300060012001503030312060306121203C109033120640009R20315", "Hot sands"),
+        CLEAR_THE_WAY("LASAFC100003000640003R20906", "Clear the way"),
+        RUNNING_IN_CIRCLES("LNSNLASSF00030006001203031203C00009106033001540903R11212", "Running in circles"),
+        EVERYONE_IS_WELCOME("LNSNLSSSF000600121212C0120920003303064031251206R00009", "Everyone is welcome"),
+        SWITCH_PLACES("LASNLASAF00000003000903000909C30006300154060050012R31209", "Switch places"),
+        KEEPING_A_BALANCE("LASNLESAF0000000603001203C000030031530309309094060950600R31209", "Keeping a balance"),
+        AROUND_THE_ISLAND("LNSNLSSSF0003000609091212C000093091250012R31209", "Around the island"),
+        IN_THE_WRONG_PLACE("LNSNLNSAFC1090330003300154000660012R31209", "In the wrong place"),
+        DRAWING_STRAWS("SASNSNSAF0000001206090903C2000630300R20015", "Drawing straws"),
+        MIXED_MESSAGES("SNSNSASAF00030009060309030915C10303300124000650015R30912", "Mixed messages"),
+        STRAIGHT_DASH("LESALASAF001200151200120912121215C00600100093030041203R20615", "Straight dash"),
+        ITS_MEOW_OR_NEVER("LNSNLASAF000300060012001503030603061212031206C100093031240903R20315", "It's meow or never"),
+        DOWN_THE_WATERFALL("LNSNLASAF0003000900150303030903150603090312091215C100122000661203R01212", "Down the waterfall"),
+        BURNING_TAILS("LNSNLASAF00030006030306030606060909030906C000123000940015R31203", "Burning tails");
+
+        private final String challengeString;
+        private final String name;
+
+        ChallengeId(String challengeString, String name) {
+            this.challengeString = challengeString;
+            this.name = name;
         }
-        // Add cases for difficulty 1 challenges
-        else if (challengeString.startsWith("SNSNSASAF00030015C00006000094030350012R30909")) {
-            this.difficulty = 1;
-            this.name = "Early morning";
-        } else if (challengeString.startsWith("SASASASAF0009001203000600C10006300154000050900R10915")) {
-            this.difficulty = 1;
-            this.name = "The protector";
-        } else if (challengeString.startsWith("SNSNSASAF000300060012C00303100094090350015R30915")) {
-            this.difficulty = 1;
-            this.name = "Wet paws";
-        } else if (challengeString.startsWith("SNSASASAF000600090012C10015306004000350900R10915")) {
-            this.difficulty = 1;
-            this.name = "Mind the gap";
+
+        public String getChallengeString() {
+            return challengeString;
         }
-        // Add cases for difficulty 2 challenges
-        else if (challengeString.startsWith("LASALASAF000000030009001503000900C00012312004060050006R20915")) {
-            this.difficulty = 2;
-            this.name = "Waiting for friends";
-        } else if (challengeString.startsWith("LNSNLASAF0003000600120903120312061215C00303100094001551212R10915")) {
-            this.difficulty = 2;
-            this.name = "In the way";
-        } else if (challengeString.startsWith("LNSALASAF000300090015C00012100061120050900R20915")) {
-            this.difficulty = 2;
-            this.name = "The old Teruvian";
-        } else if (challengeString.startsWith("LNSNLASAF0003000600090303C0060311203303064001250015R11215")) {
-            this.difficulty = 2;
-            this.name = "Like a rainbow";
-        }
-        // Add cases for difficulty 3 challenges
-        else if (challengeString.startsWith("SNSNSASAF0003000903030903C00006100153060340012R30906")) {
-            this.difficulty = 3;
-            this.name = "Down in the valley";
-        } else if (challengeString.startsWith("SNSNSASAFC1000930003300154000650012R30909")) {
-            this.difficulty = 3;
-            this.name = "Narrow spaces";
-        } else if (challengeString.startsWith("LNSNLASAF000300060009001203030903C00912100151060351203R21215")) {
-            this.difficulty = 3;
-            this.name = "Tricky waters";
-        } else if (challengeString.startsWith("SNSNSASAF00030009001503030915C10012306034000650903R10615")) {
-            this.difficulty = 3;
-            this.name = "All over the place";
-        }
-        // Add cases for difficulty 4 challenges
-        else if (challengeString.startsWith("LALAF1500C000032000630000R11506")) {
-            this.difficulty = 4;
-            this.name = "Running into fire";
-        } else if (challengeString.startsWith("LNSNLASAF000300060012001503030312060306121203C109033120640009R20315")) {
-            this.difficulty = 4;
-            this.name = "Hot sands";
-        } else if (challengeString.startsWith("LASAFC100003000640003R20906")) {
-            this.difficulty = 4;
-            this.name = "Clear the way";
-        } else if (challengeString.startsWith("LNSNLASSF00030006001203031203C00009106033001540903R11212")) {
-            this.difficulty = 4;
-            this.name = "Running in circles";
-        }
-        // Add cases for difficulty 5 challenges
-        else if (challengeString.startsWith("LNSNLNSAFC1090330003300154000660012R31209")) {
-            this.difficulty = 5;
-            this.name = "In the wrong place";
-        } else if (challengeString.startsWith("SASNSNSAF0000001206090903C2000630300R20015")) {
-            this.difficulty = 5;
-            this.name = "Drawing straws";
-        } else if (challengeString.startsWith("SNSNSASAF00030009060309030915C10303300124000650015R30912")) {
-            this.difficulty = 5;
-            this.name = "Mixed messages";
-        } else if (challengeString.startsWith("LESALASAF001200151200120912121215C00600100093030041203R20615")) {
-            this.difficulty = 5;
-            this.name = "Straight dash";
+
+        public String getName() {
+            return name;
         }
     }
+
+    // Constructor that initializes difficulty and name based on challengeString
+    public Challenge(String challengeString) {
+        for (ChallengeId challengeId : ChallengeId.values()) {
+            if (challengeString.startsWith(challengeId.getChallengeString())) {
+                this.difficulty = getDifficultyFromChallengeId(challengeId);
+                this.name = challengeId.getName();
+                parseChallengeString(challengeString);
+                break;
+            }
+        }
+    }
+
+    // Helper method to map ChallengeId to difficulty level
+    private int getDifficultyFromChallengeId(ChallengeId challengeId) {
+        // Implement logic to map challenge ID to difficulty level
+        if (challengeId == ChallengeId.FIRST_STEPS ||
+                challengeId == ChallengeId.ANCIENT_TRAIL ||
+                challengeId == ChallengeId.CROSSED_PATHS ||
+                challengeId == ChallengeId.DOWN_THE_RIVER) {
+            return 0;
+        } else if (challengeId == ChallengeId.EARLY_MORNING ||
+                challengeId == ChallengeId.THE_PROTECTOR ||
+                challengeId == ChallengeId.WET_PAWS ||
+                challengeId == ChallengeId.MIND_THE_GAP) {
+            return 1;
+        } else if (challengeId == ChallengeId.WAITING_FOR_FRIENDS ||
+                challengeId == ChallengeId.IN_THE_WAY ||
+                challengeId == ChallengeId.THE_OLD_TERUVIAN ||
+                challengeId == ChallengeId.LIKE_A_RAINBOW ||
+                challengeId == ChallengeId.CLOSING_IN ||
+                challengeId == ChallengeId.FUSSY_CATS ||
+                challengeId == ChallengeId.RIVER_RAFTS ||
+                challengeId == ChallengeId.ME_FIRST) {
+            return 2;
+        } else if (challengeId == ChallengeId.DOWN_IN_THE_VALLEY ||
+                challengeId == ChallengeId.NARROW_SPACES ||
+                challengeId == ChallengeId.TRICKY_WATERS ||
+                challengeId == ChallengeId.ALL_OVER_THE_PLACE ||
+                challengeId == ChallengeId.STUCK_IN_THE_FOREST ||
+                challengeId == ChallengeId.MEET_THE_TWINS ||
+                challengeId == ChallengeId.BURNING_TREES ||
+                challengeId == ChallengeId.YANNAS_CHILDREN) {
+            return 3;
+        } else if (challengeId == ChallengeId.RUNNING_INTO_FIRE ||
+                challengeId == ChallengeId.HOT_SANDS ||
+                challengeId == ChallengeId.CLEAR_THE_WAY ||
+                challengeId == ChallengeId.RUNNING_IN_CIRCLES ||
+                challengeId == ChallengeId.EVERYONE_IS_WELCOME ||
+                challengeId == ChallengeId.SWITCH_PLACES ||
+                challengeId == ChallengeId.KEEPING_A_BALANCE ||
+                challengeId == ChallengeId.AROUND_THE_ISLAND) {
+            return 4;
+        } else if (challengeId == ChallengeId.IN_THE_WRONG_PLACE ||
+                challengeId == ChallengeId.DRAWING_STRAWS ||
+                challengeId == ChallengeId.MIXED_MESSAGES ||
+                challengeId == ChallengeId.STRAIGHT_DASH ||
+                challengeId == ChallengeId.ITS_MEOW_OR_NEVER ||
+                challengeId == ChallengeId.DOWN_THE_WATERFALL ||
+                challengeId == ChallengeId.BURNING_TAILS) {
+            return 5;
+        }
+        return -1; // Default difficulty level if no match found
+    }
+
+    // Helper method to parse challenge string into substrings
+    private void parseChallengeString(String challengeString) {
+        int indexF = challengeString.indexOf('F');
+        int indexC = challengeString.indexOf('C');
+        int indexR = challengeString.indexOf('R');
+
+        // Extract substrings based on delimiter positions
+        this.island = challengeString.substring(0, indexF);
+        this.fireSubstring = challengeString.substring(indexF + 1, indexC);
+        this.catSubstring = challengeString.substring(indexC + 1, indexR);
+        this.raftSubstring = challengeString.substring(indexR + 1);
+    }
+
 
     public int getDifficulty() {
         return difficulty;
@@ -97,5 +152,32 @@ public class Challenge {
 
     public String getName() {
         return name;
+    }
+
+    public String getIsland() {
+        return island;
+    }
+
+    public String getFireSubstring() {
+        return fireSubstring;
+    }
+
+    public String getCatSubstring() {
+        return catSubstring;
+    }
+
+    public String getRaftSubstring() {
+        return raftSubstring;
+    }
+
+    public static void main(String[] args) {
+        // Example usage to create a Challenge object and access its substrings
+        String challengeString = "LNSNLASAF000300060012001503030903C112033060340009R01215"; // Example challenge string
+        Challenge challenge = new Challenge(challengeString);
+
+        System.out.println("Island: " + challenge.getIsland());
+        System.out.println("Fire Substring: " + challenge.getFireSubstring());
+        System.out.println("Cat Substring: " + challenge.getCatSubstring());
+        System.out.println("Raft Substring: " + challenge.getRaftSubstring());
     }
 }
