@@ -121,7 +121,7 @@ public class FireTile {
         } else {rotatedTiles = new char[dim[1]][dim[0]];
         }
 
-        if (direction == WEST || direction == WEST) {
+        if (direction == WEST || direction == EAST) {
             for (int i = 0; i < tiles.length; i++) {
                 for (int j = 0; j < tiles[i].length; j++) {
                     if (direction.equals(EAST)) { // rotate 90 degrees clockwise
