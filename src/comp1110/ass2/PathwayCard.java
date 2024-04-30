@@ -46,15 +46,16 @@ public class PathwayCard { ;
         };
         String card = cardFinder(deck, cardID);
         char[][] cardArray = cardBuilder(card);
+        PathwayCard wayCard = new PathwayCard(cardArray, xy);
         if (direction == EAST){
-            rotate(cardArray, EAST);
+            wayCard.rotate(EAST);
         }
         if (direction == WEST){
-            rotate(cardArray, WEST);
+            wayCard.rotate(WEST);
         }
         if (direction == SOUTH) {
-            rotate(cardArray, EAST);
-            rotate(cardArray, EAST);
+            wayCard.rotate(EAST);
+            wayCard.rotate(EAST);
         }
         return new PathwayCard(cardArray, xy);
     }
@@ -97,22 +98,22 @@ public class PathwayCard { ;
         return sb.toString();
     }
 
-    public static void rotate(char[][] card, Direction direction) {
+    public void rotate(Direction direction) {
 
         char[][] rotatedCard = new char[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (direction.equals(EAST)) {
                     // Rotate card 90 degrees clockwise
-                    rotatedCard[j][2 - i] = card[i][j];
+                    rotatedCard[j][2 - i] = tiles[i][j];
                 } else {
                     // Rotate card 90 degrees counter-clockwise
-                    rotatedCard[2 - j][i] = card[i][j];
+                    rotatedCard[2 - j][i] = tiles[i][j];
                 }
             }
         }
 
-        card = rotatedCard; // Update the card's tiles
+        tiles = rotatedCard; // Update the card's tiles
     }
     public static String[] cardPickUp(String decks, String hand, String drawRequest) {
 

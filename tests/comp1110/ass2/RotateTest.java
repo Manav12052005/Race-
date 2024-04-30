@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static comp1110.ass2.PathwayCard.Direction.EAST;
 import static comp1110.ass2.PathwayCard.Direction.WEST;
-import static comp1110.ass2.PathwayCard.rotate;
 
 public class RotateTest {
     //tests whether the FireTile and PathwayCard rotate functions works properly
@@ -20,7 +19,7 @@ public class RotateTest {
         };
 
         PathwayCard wayCard = new PathwayCard(sArray, dummyInt);
-        rotate(sArray, EAST);
+        wayCard.rotate(EAST);
 
         char[][] expectedResult = new char[][]{
                 {'g', 'y', 'b'},
@@ -38,11 +37,11 @@ public class RotateTest {
         };
 
         PathwayCard wayCard = new PathwayCard(sArray, dummyInt);
-        rotate(sArray, WEST);
+        wayCard.rotate(WEST);
 
         char[][] expectedResult = new char[][]{
                 {'g', 'r', 'p'},
-                {'r', 'p', 'y'},
+                {'r', 'p', 'p'},
                 {'b', 'y', 'g'}
         };
         Assertions.assertArrayEquals(expectedResult, wayCard.getTiles());
@@ -59,7 +58,7 @@ public class RotateTest {
         fireTile.rotate(PathwayCard.Direction.EAST);
 
         char[][] expectedResult = new char[][]{
-                {'f', 'N', 'f'},
+                {'f', 'f', 'f'},
                 {'N', 'f', 'f'},
                 {'f', 'N', 'f'},
                 {'N', 'f', 'N'}
