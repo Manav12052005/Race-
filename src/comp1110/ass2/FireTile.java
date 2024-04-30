@@ -4,6 +4,7 @@ import java.util.Random;
 
 import static comp1110.ass2.Board.charBoardToString;
 import static comp1110.ass2.PathwayCard.Direction.*;
+import static comp1110.ass2.PathwayCard.extractSubBoard;
 
 public class FireTile {
     private char[][] tiles; // char representation array
@@ -138,9 +139,72 @@ public class FireTile {
         isHorizontal = !isHorizontal;
     }
 
-    public boolean isEmpty (String thing){
-            return thing == "";
+    public static boolean isOverlappingFireFT(char[][] board, char[][] tile, int x, int y){
+        char[][] subBoard = extractSubBoard(board, tile, x, y);
+        for (int row = 0; row < subBoard.length; row++) {
+            for (int col = 0; col < subBoard[row].length; col++) {
+                if (subBoard[row][col] == 'f' && tile[row][col] == 'f') {
+                    return true; // 'f' found at the same index
+                }
+            }
         }
+        return false;
+    }
+    public static boolean isOverlappingCatFT(char[][] board, char[][] tile, int x, int y){
+        char[][] subBoard = extractSubBoard(board, tile, x, y);
+        for (int row = 0; row < subBoard.length; row++) {
+            for (int col = 0; col < subBoard[row].length; col++) {
+                if (Character.isUpperCase(subBoard[row][col]) && tile[row][col] == 'f') {
+                    return true; // 'f' found at the same index
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean isOverlappingRaftFT(char[][] board, char[][] tile, int x, int y){
+        char[][] subBoard = extractSubBoard(board, tile, x, y);
+        for (int row = 0; row < subBoard.length; row++) {
+            for (int col = 0; col < subBoard[row].length; col++) {
+                if (subBoard[row][col] == 'o' && tile[row][col] == 'f') {
+                    return true; // 'f' found at the same index
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean isAdjacentToFire(char[][] board, char[][] tile, int x, int y){
+        int cardRows = tile.length;
+        int cardCols = tile[0].length;
+
+        char[][] tempBoard = new char[cardRows][cardCols];
+        for (int row = 0; row < cardRows; row++) {
+            System.arraycopy(board[y + row], x, tempBoard[row], 0, cardCols);
+        }
+        for (int row = 0; row < cardRows; row++) {
+            for (int col = 0; col < cardCols; col++) {
+                    tempBoard[row][col] = tile[row][col];
+                }
+            }
+        int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        for (int row = 0; row < cardRows; row++) {
+            for (int col = 0; col < cardCols; col++) {
+                if (tempBoard[row][col] == 'f') {
+                    for (int[] offset : offsets) {
+                        int adjRow = row + offset[0];
+                        int adjCol = col + offset[1];
+
+                        if (adjRow >= 0 && adjRow < cardRows &&
+                                adjCol >= 0 && adjCol < cardCols &&
+                                tempBoard[adjRow][adjCol] == 'f') {
+                            return true; //
+                        }
+                    }
+                }
+            }
+        }
+
+        return false; //
+    }
 
     public static String pickFire (String stringBag){
         Random random = new Random();

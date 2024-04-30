@@ -264,8 +264,30 @@ public class RaceToTheRaft {
      * @return True if the placement is valid, otherwise false.
      */
     public static boolean isPlacementValid(String[] gameState, String placementString) {
-        return false; // FIXME TASK 12
-    }
+        int x = Integer.parseInt(placementString.substring(1, 2));
+        int y = Integer.parseInt(placementString.substring(3, 4));
+
+        // 3. Create Tile Representation
+        char[][] tile;
+        char[][] board = charBoard(gameState[0]);
+        if (placementString.charAt(0) == 'f') {
+            FireTile fireTile = FireTile.actionStringToFT(placementString);
+            tile = fireTile.getTiles();
+            return isOffBoard(board, tile, x, y) ||
+                    isOverlappingFireFT(board, tile, x, y) ||
+                    isOverlappingCatFT(board, tile, x, y) ||
+                    isOverlappingRaftFT(board, tile, x, y) ||
+                    !isAdjacentToFire(board, tile, x, y);
+        } else {
+            PathwayCard card = PathwayCard.actionStringToPWC(placementString);
+            tile = card.getTiles();
+            return isOffBoard(board, tile, x, y) ||
+                    isOverlappingFirePWC(board, tile, x, y) ||
+                    isOverlappingCatPWC(board, tile, x, y) ||
+                    isOverlappingRaftPWC(board, tile, x, y);
+        }
+
+    } // FIXME TASK 12
 
     /**
      * Given a cat movement string, check if the cat movement is valid.

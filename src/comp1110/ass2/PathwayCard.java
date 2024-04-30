@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import static comp1110.ass2.Board.charBoardToString;
@@ -90,14 +91,6 @@ public class PathwayCard { ;
         return new char[][]{row1, row2, row3};
     };
 
-    public String charArrayToString() {
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < tiles.length; i++) {
-            sb.append(tiles[i].toString());
-        }
-        return sb.toString();
-    }
-
     public void rotate(Direction direction) {
 
         char[][] rotatedCard = new char[3][3];
@@ -114,6 +107,69 @@ public class PathwayCard { ;
         }
 
         tiles = rotatedCard; // Update the card's tiles
+    }
+
+    public static boolean isOffBoard(char[][] board, char[][] tile, int x, int y){
+        if(board.length - y > tile.length || board[0].length - x > tile[0].length){
+            return true;
+        }
+        return false;
+    }
+    public static boolean isOverlappingFirePWC(char[][] board, char[][] card, int x, int y){
+        char[][] subBoard = extractSubBoard(board, card, x, y);
+        for (char[] chars : subBoard) {
+            for (char aChar : chars) {
+                if (aChar == 'f') {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean isOverlappingCatPWC(char[][] board, char[][] card, int x, int y){
+        char[][] subBoard = extractSubBoard(board, card, x, y);
+        for (char[] chars : subBoard) {
+            for (char aChar : chars) {
+                if (Character.isUpperCase(aChar)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public static boolean isOverlappingRaftPWC(char[][] board, char[][] card, int x, int y){
+        char[][] subBoard = extractSubBoard(board, card, x, y);
+        for (char[] chars : subBoard) {
+            for (char aChar : chars) {
+                if (aChar == 'o') {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static char[][] extractSubBoard(char[][] board, char[][] card, int x, int y) {
+        // Get dimensions of the smaller card
+        int cardRows = card.length;
+        int cardCols = card[0].length;
+
+        // Create a new char array to hold the extracted sub-board
+        char[][] subBoard = new char[cardRows][cardCols];
+
+        // Iterate through the sub-board area
+        for (int row = 0; row < cardRows; row++) {
+            for (int col = 0; col < cardCols; col++) {
+                // Calculate the corresponding index in the larger board
+                int boardRow = y + row;
+                int boardCol = x + col;
+
+                // Extract the character from the larger board
+                subBoard[row][col] = board[boardRow][boardCol];
+            }
+        }
+
+        return subBoard;
     }
     public static String[] cardPickUp(String decks, String hand, String drawRequest) {
 
