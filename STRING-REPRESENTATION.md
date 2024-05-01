@@ -48,7 +48,6 @@ Note that the newlines are a vital part of the string. Each line of text represe
  ffffffbrrrybgygybg
  ffffffgpbbyrprgbbp
  ffffffbyrbpybgpryg
- ffffffbyrbpybgpryg
  ffffffpgyrggrbgyby
  fffffybgbpryybpgyp
  ffffYyybpgbprygrow

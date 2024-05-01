@@ -316,9 +316,7 @@ public class RaceToTheRaft {
      * 2. If placing this fire tile makes it impossible for any one cat to reach the raft (the game is lost).
      * <p>
      * Cat movement:
-     * 1. If after moving this cat, there are greater than or equal to 4 cards in the disaster pile and there are
-     * no more file tiles left in the bag (the game is lost).
-     * 2. If after moving this cat, all cats have safely reached the raft (the game is won).
+     * 1. If after moving this cat, all cats have safely reached the raft (the game is won).
      * <p>
      * Card placement:
      * 1. If after placing this card, there are no more fire tiles left in the bag (the game is lost).
