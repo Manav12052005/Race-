@@ -14,15 +14,6 @@ public class DrawFireTileTest {
         return (id >= 'a' && id <= 'z') || (id >= 'A' && id <= 'E');
     }
 
-    private boolean areLegitCoordinates(String coordinates) {
-        // Has to be even-length
-        if (coordinates.length() % 2 == 1) return false;
-        for (int i = 0; i < coordinates.length(); i++) {
-            // Every character must be a digit
-            if (!Character.isDigit(coordinates.charAt(i))) return false;
-        }
-        return true;
-    }
 
     private boolean comesFromBag(char id, String bag) {
         return bag.contains(String.valueOf(id));
@@ -30,9 +21,7 @@ public class DrawFireTileTest {
 
     private void testIsFireTile(String fireTile, String bag) {
         char id = fireTile.charAt(0);
-        // String coordinates = fireTile.substring(1);
         Assertions.assertTrue(isLegitID(id));
-        // Assertions.assertTrue(areLegitCoordinates(coordinates));
         Assertions.assertTrue(comesFromBag(id, bag));
     }
 
