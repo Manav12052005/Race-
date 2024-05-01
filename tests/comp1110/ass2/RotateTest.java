@@ -1,15 +1,15 @@
 package comp1110.ass2;
 
-import gittest.B;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static comp1110.ass2.PathwayCard.Direction.EAST;
 import static comp1110.ass2.PathwayCard.Direction.WEST;
-import static comp1110.ass2.Square.type.*;
 
 public class RotateTest {
     //tests whether the FireTile and PathwayCard rotate functions works properly
+
+    int[] dummyInt = new int[]{0, 0};
     @Test
     void testRotateEastPC(){ //PathwayCard rotation east test
         char[][] sArray = new char[][]{
@@ -18,7 +18,7 @@ public class RotateTest {
                 {'g', 'y', 'p'}
         };
 
-        PathwayCard wayCard = new PathwayCard(sArray);
+        PathwayCard wayCard = new PathwayCard(sArray, dummyInt);
         wayCard.rotate(EAST);
 
         char[][] expectedResult = new char[][]{
@@ -30,18 +30,18 @@ public class RotateTest {
     }
     @Test
     void testRotateWestPC(){ //PathwayCard rotation west test
-        char[][] sArray = new char][]{
+        char[][] sArray = new char[][]{
                 {'b', 'r', 'g'},
                 {'y', 'p', 'r'},
                 {'g', 'p', 'p'}
         };
 
-        PathwayCard wayCard = new PathwayCard(sArray);
+        PathwayCard wayCard = new PathwayCard(sArray, dummyInt);
         wayCard.rotate(WEST);
 
         char[][] expectedResult = new char[][]{
                 {'g', 'r', 'p'},
-                {'r', 'p', 'y'},
+                {'r', 'p', 'p'},
                 {'b', 'y', 'g'}
         };
         Assertions.assertArrayEquals(expectedResult, wayCard.getTiles());
@@ -54,11 +54,11 @@ public class RotateTest {
                 {'f', 'N', 'f', 'N'}
         };
 
-        FireTile fireTile = new FireTile(sArray, true);
-        fireTile.rotate("east");
+        FireTile fireTile = new FireTile(sArray,new int[]{3, 4}, true);
+        fireTile.rotate(PathwayCard.Direction.EAST);
 
         char[][] expectedResult = new char[][]{
-                {'f', 'N', 'f'},
+                {'f', 'f', 'f'},
                 {'N', 'f', 'f'},
                 {'f', 'N', 'f'},
                 {'N', 'f', 'N'}
@@ -75,8 +75,8 @@ public class RotateTest {
                 {'f', 'f', 'f', 'f'}
         };
 
-        FireTile fireTile = new FireTile(sArray, true);
-        fireTile.rotate("west");
+        FireTile fireTile = new FireTile(sArray, new int[]{3, 4},true);
+        fireTile.rotate(PathwayCard.Direction.WEST);
 
         char[][] expectedResult = new char[][]{
                 {'f', 'N', 'f'},
@@ -97,8 +97,8 @@ public class RotateTest {
                 {'f', 'f', 'N', 'N'}
         };
 
-        FireTile fireTile = new FireTile(sArray, true);
-        fireTile.rotate(FireTile.Direction.FLIP);
+        FireTile fireTile = new FireTile(sArray, new int[]{3, 4}, true);
+        fireTile.rotate(PathwayCard.Direction.FLIP);
 
         char[][] expectedResult = new char[][]{
                 {'f', 'f', 'N', 'f'},
