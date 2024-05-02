@@ -345,18 +345,22 @@ the given coordinates.
 <img src="assets/fire-tiles-flipped.png" alt="fire tile orientations" />
 
 ### Cat movement string
-Cat movement strings are 9-character strings defined as follows: 
+Cat movement strings are 11 or 13-character strings defined as follows: 
 
-`{colour}{startLocation}{endLocation}`
+`{colour}{startLocation}{endLocation}{discardedCards}`
 
 - The first character represents the colour of the cat `B`, `G`, `P`, `R` or `Y`.
 - The second and third characters represent the starting row-coordinate of the cat. 
 - The fourth and fifth characters represent the starting column-coordinate of the cat. 
 - The sixth and seventh characters represent the ending row-coordinate of the cat.
-- The eighth and ninth characters represent the ending column-coordinate of the cat. 
+- The eighth and ninth characters represent the ending column-coordinate of the cat.
+- The thenth character represents the deck ('A' to 'D') of the card discarded to move the cat
+- The eleventh character represents the ID ('a' to 'y') of the card discarded to move the cat
+- The twelth character (if present) represents the deck ('A' to 'D') of the extra card discarded to move an exhausted cat
+- The thirteenth character (if present) represents the ID ('a' to 'y') of the extra card discarded to move an exhausted cat 
 
 For example: 
-`"R01040410` tells us that the Red cat at location `(1,4)`, should be moved to Location `(4,10)`.
+`"R01040410Ac"` tells us that the Red (non-exhausted) cat at location `(1,4)`, should be moved to Location `(4,10)`, and that card 'c' of deck 'A' was discarded for that action.
 
 ## Draw Request
 We also use a string to encode how cards should be drawn for a player's hand. 
