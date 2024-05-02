@@ -272,9 +272,9 @@ fffffybgbpryybpGYp
 ffffYyybpyyyyygRow
 fffyyyyyyygbyyywww
 """;
-        test(new String[]{boardWithGreenLeft,"AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"},"Y13041415",false);
-        test(new String[]{boardWithoutGreenLeft,"AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"},"Y13041415",true);
-        test(new String[]{boardWithoutGreenLeft,"AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"},"Y13041414",false);
+        test(new String[]{boardWithGreenLeft,"AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"},"Y13041415Am",false);
+        test(new String[]{boardWithoutGreenLeft,"AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"},"Y13041415Am",true);
+        test(new String[]{boardWithoutGreenLeft,"AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"},"Y13041414Cq",false);
     }
 
 
@@ -880,35 +880,35 @@ ffffffffrybbrgybww
     private final static String[] actions = new String[]{
             "Bt0406N", // card
             "x0706FN", // fire
-            "g04040708", // cat
+            "g04040708Af", // cat
             "Cf1107W", // card
             "r0303FS", // fire
-            "y13041209", // cat
-            "r01100508", // cat
+            "y13041209Al", // cat
+            "r01100508Ba", // cat
             "Cv0709N", // card
             "g1303TN", // fire
             "Cc1210W", // card
             "b1205TN", // fire
             "Cb0912E", // card
             "t0009FE", // fire
-            "g07080914", // cat
+            "g07080914Am", // cat
             "As0409N", // card
             "i0906FS", // fire
             "Ac0910N", // card
             "j0206TN", // fire
-            "r05081014", // cat
+            "r05081014Ak", // cat
             "Au1112N", // card
             "B0506TW", // fire
-            "r10141315", // cat
+            "r10141315Ab", // cat
             "Ch0915N", // card
             "q0407FS", // fire
-            "g09141215", // cat
+            "g09141215Ah", // cat
             "Ce1010E", // card
             "n0315FW", // fire
-            "y12091111", // cat
+            "y12091111Ae", // cat
             "Cq0914W", // card
             "k0311FN", // fire
-            "y11111216", // cat
+            "y11111216De", // cat
 
     };
 }
