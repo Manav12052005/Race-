@@ -194,14 +194,14 @@ public class RaceToTheRaft {
         char deckID = placementString.charAt(0);
         char cardID = placementString.charAt(1);
 
-        if (placementString.charAt(0) == 'f') {//FireTile Placement
+        if (Character.isDigit(placementString.charAt(1))) {//FireTile Placement
             FireTile fireTile = actionStringToFT(placementString); // Create FireTile object
-            int[] loc = new int[]{Integer.parseInt(placementString.substring(1,2)),
-                    Integer.parseInt(placementString.substring(3,4))};
-            board = fireTile.placeOnBoard(fireTile, charBoard(board), loc); // Modify the board
+            int[] loc = new int[]{Integer.parseInt(placementString.substring(1,3)),
+                    Integer.parseInt(placementString.substring(3,5))};
+            board = placeOnBoardFT(fireTile, charBoard(board), loc); // Modify the board
         } else { //PathwayCard Placement
             PathwayCard card = actionStringToPWC(placementString); // Create PathwayCard object
-            board = placeOnBoard(card, charBoard(board)); // Modify the board
+            board = placeOnBoardPWC(card, charBoard(board)); // Modify the board
             if (!hand.contains("A")){
                 hand = "A" + hand;
             }
