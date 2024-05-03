@@ -42,9 +42,7 @@ public class Board {
         StringBuilder boardString = new StringBuilder();
         for (int i = 0; i < tiles.length; i++) {
             boardString.append(new String(tiles[i]));
-            if (i < tiles.length - 1) {
-                boardString.append("\n");
-            }
+            boardString.append("\n");
         }
         return boardString.toString();
     }

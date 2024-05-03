@@ -2,6 +2,7 @@ package comp1110.ass2;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.time.temporal.ChronoField;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -192,6 +193,8 @@ public class RaceToTheRaft {
     public static String[] applyPlacement(String[] gameState, String placementString) {
         String board = gameState[0];
         String hand = gameState[2];
+        char deckID = placementString.charAt(0);
+        char cardID = placementString.charAt(1);
 
         if (placementString.charAt(0) == 'f') {//FireTile Placement
             FireTile fireTile = actionStringToFT(placementString); // Create FireTile object
@@ -201,7 +204,21 @@ public class RaceToTheRaft {
         } else { //PathwayCard Placement
             PathwayCard card = actionStringToPWC(placementString); // Create PathwayCard object
             board = placeOnBoard(card, charBoard(board)); // Modify the board
-            hand = hand.replace(placementString.substring(0, 3), ""); // Remove card from hand
+            if (!hand.contains("A")){
+                hand = "A" + hand;
+            }
+            if (!hand.contains("B")){
+                hand = hand.substring(0, hand.indexOf("C")) + "B" + hand.substring(hand.indexOf("C"));
+            }
+            if (!hand.contains("C")){
+                hand = hand.substring(0, hand.indexOf("D")) + "C" + hand.substring(hand.indexOf("D"));
+            }
+            if (!hand.contains("D")){
+                hand = hand + "D";
+            }
+            hand = hand.substring(0, hand.indexOf(deckID))
+                    + hand.substring(hand.indexOf(deckID)).replaceFirst(String.valueOf(cardID), "");
+            // remove card from hand
         }
 
         // Update gameState
