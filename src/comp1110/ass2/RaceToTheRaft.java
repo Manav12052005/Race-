@@ -1,9 +1,7 @@
 package comp1110.ass2;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.time.temporal.ChronoField;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static comp1110.ass2.Board.*;
@@ -391,7 +389,32 @@ public class RaceToTheRaft {
      * @return True if the cat movement is valid, otherwise false
      */
     public static boolean isCatMovementValid(String[] gameState, String catMovementString) {
-        return false; // FIXME TASK 14
+//        return false; // FIXME TASK 14
+        char catColor = catMovementString.charAt(0);
+        int startY = Integer.parseInt(catMovementString.substring(1, 3));
+        int startX = Integer.parseInt(catMovementString.substring(3, 5));
+        int endY = Integer.parseInt(catMovementString.substring(5, 7));
+        int endX = Integer.parseInt(catMovementString.substring(7, 9));
+
+        System.out.println(catMovementString);
+        System.out.println(startY);
+        System.out.println(startX);
+        System.out.println(endY);
+        System.out.println(endX);
+
+        // Check if the end position color matches the cat color
+        String[] rows = gameState[0].split("\n");
+        System.out.println(rows[endY].charAt(endX));
+        if (rows[endY].charAt(endX) != Character.toLowerCase(catColor)) {
+            return false;
+        }
+
+        // Check if there is a possible way to move cat
+
+
+
+
+        return false;
     }
 
 
