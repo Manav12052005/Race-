@@ -173,7 +173,7 @@ Challenges in Race to the Raft are made up of the following substrings:
 - Raft card location
 
 A challenge string looks like this:
-`{Island substring}F{fire substring}C{Cat substring}R{raft substring}`
+`{Island substring}F{rest of fire substring}C{rest of Cat substring}R{rest of raft substring}`
 
 Note that the letters `F`, `C` and `R` denote the start of the `Fire`, `Cat` and `Raft` substrings respectively.
 
@@ -250,18 +250,21 @@ another at row 4, column 9 `(4,9)`.
 
 ## Cat (challenge substring)
 Cat cards are 3 x 3 placement cards containing terrain, fire, and the starting
-location of at least one cat. Cat cards are denoted by a six-letter string.
-- The first character of the string is `C`, stating that it is a cat card.
-- The second character is number between `0` and `6` representing the ID of the cat card.
-- The third and fourth characters represent the row coordinate of the top-left square of the cat card.
-- The fifth and sixth characters represent the column coordinate of the top-left square of the cat card.
+location of at least one cat. 
+
+The cat challenge substring starts with `C` and is followed by at least one cat card placement.
+
+Cat card placements are denoted by a five-letter string.
+- The first character is number between `0` and `6` representing the ID of the cat card.
+- The second and third characters represent the row coordinate of the top-left square of the cat card.
+- The fourth and fifth characters represent the column coordinate of the top-left square of the cat card.
 
 For example: the string `"C00211` tells us that Cat card `0` is placed at row 2, column 11, `(2,11)`.
 
 ### Cat (utility string)
 The `CAT_CARDS` array in the `Utility` class stores information about each cat card in the game. 
 - The first character tells us the ID of the cat card and is a number between `0` and `6`.
-- The second to tenth characters (`b`, `g`, `p`, `r` or `y`) give the state of each square in row-major order shown in the
+- The second to tenth characters (`b`, `g`, `p`, `r`, `y`, `B`, `G`, `P`, `R`, `Y`, or `f`) give the state of each square in row-major order shown in the
   example below.
 
 For example: `3gffgGfggg` represents the cat card pictured below which has been numbered to show the index

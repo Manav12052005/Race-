@@ -77,7 +77,7 @@ public class ApplyPlacementTest {
                 ffffffbyrbprgpbyry
                 """,
                     "AabcdefghijklnopqrstuvxyBabdeghiklmnoqrstuvwxyCabcdfghijklmnopqrstuvwxyDabcdefghilnopqtuvwxy",
-                    "ABcfjDjks", "", "abcefghijklmnoprstuvwxyzBCDE"
+                    "ABcfjCDjks", "", "abcefghijklmnoprstuvwxyzBCDE"
 
             },
             new String[]{
@@ -120,7 +120,7 @@ public class ApplyPlacementTest {
                 fffbbbbbbgrybpywww
                 """,
                     "AabcdfghikmnopqrstuwxyBabcdefgijklmnopqrstuvwxyCabcdefhikmnopqrstuvwyDacdefghilmnopqrstuvwxy",
-                    "AeCjlDj", "y0811", "abcdefgijklmopqrstuwxyzCDE"},
+                    "AeBCjlDj", "Y0811", "abcdefgijklmopqrstuwxyzCDE"},
     };
 
     private final String[][] expected = new String[][]{
@@ -200,7 +200,7 @@ public class ApplyPlacementTest {
                 fffbbbbbbgrybpywww
                 """,
                     "AabcdfghikmnopqrstuwxyBabcdefgijklmnopqrstuvwxyCabcdefhikmnopqrstuvwyDacdefghilmnopqrstuvwxy",
-                    "AeBCjlD", "y0811", "abcdefgijklmopqrstwxyzCDE"},
+                    "AeBCjlD", "Y0811", "abcdefgijklmopqrstwxyzCDE"},
 
     };
 
@@ -255,7 +255,7 @@ fffrgggyp
 fffpbyrow
 fffgybbww
 """,
-                    "AabcdefhijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmopqtwxy","ABCDnrv","r0504","bcdefgijklmnopqrstuvwxyzABCDE"},
+                    "AabcdefhijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmopqtwxy","ABCDnrv","R0504","bcdefgijklmnopqrstuvwxyzABCDE"},
             new String[]{
                     """
 fffgffffyffffppgff
@@ -293,7 +293,7 @@ fffffrggrpbyygpybg
 fffpffypbrorpbrgpb
 fffgfprybgwggrbpyy
 """,
-                    "AabcdefghijklmnopqrstuvwxyBabdefhijklmopqrstuvwxyCabcdefghijklmnopqrstuvxyDacdefghijklmnoprstuvwxy","ABgCDq","g0505y0406","abcdefghijkmnopqrstuvxyzABCDE"},
+                    "AabcdefghijklmnopqrstuvwxyBabdefhijklmopqrstuvwxyCabcdefghijklmnopqrstuvxyDacdefghijklmnoprstuvwxy","ABgCDq","G0505Y0406","abcdefghijkmnopqrstuvxyzABCDE"},
 
 
     };
@@ -350,7 +350,7 @@ fffrgggyp
 fffpbyrow
 fffgybbww
 """,
-                    "AabcdefhijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmopqtwxy","ABCDnrv","r0504","bcdefgijklmnopqrstuvwxyzABCDE"},
+                    "AabcdefhijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmopqtwxy","ABCDnrv","R0504","bcdefgijklmnopqrstuvwxyzABCDE"},
             new String[]{
                     """
 fffgffffyffffppgff
@@ -388,7 +388,7 @@ fffffrggrpbyygpybg
 fffpffypbrorpbrgpb
 fffgfprybgwggrbpyy
 """,
-                    "AabcdefghijklmnopqrstuvwxyBabdefhijklmopqrstuvwxyCabcdefghijklmnopqrstuvxyDacdefghijklmnoprstuvwxy","ABgCDq","g0505y0406","abcdefghijkmnopqrstuvxyzABCDE"},
+                    "AabcdefghijklmnopqrstuvwxyBabdefhijklmopqrstuvwxyCabcdefghijklmnopqrstuvxyDacdefghijklmnoprstuvwxy","ABgCDq","G0505Y0406","abcdefghijkmnopqrstuvxyzABCDE"},
 
     };
 
