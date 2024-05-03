@@ -166,7 +166,7 @@ fffffyypyfffffffff
 ffffyypbbfffffffff
 fffyyygyrfffffffff
 """,
-                    "AabdefghiknopqruvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy","AjlmsBCD","y1106","abcdefghijlmnopqrstuvwxyzABCDE"},
+                    "AabdefghiknopqruvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy","AjlmsBCD","Y1106","abcdefghijlmnopqrstuvwxyzABCDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -185,7 +185,7 @@ fffffyypyfffffffff
 ffffyypbbfffffffff
 fffyyygyrfffffffff
 """,
-                    "AabdefghiknopqruvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy","AlsBCD","r0904y1106","abcdefghijlmopqrstuvwxyzABCDE"},
+                    "AabdefghiknopqruvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy","AlsBCD","R0904Y1106","abcdefghijlmopqrstuvwxyzABCDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -223,7 +223,7 @@ fffffyypyfffffffff
 ffffyypbbfffffffff
 fffyyygyrfffffffff
 """,
-                    "AbdeghiknpquvyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy","ArwxBCD","b0715","abcdefghijlmpqrstuvwxyzABCE"},
+                    "AbdeghiknpquvyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy","ArwxBCD","B0715","abcdefghijlmpqrstuvwxyzABCE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -242,7 +242,7 @@ fffffyypyfffffffff
 ffffyypbbfffffffff
 fffyyygyrfffffffff
 """,
-                    "AbdeghiknpquvyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy","AwxBCD","b0715","abcdefghijlmpqrstuvwxyzABC"},
+                    "AbdeghiknpquvyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy","AwxBCD","B0715","abcdefghijlmpqrstuvwxyzABC"},
 
 
     };
