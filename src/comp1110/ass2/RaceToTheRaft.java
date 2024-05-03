@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.time.temporal.ChronoField;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -237,7 +239,76 @@ public class RaceToTheRaft {
      * @return the updated gameState array after this movement has been made.
      */
     public static String[] moveCat(String[] gameState, String movementString) {
-        return new String[0]; // FIXME TASK 9
+        /*
+        Cat move operation
+         */
+        char cat = movementString.charAt(0);
+
+        int startY = Integer.parseInt(movementString.substring(1, 3));
+        int startX = Integer.parseInt(movementString.substring(3, 5));
+        int destY = Integer.parseInt(movementString.substring(5, 7));
+        int destX = Integer.parseInt(movementString.substring(7, 9));
+
+        String[] ret = gameState;
+
+        String[] rows = ret[0].split("\n");
+        char[] startRow = rows[startY].toCharArray();
+        startRow[startX] = Character.toLowerCase(cat);
+        rows[startY] = new String(startRow);
+        char[] destRow = rows[destY].toCharArray();
+        destRow[destX] = Character.toUpperCase(cat);
+        rows[destY] = new String(destRow);
+        ret[0] = String.join("\n", rows) + "\n";
+
+        /*
+        Card discard operation
+         */
+        String discardString = movementString.substring(9);
+        char[] hand = ret[2].toCharArray();
+        for (int i = 0; i < discardString.length(); i += 2) {
+            String discard = discardString.substring(i, i + 2);
+            char deck = discard.charAt(0);
+            char[] newHand = new char[hand.length - 1];
+            for (int j = 0; j < newHand.length; j++) {
+                if (hand[j] != deck) {
+                    newHand[j] = hand[j];
+                } else {
+                    for (int k = j; k < hand.length - 1; k++) {
+                        newHand[k] = hand[k + 1];
+                    }
+                    break;
+                }
+            }
+            hand = newHand;
+        }
+        ret[2] = new String(hand);
+
+        /*
+        Cat exhaust operation
+         */
+        StringBuilder sb = new StringBuilder();
+        Map<Character, String> exhaustedCats = new HashMap<>();
+
+        // Populate the map with characters and their coordinates
+        for (int i = 0; i < ret[3].length(); i += 5) {
+            exhaustedCats.put(ret[3].charAt(i), ret[3].substring(i + 1, i + 5));
+        }
+
+        // Iterate over the characters in the desired order
+        for (char c : new char[]{'B', 'G', 'P', 'R', 'Y'}) {
+            if (c == movementString.charAt(0)) {
+                // If the character is the one in the movementString, use the new coordinate
+                sb.append(c);
+                sb.append(movementString.substring(5, 9));
+            } else if (exhaustedCats.containsKey(c)) {
+                // If the character exists in ret[3], use the old coordinate
+                sb.append(c);
+                sb.append(exhaustedCats.get(c));
+            }
+        }
+        ret[3] = sb.toString();
+
+        return ret; // FIXME TASK 9
     }
 
     /**
