@@ -1,7 +1,6 @@
 package comp1110.ass2;
 
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -43,5 +42,28 @@ public class Card extends ImageView {
 
     public ArrayList<Square> getCard() {
         return card;
+    }
+
+    public static String discardCard(String handString, String movementString) {
+        String discardString = movementString.substring(9);
+        char[] hand = handString.toCharArray();
+        for (int i = 0; i < discardString.length(); i += 2) {
+            String discard = discardString.substring(i, i + 2);
+            char deck = discard.charAt(0);
+            char[] newHand = new char[hand.length - 1];
+            for (int j = 0; j < newHand.length; j++) {
+                if (hand[j] != deck) {
+                    newHand[j] = hand[j];
+                } else {
+                    for (int k = j; k < hand.length - 1; k++) {
+                        newHand[k] = hand[k + 1];
+                    }
+                    break;
+                }
+            }
+            hand = newHand;
+        }
+
+        return hand.toString();
     }
 }
