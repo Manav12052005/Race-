@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import static comp1110.ass2.Board.charBoardToString;
@@ -19,11 +20,12 @@ public class FireTile {
 
     public static FireTile actionStringToFT(String string){
         char tileID = string.charAt(0);
-        int[] xy = new int[]{Integer.parseInt(string.substring(1,2)),Integer.parseInt(string.substring(3,4))};
+        int[] xy = new int[]{Integer.parseInt(string.substring(1,3)),Integer.parseInt(string.substring(3,5))};
         char flip = string.charAt(5);
         PathwayCard.Direction direction = PathwayCard.charToDirection(string.charAt(6));
         String card = tileFinder(Utility.FIRE_TILES, tileID);
         int[] intArray = toIntArray(card.substring(1));
+        System.out.println("intArray: " + Arrays.toString(intArray));
         int[] dim = findDimensions(intArray);
         char[][] cardArray = tileBuilder(defualtArray(dim), intArray, dim);
         boolean horiz = dim[1] > dim[0];
@@ -44,7 +46,7 @@ public class FireTile {
         return tile;
     }
 
-    public static String placeOnBoard(FireTile tile, char[][] board, int[] loc){
+    public static String placeOnBoardFT(FireTile tile, char[][] board, int[] loc){
         int x = tile.dim[0];
         int y = tile.dim[1];
         char[][] tiles = tile.tiles;
@@ -83,7 +85,7 @@ public class FireTile {
             intArray[i] = Character.getNumericValue(intString.charAt(i));
         }
 
-        return null;
+        return intArray;
     };
 
     public static int[] findDimensions(int[] coordinates) {
@@ -92,7 +94,6 @@ public class FireTile {
         for (int i = 0; i < coordinates.length; i += 2) {
             int x = coordinates[i];
             int y = coordinates[i + 1];
-
             maxX = Math.max(maxX, x);
             maxY = Math.max(maxY, y);
         }

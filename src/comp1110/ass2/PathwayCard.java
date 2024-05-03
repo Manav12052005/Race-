@@ -61,7 +61,7 @@ public class PathwayCard { ;
         return wayCard;
     }
 
-    public static String placeOnBoard(PathwayCard card, char[][] board){
+    public static String placeOnBoardPWC(PathwayCard card, char[][] board){
         int row = card.rowcol[0];
         int col = card.rowcol[1];
         char[][] tiles = card.tiles;
