@@ -20,12 +20,10 @@ public class FireTile {
 
     public static FireTile actionStringToFT(String string){
         char tileID = string.charAt(0);
-        int[] xy = new int[]{Integer.parseInt(string.substring(1,3)),Integer.parseInt(string.substring(3,5))};
         char flip = string.charAt(5);
         PathwayCard.Direction direction = PathwayCard.charToDirection(string.charAt(6));
         String card = tileFinder(Utility.FIRE_TILES, tileID);
         int[] intArray = toIntArray(card.substring(1));
-        System.out.println("intArray: " + Arrays.toString(intArray));
         int[] dim = findDimensions(intArray);
         char[][] cardArray = tileBuilder(defualtArray(dim), intArray, dim);
         boolean horiz = dim[1] > dim[0];
@@ -47,13 +45,15 @@ public class FireTile {
     }
 
     public static String placeOnBoardFT(FireTile tile, char[][] board, int[] loc){
-        int x = tile.dim[0];
-        int y = tile.dim[1];
+        int startX = loc[0];
+        int startY = loc[1];
         char[][] tiles = tile.tiles;
-        for(int i = x; i <= (x+2); i++){
-            for(int j = y; j <= (y+2); j++){
-                if (tiles[(i-x)][(i-y)] != 'N'){
-                board[i][j] = tiles[(i-x)][(i-y)];
+        for (int tileRow = 0; tileRow < tiles.length; tileRow++) {
+            for (int tileCol = 0; tileCol < tiles[0].length; tileCol++) {
+                int boardRow = startX + tileRow;
+                int boardCol = startY + tileCol;
+                if (tiles[tileRow][tileCol] != 'N') {
+                    board[boardRow][boardCol] = tiles[tileRow][tileCol];
             }}
         }
         return charBoardToString(board);
@@ -97,6 +97,8 @@ public class FireTile {
             maxX = Math.max(maxX, x);
             maxY = Math.max(maxY, y);
         }
+        System.out.println(maxX);
+        System.out.println(maxY);
         return new int[] {maxX + 1, maxY + 1};
     }
 
@@ -118,9 +120,10 @@ public class FireTile {
             rotatedTiles = new char[dim[1]][dim[0]];
         } else if(!isHorizontal & direction != FLIP){
             rotatedTiles = new char[dim[0]][dim[1]];
-        } else if(isHorizontal & direction == FLIP){
+        } else if(isHorizontal){
             rotatedTiles = new char[dim[0]][dim[1]];
-        } else {rotatedTiles = new char[dim[1]][dim[0]];
+        } else {
+            rotatedTiles = new char[dim[1]][dim[0]];
         }
 
         if (direction == WEST || direction == EAST) {
@@ -128,16 +131,17 @@ public class FireTile {
                 for (int j = 0; j < tiles[i].length; j++) {
                     if (direction.equals(EAST)) { // rotate 90 degrees clockwise
                         rotatedTiles[j][tiles.length - 1 - i] = tiles[i][j];
-                    } else {rotatedTiles[tiles[0].length - 1 - j][i] = tiles[i][j];// rotate 90 degrees counterclockwise
+                    } else {
+                        rotatedTiles[tiles[0].length - 1 - j][i] = tiles[i][j];// rotate 90 degrees counterclockwise
                     }
                 }
             }
+            isHorizontal = !isHorizontal;
         } else for (int i = 0; i < tiles.length; i++) { //flips card about the y axis
                     for (int j = 0; j < tiles[i].length; j++) {
                         rotatedTiles[i][tiles[i].length - 1 - j] = tiles[i][j];
                     }}
         tiles = rotatedTiles;
-        isHorizontal = !isHorizontal;
     }
 
     public static boolean isOverlappingFireFT(char[][] board, char[][] tile, int x, int y){
