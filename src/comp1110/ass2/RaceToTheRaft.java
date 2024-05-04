@@ -1,5 +1,8 @@
 package comp1110.ass2;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.time.temporal.ChronoField;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -190,16 +193,32 @@ public class RaceToTheRaft {
     public static String[] applyPlacement(String[] gameState, String placementString) {
         String board = gameState[0];
         String hand = gameState[2];
+        char deckID = placementString.charAt(0);
+        char cardID = placementString.charAt(1);
 
-        if (placementString.charAt(0) == 'f') {//FireTile Placement
+        if (Character.isDigit(placementString.charAt(1))) {//FireTile Placement
             FireTile fireTile = actionStringToFT(placementString); // Create FireTile object
-            int[] loc = new int[]{Integer.parseInt(placementString.substring(1,2)),
-                    Integer.parseInt(placementString.substring(3,4))};
-            board = fireTile.placeOnBoard(fireTile, charBoard(board), loc); // Modify the board
+            int[] loc = new int[]{Integer.parseInt(placementString.substring(1,3)),
+                    Integer.parseInt(placementString.substring(3,5))};
+            board = placeOnBoardFT(fireTile, charBoard(board), loc); // Modify the board
         } else { //PathwayCard Placement
             PathwayCard card = actionStringToPWC(placementString); // Create PathwayCard object
-            board = placeOnBoard(card, charBoard(board)); // Modify the board
-            hand = hand.replace(placementString.substring(0, 3), ""); // Remove card from hand
+            board = placeOnBoardPWC(card, charBoard(board)); // Modify the board
+            if (!hand.contains("A")){
+                hand = "A" + hand;
+            }
+            if (!hand.contains("B")){
+                hand = hand.substring(0, hand.indexOf("C")) + "B" + hand.substring(hand.indexOf("C"));
+            }
+            if (!hand.contains("C")){
+                hand = hand.substring(0, hand.indexOf("D")) + "C" + hand.substring(hand.indexOf("D"));
+            }
+            if (!hand.contains("D")){
+                hand = hand + "D";
+            }
+            hand = hand.substring(0, hand.indexOf(deckID))
+                    + hand.substring(hand.indexOf(deckID)).replaceFirst(String.valueOf(cardID), "");
+            // remove card from hand
         }
 
         // Update gameState
@@ -220,7 +239,15 @@ public class RaceToTheRaft {
      * @return the updated gameState array after this movement has been made.
      */
     public static String[] moveCat(String[] gameState, String movementString) {
-        return new String[0]; // FIXME TASK 9
+        String[] ret = gameState;
+        // Cat move operation
+        ret[0] = Cat.catMove(ret[0], movementString);
+        // Card discard operation
+        ret[2] = Card.discardCard(ret[2], movementString);
+        // Cat exhaust operation
+        ret[3] = Cat.catExhauste(ret[3], movementString);
+
+        return ret; // FIXME TASK 9
     }
 
     /**
@@ -264,27 +291,42 @@ public class RaceToTheRaft {
      * @return True if the placement is valid, otherwise false.
      */
     public static boolean isPlacementValid(String[] gameState, String placementString) {
-        int x = Integer.parseInt(placementString.substring(1, 2));
-        int y = Integer.parseInt(placementString.substring(3, 4));
-
-        // 3. Create Tile Representation
         char[][] tile;
         char[][] board = charBoard(gameState[0]);
-        if (placementString.charAt(0) == 'f') {
+        if (Character.isDigit(placementString.charAt(1))) {
             FireTile fireTile = FireTile.actionStringToFT(placementString);
             tile = fireTile.getTiles();
-            return isOffBoard(board, tile, x, y) ||
-                    isOverlappingFireFT(board, tile, x, y) ||
-                    isOverlappingCatFT(board, tile, x, y) ||
-                    isOverlappingRaftFT(board, tile, x, y) ||
-                    !isAdjacentToFire(board, tile, x, y);
+            for (char[] chars : tile) {
+                System.out.println(chars);
+            }
+            int x = Integer.parseInt(placementString.substring(1, 3));
+            int y = Integer.parseInt(placementString.substring(3, 5));
+            System.out.println(isOffBoard(board, tile, x, y));
+            if (isOffBoard(board, tile, x, y)) {
+                return false;
+            }
+            char[][] subBoard = extractSubBoard(board, tile, x, y);
+            if (isOverlappingFireFT(subBoard, tile)) {
+                return false;
+            } else if (isOverlappingCatFT(subBoard, tile)) {
+                return false;
+            } else if (isOverlappingRaftFT(subBoard, tile)){
+                return false;
+            } else return isAdjacentToFire(board, tile, x, y);
         } else {
             PathwayCard card = PathwayCard.actionStringToPWC(placementString);
             tile = card.getTiles();
-            return isOffBoard(board, tile, x, y) ||
-                    isOverlappingFirePWC(board, tile, x, y) ||
-                    isOverlappingCatPWC(board, tile, x, y) ||
-                    isOverlappingRaftPWC(board, tile, x, y);
+            int x = Integer.parseInt(placementString.substring(2,4));
+            int y = Integer.parseInt(placementString.substring(4,6));
+            if (isOffBoard(board, tile, x, y)) {
+                return false;
+            }
+            char[][] subBoard = extractSubBoard(board, tile, x, y);
+            if (isOverlappingFirePWC(subBoard)){
+                return false;
+            } else if (isOverlappingCatPWC(subBoard)){
+                return false;
+            } else return !isOverlappingRaftPWC(subBoard);
         }
 
     } // FIXME TASK 12
@@ -303,7 +345,7 @@ public class RaceToTheRaft {
      * @return True if the cat movement is valid, otherwise false
      */
     public static boolean isCatMovementValid(String[] gameState, String catMovementString) {
-        return false; // FIXME TASK 14
+        return Cat.checkMovementValid(gameState, catMovementString);    // FIXME TASK 14
     }
 
 

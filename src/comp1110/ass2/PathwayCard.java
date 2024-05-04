@@ -9,10 +9,10 @@ import static comp1110.ass2.PathwayCard.Direction.*;
 
 public class PathwayCard { ;
     private char[][] tiles;
-    private int[] xy;
+    private int[] rowcol;
     public PathwayCard(char[][] tiles, int[] xy){
         this.tiles = tiles;
-        this.xy = xy;
+        this.rowcol = xy;
     }
     public char[][] getTiles() {
         return tiles;
@@ -35,7 +35,7 @@ public class PathwayCard { ;
     public static PathwayCard actionStringToPWC(String string){
         char deckID = string.charAt(0);
         char cardID = string.charAt(1);
-        int[] xy = new int[]{Integer.parseInt(string.substring(2,3)),Integer.parseInt(string.substring(4,5))};
+        int[] rowcol = new int[]{Integer.parseInt(string.substring(2,4)),Integer.parseInt(string.substring(4,6))};
         Direction direction = charToDirection(string.charAt(6));
         String[] deck;
         deck = switch (deckID){
@@ -47,7 +47,7 @@ public class PathwayCard { ;
         };
         String card = cardFinder(deck, cardID);
         char[][] cardArray = cardBuilder(card);
-        PathwayCard wayCard = new PathwayCard(cardArray, xy);
+        PathwayCard wayCard = new PathwayCard(cardArray, rowcol);
         if (direction == EAST){
             wayCard.rotate(EAST);
         }
@@ -58,16 +58,16 @@ public class PathwayCard { ;
             wayCard.rotate(EAST);
             wayCard.rotate(EAST);
         }
-        return new PathwayCard(cardArray, xy);
+        return wayCard;
     }
 
-    public static String placeOnBoard(PathwayCard card, char[][] board){
-        int x = card.xy[0];
-        int y = card.xy[1];
+    public static String placeOnBoardPWC(PathwayCard card, char[][] board){
+        int row = card.rowcol[0];
+        int col = card.rowcol[1];
         char[][] tiles = card.tiles;
-        for(int i = x; i <= (x+2); i++){
-            for(int j = y; j <= (y+2); j++){
-                board[i][j] = tiles[(i-x)][(i-y)];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                    board[row + i][col + j] = tiles[i][j];
             }
         }
         return charBoardToString(board);
@@ -75,7 +75,7 @@ public class PathwayCard { ;
     public static String cardFinder(String[] deck, char c){
         for (String card : deck) {
             if (card.charAt(0) == c) {
-                return card;
+                return card.substring(1);
             }
         }
         return null;
@@ -88,7 +88,8 @@ public class PathwayCard { ;
         char[] row1 = {string.charAt(0), string.charAt(1), string.charAt(2)};
         char[] row2 = {string.charAt(3), string.charAt(4), string.charAt(5)};
         char[] row3 = {string.charAt(6), string.charAt(7), string.charAt(8)};
-        return new char[][]{row1, row2, row3};
+        char[][] card = new char[][]{row1, row2, row3};
+        return card;
     };
 
     public void rotate(Direction direction) {
@@ -110,14 +111,12 @@ public class PathwayCard { ;
     }
 
     public static boolean isOffBoard(char[][] board, char[][] tile, int x, int y){
-        if(board.length - y > tile.length || board[0].length - x > tile[0].length){
-            return true;
-        }
-        return false;
+        return x < 0 || y < 0 ||
+                y + tile[0].length > board[0].length ||
+                x + tile.length > board.length;
     }
-    public static boolean isOverlappingFirePWC(char[][] board, char[][] card, int x, int y){
-        char[][] subBoard = extractSubBoard(board, card, x, y);
-        for (char[] chars : subBoard) {
+    public static boolean isOverlappingFirePWC(char[][] board){
+        for (char[] chars : board) {
             for (char aChar : chars) {
                 if (aChar == 'f') {
                     return true;
@@ -126,9 +125,8 @@ public class PathwayCard { ;
         }
         return false;
     }
-    public static boolean isOverlappingCatPWC(char[][] board, char[][] card, int x, int y){
-        char[][] subBoard = extractSubBoard(board, card, x, y);
-        for (char[] chars : subBoard) {
+    public static boolean isOverlappingCatPWC(char[][] board){
+        for (char[] chars : board) {
             for (char aChar : chars) {
                 if (Character.isUpperCase(aChar)) {
                     return true;
@@ -137,9 +135,8 @@ public class PathwayCard { ;
         }
         return false;
     }
-    public static boolean isOverlappingRaftPWC(char[][] board, char[][] card, int x, int y){
-        char[][] subBoard = extractSubBoard(board, card, x, y);
-        for (char[] chars : subBoard) {
+    public static boolean isOverlappingRaftPWC(char[][] board){
+        for (char[] chars : board) {
             for (char aChar : chars) {
                 if (aChar == 'o') {
                     return true;
@@ -150,25 +147,25 @@ public class PathwayCard { ;
     }
 
     public static char[][] extractSubBoard(char[][] board, char[][] card, int x, int y) {
-        // Get dimensions of the smaller card
         int cardRows = card.length;
         int cardCols = card[0].length;
+        System.out.println("board dimensions: " + board.length + "x" + board[0].length);
+        System.out.println("card dimensions: " + cardRows + "x" + cardCols);
+        System.out.println("placement coordinates (x, y): " + x + ", " + y);
 
         // Create a new char array to hold the extracted sub-board
         char[][] subBoard = new char[cardRows][cardCols];
-
-        // Iterate through the sub-board area
         for (int row = 0; row < cardRows; row++) {
             for (int col = 0; col < cardCols; col++) {
                 // Calculate the corresponding index in the larger board
-                int boardRow = y + row;
-                int boardCol = x + col;
-
+                int boardRow = x + row;
+                int boardCol = y + col;
+                System.out.println("Accessing board[" + boardRow + "][" + boardCol + "]");
                 // Extract the character from the larger board
                 subBoard[row][col] = board[boardRow][boardCol];
             }
         }
-
+        System.out.println("");
         return subBoard;
     }
     public static String[] cardPickUp(String decks, String hand, String drawRequest) {

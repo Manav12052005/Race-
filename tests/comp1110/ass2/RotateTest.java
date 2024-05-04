@@ -54,7 +54,7 @@ public class RotateTest {
                 {'f', 'N', 'f', 'N'}
         };
 
-        FireTile fireTile = new FireTile(sArray,new int[]{3, 4}, true);
+        FireTile fireTile = new FireTile(sArray, true);
         fireTile.rotate(PathwayCard.Direction.EAST);
 
         char[][] expectedResult = new char[][]{
@@ -75,7 +75,7 @@ public class RotateTest {
                 {'f', 'f', 'f', 'f'}
         };
 
-        FireTile fireTile = new FireTile(sArray, new int[]{3, 4},true);
+        FireTile fireTile = new FireTile(sArray,true);
         fireTile.rotate(PathwayCard.Direction.WEST);
 
         char[][] expectedResult = new char[][]{
@@ -97,7 +97,7 @@ public class RotateTest {
                 {'f', 'f', 'N', 'N'}
         };
 
-        FireTile fireTile = new FireTile(sArray, new int[]{3, 4}, true);
+        FireTile fireTile = new FireTile(sArray, true);
         fireTile.rotate(PathwayCard.Direction.FLIP);
 
         char[][] expectedResult = new char[][]{
@@ -105,7 +105,7 @@ public class RotateTest {
                 {'f', 'N', 'N', 'N'},
                 {'N', 'N', 'f', 'f'}
         };
-        boolean expectedIsHorizontal = false;
+        boolean expectedIsHorizontal = true;
         Assertions.assertArrayEquals(expectedResult, fireTile.getTiles());
         Assertions.assertEquals(expectedIsHorizontal, fireTile.getIsHorizontal());
     }

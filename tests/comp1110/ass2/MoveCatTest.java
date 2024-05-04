@@ -90,7 +90,7 @@ public class MoveCatTest {
                 fffbBbypbybypbrbow
                 fffbbbrybgrpgrbbyg
                 """,
-                    "AabcdefgijklmnoprstuvwxyBabdefghijklnopqrstuvwxyCabcdefghiklmnopqrstuvwxyDabcefghijklmnopqrstuvwxy", "AhBcmCD", "p0709", "bcdefghijklmnoprstuvwxyzABCDE"},
+                    "AabcdefgijklmnoprstuvwxyBabdefghijklnopqrstuvwxyCabcdefghiklmnopqrstuvwxyDabcefghijklmnopqrstuvwxy", "AhBcmCD", "P0709", "bcdefghijklmnoprstuvwxyzABCDE"},
             new String[]{
                     """
                 fffffffffffffffrrf
@@ -109,7 +109,7 @@ public class MoveCatTest {
                 fffbBbypbybypbrbow
                 fffbbbrybgrpgrbbyg
                 """,
-                    "AabcdefgijklmnoprstuvwxyBabdefghijklnopqrstuvwxyCabcdefghiklmnopqrstuvwxyDabcefghijklmnopqrstuvwxy", "AhBcCD", "b0710p0709", "bcdefghijklmnoprstuvwxyzABCDE"},
+                    "AabcdefgijklmnoprstuvwxyBabdefghijklnopqrstuvwxyCabcdefghiklmnopqrstuvwxyDabcefghijklmnopqrstuvwxy", "AhBcCD", "B0710P0709", "bcdefghijklmnoprstuvwxyzABCDE"},
             new String[]{
                     """
                 fffffffffffffffrrf
@@ -147,18 +147,18 @@ public class MoveCatTest {
                 fffbBbypbybypbrbow
                 fffbbbrybgrpgrbbyg
                 """,
-                    "AabcdefgijklmnoprstuvwxyBabdeghijklnoqrstvwxCabdefghiklmnopqrstvwxyDabcefghijklmnopqrstuvwxy", "AByCcuD", "p0811", "bcdefghiklmnoprtuvwxyzABCDE"},
+                    "AabcdefgijklmnoprstuvwxyBabdeghijklnoqrstvwxCabdefghiklmnopqrstvwxyDabcefghijklmnopqrstuvwxy", "AByCcuD", "P0811", "bcdefghiklmnoprtuvwxyzABCDE"},
 
 
     };
 
     private final String[] placement = new String[]{
-            "y01100610Cv",
-            "p07040709Cj",
-            "b01100710Bm",
-            "b07100413AhBc",
-            "p07090811Bp",
-            "r01160715By",
+            "Y01100610Cv",
+            "P07040709Cj",
+            "B01100710Bm",
+            "B07100413AhBc",
+            "P07090811Bp",
+            "R01160715By",
     };
 
     private final String[][] expected = new String[][]{
@@ -180,7 +180,7 @@ public class MoveCatTest {
                 fffbBbygggyrpgbwow
                 fffbbbbrypbbgrpwww
                 """,
-                    "AabcdefghijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefhklmnpqrstuwyDabcdefghijklmnopqrstuvwxy", "ABCgijoD", "y0610", "abcdefghijklmnopqrstuvwxzABCDE"},
+                    "AabcdefghijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefhklmnpqrstuwyDabcdefghijklmnopqrstuvwxy", "ABCgijoD", "Y0610", "abcdefghijklmnopqrstuvwxzABCDE"},
             new String[]{
                     """
                 fffffffffffffffrrf
@@ -199,7 +199,7 @@ public class MoveCatTest {
                 fffbBbypbybypbrbow
                 fffbbbrybgrpgrbbyg
                 """,
-                    "AabcdefgijklmnoprstuvwxyBabdefghijklnopqrstuvwxyCabcdefghiklmnopqrstuvwxyDabcefghijklmnopqrstuvwxy", "AhBcmCD", "p0709", "bcdefghijklmnoprstuvwxyzABCDE"},
+                    "AabcdefgijklmnoprstuvwxyBabdefghijklnopqrstuvwxyCabcdefghiklmnopqrstuvwxyDabcefghijklmnopqrstuvwxy", "AhBcmCD", "P0709", "bcdefghijklmnoprstuvwxyzABCDE"},
             new String[]{
                     """
                 fffffffffffffffrrf
@@ -218,7 +218,7 @@ public class MoveCatTest {
                 fffbBbypbybypbrbow
                 fffbbbrybgrpgrbbyg
                 """,
-                    "AabcdefgijklmnoprstuvwxyBabdefghijklnopqrstuvwxyCabcdefghiklmnopqrstuvwxyDabcefghijklmnopqrstuvwxy", "AhBcCD", "b0710p0709", "bcdefghijklmnoprstuvwxyzABCDE"},
+                    "AabcdefgijklmnoprstuvwxyBabdefghijklnopqrstuvwxyCabcdefghiklmnopqrstuvwxyDabcefghijklmnopqrstuvwxy", "AhBcCD", "B0710P0709", "bcdefghijklmnoprstuvwxyzABCDE"},
             new String[]{
                     """
                 fffffffffffffffrrf
@@ -237,7 +237,7 @@ public class MoveCatTest {
                 fffbBbypbybypbrbow
                 fffbbbrybgrpgrbbyg
                 """,
-                    "AabcdefgijklmnoprstuvwxyBabdefghijklnopqrstuvwxyCabcdefghiklmnopqrstuvwxyDabcefghijklmnopqrstuvwxy", "ABCD", "b0413p0709", "bcdefghijklmnoprstuvwxyzABCDE"},
+                    "AabcdefgijklmnoprstuvwxyBabdefghijklnopqrstuvwxyCabcdefghiklmnopqrstuvwxyDabcefghijklmnopqrstuvwxy", "ABCD", "B0413P0709", "bcdefghijklmnoprstuvwxyzABCDE"},
             new String[]{
                     """
                 fffffffffffffffrrf
@@ -256,7 +256,7 @@ public class MoveCatTest {
                 fffbBbypbybypbrbow
                 fffbbbrybgrpgrbbyg
                 """,
-                    "AabcdefgijklmnoprstuvwxyBabdeghijklnoqrstvwxCabdefghiklmnopqrstvwxyDabcefghijklmnopqrstuvwxy", "ABpCcuD", "p0811", "bcdefghiklmnoprtuvwxyzABCDE"},
+                    "AabcdefgijklmnoprstuvwxyBabdeghijklnoqrstvwxCabdefghiklmnopqrstvwxyDabcefghijklmnopqrstuvwxy", "ABpCcuD", "P0811", "bcdefghiklmnoprtuvwxyzABCDE"},
             new String[]{
                     """
                 fffffffffffffffrrf
@@ -275,7 +275,7 @@ public class MoveCatTest {
                 fffbBbypbybypbrbow
                 fffbbbrybgrpgrbbyg
                 """,
-                    "AabcdefgijklmnoprstuvwxyBabdeghijklnoqrstvwxCabdefghiklmnopqrstvwxyDabcefghijklmnopqrstuvwxy","ABCcuD","p0811r0715","bcdefghiklmnoprtuvwxyzABCDE"},
+                    "AabcdefgijklmnoprstuvwxyBabdeghijklnoqrstvwxCabdefghiklmnopqrstvwxyDabcefghijklmnopqrstuvwxy","ABCcuD","P0811R0715","bcdefghiklmnoprtuvwxyzABCDE"},
     };
 }
 

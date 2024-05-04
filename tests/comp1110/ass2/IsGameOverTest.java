@@ -354,7 +354,7 @@ fffffyypypryybpgyp
 ffffYypbbgbprygrow
 fffyyygyrygbygybww
 """,
-                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABalCfvD", "g0708", "abcdefghijklmnopqrstuvwyzABCDE"},
+                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABalCfvD", "G0708", "abcdefghijklmnopqrstuvwyzABCDE"},
             new String[]{
                     """
 fffffffffrrfffffff
@@ -373,7 +373,7 @@ fffffyyyyyryybpgyp
 ffffYypyggbprygrow
 fffyyygyrygbygybww
 """,
-                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABalCvD", "g0708", "abcdefghijklmnopqstuvwyzABCDE"},
+                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABalCvD", "G0708", "abcdefghijklmnopqstuvwyzABCDE"},
             new String[]{
                     """
 fffffffffrrfffffff
@@ -392,7 +392,7 @@ fffffyyyyyryybpgyp
 ffffYypyggbprygrow
 fffyyygyrygbygybww
 """,
-                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABalCvD", "g0708", "abcdefghijklmnopqstuvwyzABCDE"},
+                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABalCvD", "G0708", "abcdefghijklmnopqstuvwyzABCDE"},
             new String[]{
                     """
 fffffffffrrfffffff
@@ -411,7 +411,7 @@ fffffyyyyYryybpgyp
 ffffyypyggbprygrow
 fffyyygyrygbygybww
 """,
-                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABaCvD", "g0708y1209", "abcdefghijklmnopqstuvwyzABCDE"},
+                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABaCvD", "G0708Y1209", "abcdefghijklmnopqstuvwyzABCDE"},
             new String[]{
                     """
 fffffffffrrfffffff
@@ -430,7 +430,7 @@ fffffyyyyYryybpgyp
 ffffyypyggbprygrow
 fffyyygyrygbygybww
 """,
-                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABCvD", "g0708r0508y1209", "abcdefghijklmnopqstuvwyzABCDE"},
+                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABCvD", "G0708R0508Y1209", "abcdefghijklmnopqstuvwyzABCDE"},
             new String[]{
                     """
 fffffffffrrfffffff
@@ -449,7 +449,7 @@ fffffyyyyYryybpgyp
 ffffyypyggbprygrow
 fffyyygyrygbygybww
 """,
-                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABCD", "g0708r0508y1209", "abcdefhijklmnopqstuvwyzABCDE"},
+                    "AabcdefghijklmnopqrstuvwxyBbcdeghijkmnopqrsuvwxyCabcdeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "ABCD", "G0708R0508Y1209", "abcdefhijklmnopqstuvwyzABCDE"},
             new String[]{
                     """
 fffffffffrrfffffff
@@ -563,7 +563,7 @@ ffffffffyYyrrbpgyp
 ffffffffggyyyygrow
 ffffffffrybbrgybww
 """,
-                    "AabdefghijlnopqrtuvwxyBbcdeghijkmnopqrsuvwxyCadeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AcksBCD", "g0914", "acdefhijklmnopqsuvwyzABCDE"},
+                    "AabdefghijlnopqrtuvwxyBbcdeghijkmnopqrsuvwxyCadeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AcksBCD", "G0914", "acdefhijklmnopqsuvwyzABCDE"},
 
             new String[]{
                     """
@@ -583,7 +583,7 @@ ffffffffyYyrrbpgyp
 ffffffffggyyyygrow
 ffffffffrybbrgybww
 """,
-                    "AabdefghijlnopqrtuvwxyBbcdeghijkmnopqrsuvwxyCadeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AckBCD", "g0914", "acdefhjklmnopqsuvwyzABCDE"},
+                    "AabdefghijlnopqrtuvwxyBbcdeghijkmnopqrsuvwxyCadeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AckBCD", "G0914", "acdefhjklmnopqsuvwyzABCDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -602,7 +602,7 @@ ffffffffyYyrrbpgyp
 ffffffffggyyyygrow
 ffffffffrybbrgybww
 """,
-                    "AabdefghijlnopqrtuvwxyBbcdeghijkmnopqrsuvwxyCadeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AckBCD", "g0914", "acdefhjklmnopqsuvwyzABCDE"},
+                    "AabdefghijlnopqrtuvwxyBbcdeghijkmnopqrsuvwxyCadeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AckBCD", "G0914", "acdefhjklmnopqsuvwyzABCDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -622,7 +622,7 @@ ffffffffggyyyygrow
 ffffffffrybbrgybww
 """,
                     "AabdefghijlnopqrtuvwxyBbcdeghijkmnopqrsuvwxyCadeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy",
-                    "AkBCD", "g0914", "acdefhklmnopqsuvwyzABCDE"},
+                    "AkBCD", "G0914", "acdefhklmnopqsuvwyzABCDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -642,7 +642,7 @@ ffffffffggyyyygrow
 ffffffffrybbrgybww
 """,
                     "AabdefghijlnopqrtuvwxyBbcdeghijkmnopqrsuvwxyCadeghijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy",
-                    "AkBCD", "g0914", "acdefhklmnopqsuvwyzABCDE"},
+                    "AkBCD", "G0914", "acdefhklmnopqsuvwyzABCDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -718,7 +718,7 @@ ffffffffyYyrgyrgyp
 ffffffffggyyggrRow
 ffffffffrybbrgybww
 """,
-                    "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AehBCehD", "r1315", "acdefhklmnopqsuvwyzACDE"},
+                    "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AehBCehD", "R1315", "acdefhklmnopqsuvwyzACDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -737,7 +737,7 @@ ffffffffyYyrgyrgyp
 ffffffffggyyggrRow
 ffffffffrybbrgybww
 """,
-                    "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AehBCeD", "r1315", "acdefhklmnopsuvwyzACDE"},
+                    "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AehBCeD", "R1315", "acdefhklmnopsuvwyzACDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -756,7 +756,7 @@ ffffffffyYyrgyrgyp
 ffffffffggyyggrRow
 ffffffffrybbrgybww
 """,
-                    "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AehBCeD", "r1315", "acdefhklmnopsuvwyzACDE"},
+                    "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AehBCeD", "R1315", "acdefhklmnopsuvwyzACDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -775,7 +775,7 @@ ffffffffyYyrgyrGyp
 ffffffffggyyggrRow
 ffffffffrybbrgybww
 """,
-                    "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AeBCeD", "g1215r1315", "acdefhklmnopsuvwyzACDE"},
+                    "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AeBCeD", "G1215R1315", "acdefhklmnopsuvwyzACDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -795,7 +795,7 @@ ffffffffggyyggrRow
 ffffffffrybbrgybww
 """,
                     "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AeBCD",
-                    "g1215r1315", "acdefhklmopsuvwyzACDE"},
+                    "G1215R1315", "acdefhklmopsuvwyzACDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -814,7 +814,7 @@ ffffffffyYbbbyrGyp
 ffffffffggyyggrRow
 ffffffffrybbrgybww
 """,
-                    "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AeBCD", "g1215r1315", "acdefhklmopsuvwyzACDE"},
+                    "AadfgijlnopqrtvwxyBbcdeghijkmnopqrsuvwxyCadgijklmnopqrstuwxyDabcdefghijklmnopqrstuvwxy", "AeBCD", "G1215R1315", "acdefhklmopsuvwyzACDE"},
             new String[]{
                     """
 ffffffffffffffffff
@@ -880,35 +880,35 @@ ffffffffrybbrgybww
     private final static String[] actions = new String[]{
             "Bt0406N", // card
             "x0706FN", // fire
-            "g04040708Af", // cat
+            "G04040708Af", // cat
             "Cf1107W", // card
             "r0303FS", // fire
-            "y13041209Al", // cat
-            "r01100508Ba", // cat
+            "Y13041209Al", // cat
+            "R01100508Ba", // cat
             "Cv0709N", // card
             "g1303TN", // fire
             "Cc1210W", // card
             "b1205TN", // fire
             "Cb0912E", // card
             "t0009FE", // fire
-            "g07080914Am", // cat
+            "G07080914Am", // cat
             "As0409N", // card
             "i0906FS", // fire
             "Ac0910N", // card
             "j0206TN", // fire
-            "r05081014Ak", // cat
+            "R05081014Ak", // cat
             "Au1112N", // card
             "B0506TW", // fire
-            "r10141315Ab", // cat
+            "R10141315Ab", // cat
             "Ch0915N", // card
             "q0407FS", // fire
-            "g09141215Ah", // cat
+            "G09141215Ah", // cat
             "Ce1010E", // card
             "n0315FW", // fire
-            "y12091111Ae", // cat
+            "Y12091111Ae", // cat
             "Cq0914W", // card
             "k0311FN", // fire
-            "y11111216De", // cat
+            "Y11111216De", // cat
 
     };
 }
