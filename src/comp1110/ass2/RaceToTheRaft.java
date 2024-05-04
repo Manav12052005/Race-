@@ -345,7 +345,7 @@ public class RaceToTheRaft {
      * @return True if the cat movement is valid, otherwise false
      */
     public static boolean isCatMovementValid(String[] gameState, String catMovementString) {
-        return false; // FIXME TASK 14
+        return Cat.checkMovementValid(gameState, catMovementString);    // FIXME TASK 14
     }
 
 
