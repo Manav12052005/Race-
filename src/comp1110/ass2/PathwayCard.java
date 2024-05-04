@@ -111,14 +111,12 @@ public class PathwayCard { ;
     }
 
     public static boolean isOffBoard(char[][] board, char[][] tile, int x, int y){
-        if(board.length - y > tile.length || board[0].length - x > tile[0].length){
-            return true;
-        }
-        return false;
+        return x < 0 || y < 0 ||
+                y + tile[0].length > board[0].length ||
+                x + tile.length > board.length;
     }
-    public static boolean isOverlappingFirePWC(char[][] board, char[][] card, int x, int y){
-        char[][] subBoard = extractSubBoard(board, card, x, y);
-        for (char[] chars : subBoard) {
+    public static boolean isOverlappingFirePWC(char[][] board){
+        for (char[] chars : board) {
             for (char aChar : chars) {
                 if (aChar == 'f') {
                     return true;
@@ -127,9 +125,8 @@ public class PathwayCard { ;
         }
         return false;
     }
-    public static boolean isOverlappingCatPWC(char[][] board, char[][] card, int x, int y){
-        char[][] subBoard = extractSubBoard(board, card, x, y);
-        for (char[] chars : subBoard) {
+    public static boolean isOverlappingCatPWC(char[][] board){
+        for (char[] chars : board) {
             for (char aChar : chars) {
                 if (Character.isUpperCase(aChar)) {
                     return true;
@@ -138,9 +135,8 @@ public class PathwayCard { ;
         }
         return false;
     }
-    public static boolean isOverlappingRaftPWC(char[][] board, char[][] card, int x, int y){
-        char[][] subBoard = extractSubBoard(board, card, x, y);
-        for (char[] chars : subBoard) {
+    public static boolean isOverlappingRaftPWC(char[][] board){
+        for (char[] chars : board) {
             for (char aChar : chars) {
                 if (aChar == 'o') {
                     return true;
@@ -151,25 +147,25 @@ public class PathwayCard { ;
     }
 
     public static char[][] extractSubBoard(char[][] board, char[][] card, int x, int y) {
-        // Get dimensions of the smaller card
         int cardRows = card.length;
         int cardCols = card[0].length;
+        System.out.println("board dimensions: " + board.length + "x" + board[0].length);
+        System.out.println("card dimensions: " + cardRows + "x" + cardCols);
+        System.out.println("placement coordinates (x, y): " + x + ", " + y);
 
         // Create a new char array to hold the extracted sub-board
         char[][] subBoard = new char[cardRows][cardCols];
-
-        // Iterate through the sub-board area
         for (int row = 0; row < cardRows; row++) {
             for (int col = 0; col < cardCols; col++) {
                 // Calculate the corresponding index in the larger board
-                int boardRow = y + row;
-                int boardCol = x + col;
-
+                int boardRow = x + row;
+                int boardCol = y + col;
+                System.out.println("Accessing board[" + boardRow + "][" + boardCol + "]");
                 // Extract the character from the larger board
                 subBoard[row][col] = board[boardRow][boardCol];
             }
         }
-
+        System.out.println("");
         return subBoard;
     }
     public static String[] cardPickUp(String decks, String hand, String drawRequest) {
