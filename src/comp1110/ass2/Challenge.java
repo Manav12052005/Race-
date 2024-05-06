@@ -170,14 +170,4 @@ public class Challenge {
         return raftSubstring;
     }
 
-    public static void main(String[] args) {
-        // Example usage to create a Challenge object and access its substrings
-        String challengeString = "LNSNLASAF000300060012001503030903C112033060340009R01215"; // Example challenge string
-        Challenge challenge = new Challenge(challengeString);
-
-        System.out.println("Island: " + challenge.getIsland());
-        System.out.println("Fire Substring: " + challenge.getFireSubstring());
-        System.out.println("Cat Substring: " + challenge.getCatSubstring());
-        System.out.println("Raft Substring: " + challenge.getRaftSubstring());
-    }
 }
