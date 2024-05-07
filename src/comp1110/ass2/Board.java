@@ -393,6 +393,35 @@ public class Board {
         return rotatedBoardString;
     }
 
+    public static String addFireCards(String islandBoard, String fireSubstring) {
+        StringBuilder islandWithFire = new StringBuilder(islandBoard);
+
+        // Parse the fire substring and add fire cards to the island board
+        int index = 0;
+        while (index < fireSubstring.length()) {
+            // Extract the coordinates of the top-left square of the fire card
+            int row = Integer.parseInt(fireSubstring.substring(index, index + 2));
+            int col = Integer.parseInt(fireSubstring.substring(index + 2, index + 4));
+
+            // Replace the square and its neighbors with fire tiles
+            for (int i = row - 1; i <= row + 1; i++) {
+                for (int j = col - 1; j <= col + 1; j++) {
+                    // Ensure the index is within the bounds of the board
+                    if (i >= 0 && i < islandBoard.length() / (islandBoard.indexOf('\n') + 1) &&
+                            j >= 0 && j < islandBoard.indexOf('\n')) {
+                        int position = (i * (islandBoard.indexOf('\n') + 1)) + j;
+                        islandWithFire.setCharAt(position, 'f'); // Replace the square with fire tile
+                    }
+                }
+            }
+
+            // Move to the next fire location substring
+            index += 4; // Each fire location substring has 4 characters (2 for row, 2 for column)
+        }
+
+        return islandWithFire.toString();
+    }
+
 
     public static String rotateString(String str, char orientation) {
         switch (orientation) {
@@ -474,10 +503,26 @@ class Main {
         System.out.println("\nRotated String (Counterclockwise):");
         System.out.println(Board.rotateString(testString, 'W')); // Rotate counterclockwise (West)
 
-        String islandString = "LASNLNSN";
+        String islandString = "LASN";
         String generatedIslandBoard = Board.generateIslandBoard(islandString);
         System.out.println("\nGenerated Island Board:");
         System.out.println(generatedIslandBoard);
+
+        // Test the addFireCards function
+        String islandBoard = """
+            gyybgpgpb
+            prbyrgbyr
+            yprgybpgy
+            ggybrrbgb
+            brgpygybp
+            bprgpbyry
+            """;
+        String fireSubstring = "04010107";
+        System.out.println("\nIsland Board before adding fire cards:");
+        System.out.println(islandBoard);
+        String islandWithFire = Board.addFireCards(islandBoard, fireSubstring);
+        System.out.println("\nIsland Board after adding fire cards:");
+        System.out.println(islandWithFire);
 
     }
 
