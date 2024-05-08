@@ -1,5 +1,10 @@
 package comp1110.ass2;
 
+import jdk.jshell.execution.Util;
+
+import java.util.Arrays;
+import java.util.Random;
+
 public class Challenge {
 
     private int difficulty;
@@ -170,4 +175,248 @@ public class Challenge {
         return raftSubstring;
     }
 
+    /**
+     * Given a challenge string, construct an initial board state of the island and return
+     *
+     * @author Simon Liu
+     * @param challengeString string
+     * @return Island substring
+     */
+    public static String getIsland(String challengeString) {
+        Challenge challenge = new Challenge(challengeString);
+        String islandChallenge = challenge.getIsland();
+
+        // Print out the islandChallenge (For debugging use)
+//        System.out.println(islandChallenge);
+
+        int width = 0;
+        int height = 0;
+        char[] islandChar = islandChallenge.toCharArray();
+
+        for (int i = 0; i < islandChar.length; i += 2) {
+            if (i == 0) {
+                if (islandChar[i] == 'L') {
+                    width += 9;
+                    height += 9;
+                } else if (islandChar[i] == 'S') {
+                    width += 9;
+                    height += 6;
+                }
+            }
+            if (i == 2) {
+                if (islandChar[i] == 'L') {
+                    height += 9;
+                } else if (islandChar[i] == 'S') {
+                    height += 6;
+                }
+            }
+            if (i == 4) {
+                width += 9;
+            }
+        }
+
+        char[][] boardChar = new char[height][width];
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                boardChar[i][j] = '0';
+            }
+        }
+
+        int startX = 0;
+        int startY = 0;
+
+        for (int i = 0; i < islandChar.length; i += 2) {
+            String[][] boards;
+            if (islandChar[i] == 'L') {
+                boards = Utility.SQUARE_BOARDS;
+            } else { // 'S'
+                boards = Utility.RECTANGLE_BOARDS;
+            }
+
+            // Randomly select an island from the chosen array
+            int randomIndex = new Random().nextInt(boards.length);
+            String selectedIsland;
+
+            // If the next character is 'A', select the [x][1] element, otherwise select the [x][0] element
+            if (islandChar[i + 1] == 'A') {
+                selectedIsland = boards[randomIndex][1];
+            } else {
+                selectedIsland = boards[randomIndex][0];
+            }
+
+            // Convert the selected string into a 2D char array
+            String[] rows = selectedIsland.split("\n");
+            char[][] islandArray = new char[rows.length][];
+            for (int j = 0; j < rows.length; j++) {
+                islandArray[j] = rows[j].toCharArray();
+            }
+
+            //print out the islandArray (For debugging use)
+//            for (int row = 0; row < islandArray.length; row++) {
+//                for (int col = 0; col < islandArray[0].length; col++) {
+//                    System.out.print(islandArray[row][col]);
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
+
+
+
+            // Rotate the islandArray according to the challenge string
+            islandArray = rotateIslandArray(islandArray, islandChar[i], islandChar[i + 1]);
+
+//            for (int row = 0; row < islandArray.length; row++) {
+//                for (int col = 0; col < islandArray[0].length; col++) {
+//                    System.out.print(islandArray[row][col]);
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
+
+
+            boolean f = false;
+            for (int col = 0; col < boardChar[0].length; col++) {
+                for (int row = 0; row < boardChar.length; row++) {
+                    if (boardChar[row][col] == '0') {
+                        startX = row;
+                        startY = col;
+                        f = true;
+                        break;
+                    }
+                }
+                if (f) {
+                    break;
+                }
+            }
+
+            // Fit the islandArray into the boardChar array
+            for (int row = 0; row < islandArray.length; row++) {
+                for (int col = 0; col < islandArray[0].length; col++) {
+                    boardChar[row + startX][col + startY] = islandArray[row][col];
+                }
+            }
+            // print out the boardChar (For debugging use)
+//            for (int row = 0; row < boardChar.length; row++) {
+//                for (int col = 0; col < boardChar[0].length; col++) {
+//                    System.out.print(boardChar[row][col]);
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
+        }
+
+        // Put fire, cat and raft into the boardChar
+        String fire = challenge.getFireSubstring();
+        for (int i = 0; i < fire.length(); i += 4) {
+            int x = Integer.parseInt(fire.substring(i + 0, i + 2));
+            int y = Integer.parseInt(fire.substring(i + 2, i + 4));
+            // print out the fire position (For debugging use)
+//            System.out.println(x + " " + y);
+            for (int k = 0; k < 3; k++) {
+                for (int j = 0; j < 3; j++) {
+                    boardChar[x + k][y + j] = 'f';
+                }
+            }
+        }
+
+        String cat = challenge.getCatSubstring();
+        for (int i = 0; i < cat.length(); i += 5) {
+            int cardNo = Integer.parseInt(cat.substring(i + 0, i + 1));
+            String catString = Utility.CAT_CARDS[cardNo].substring(1);
+            char[][] catChar = new char[3][3];
+            for (int j = 0; j < 3; j++) {
+                catChar[j] = catString.substring(j * 3, j * 3 + 3).toCharArray();
+            }
+            int catX = Integer.parseInt(cat.substring(i + 1, i + 3));
+            int catY = Integer.parseInt(cat.substring(i + 3, i + 5));
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    boardChar[j + catX][k + catY] = catChar[j][k];
+                }
+            }
+        }
+
+        String raft = challenge.getRaftSubstring();
+        for (int i = 0; i < raft.length(); i += 5) {
+            int cardNo = Integer.parseInt(raft.substring(i + 0, i + 1));
+            String raftString = Utility.RAFT_CARDS[cardNo].substring(1);
+            char[][] raftChar = new char[3][3];
+            for (int j = 0; j < 3; j++) {
+                raftChar[j] = raftString.substring(j * 3, j * 3 + 3).toCharArray();
+            }
+            int raftX = Integer.parseInt(raft.substring(i + 1, i + 3));
+            int raftY = Integer.parseInt(raft.substring(i + 3, i + 5));
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    boardChar[j + raftX][k + raftY] = raftChar[j][k];
+                }
+            }
+        }
+
+
+
+        // print out the boardChar (For debugging use)
+//        System.out.println(Board.charBoardToString(boardChar));
+
+        return Board.charBoardToString(boardChar);
+    }
+
+   public static char[][] rotateIslandArray(char[][] islandArray, char size, char direction) {
+    char[][] rotatedArray;
+    switch (direction) {
+        case 'N':
+            return islandArray;
+        case 'E':
+            rotatedArray = new char[islandArray[0].length][islandArray.length];
+            for (int i = 0; i < islandArray.length; i++) {
+                for (int j = 0; j < islandArray[0].length; j++) {
+                    rotatedArray[j][islandArray.length - 1 - i] = islandArray[i][j];
+                }
+            }
+            return rotatedArray;
+        case 'S':
+            rotatedArray = new char[islandArray.length][islandArray[0].length];
+            for (int i = 0; i < islandArray.length; i++) {
+                for (int j = 0; j < islandArray[0].length; j++) {
+                    rotatedArray[islandArray.length - 1 - i][islandArray[0].length - 1 - j] = islandArray[i][j];
+                }
+            }
+            return rotatedArray;
+        case 'W':
+            rotatedArray = new char[islandArray[0].length][islandArray.length];
+            for (int i = 0; i < islandArray.length; i++) {
+                for (int j = 0; j < islandArray[0].length; j++) {
+                    rotatedArray[islandArray[0].length - 1 - j][i] = islandArray[i][j];
+                }
+            }
+            return rotatedArray;
+        case 'A':
+            char[] validDirections = new char[0];
+            if (size == 'S') {
+                validDirections = new char[]{'N', 'S'};
+            } else if (size == 'L') {
+                validDirections = new char[]{'N', 'E', 'S', 'W'};
+            }
+            Random random = new Random();
+            return rotateIslandArray(islandArray, size, validDirections[random.nextInt(validDirections.length)]);
+        default:
+            return islandArray;
+    }
+}
+
+
+    public static void main(String[] args) {
+        // Example usage to create a Challenge object and access its substrings
+        String challengeString = "LNSNLASAF000300060012001503030903C112033060340009R01215"; // Example challenge string
+        Challenge challenge = new Challenge(challengeString);
+
+        getIsland(challengeString); // Call getIsland method to extract island substring (not implemented yet)
+
+
+        System.out.println("Island: " + challenge.getIsland());
+        System.out.println("Fire Substring: " + challenge.getFireSubstring());
+        System.out.println("Cat Substring: " + challenge.getCatSubstring());
+        System.out.println("Raft Substring: " + challenge.getRaftSubstring());
+    }
 }
