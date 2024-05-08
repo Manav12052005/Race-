@@ -21,17 +21,47 @@ public class Island {
             sb.add(board);
         }
 
-        // Will need further instructions to continue
+        // Process each island substring
         for (String s : sb) {
-            switch (s.charAt(0)) {
+            char size = s.charAt(0);
+            char rotation = s.charAt(1);
+
+            // Handle island size and rotation
+            switch (size) {
+                case 'S':
+                    // Handle small island
+                    break;
                 case 'L':
+                    // Handle large island
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid island size!");
+            }
+
+            switch (rotation) {
+                case 'N':
+                    // Handle north rotation
+                    break;
+                case 'E':
+                    // Handle east rotation
                     break;
                 case 'S':
+                    // Handle south rotation
                     break;
+                case 'W':
+                    // Handle west rotation
+                    break;
+                case 'A':
+                    // Handle any rotation
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid rotation!");
             }
         }
 
         this.island = island;
     }
 
+
 }
+
