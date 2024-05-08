@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+import java.util.Random;
+
 public class Challenge {
 
     private int difficulty;
@@ -208,6 +210,73 @@ public class Challenge {
         }
 
         char[][] boardChar = new char[height][width];
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                boardChar[i][j] = '0';
+            }
+        }
+
+        int startX = 0;
+        int startY = 0;
+
+        for (int i = 0; i < islandChar.length; i += 2) {
+            String[][] boards;
+            if (islandChar[i] == 'L') {
+                boards = Utility.SQUARE_BOARDS;
+            } else { // 'S'
+                boards = Utility.RECTANGLE_BOARDS;
+            }
+
+            // Randomly select an island from the chosen array
+            int randomIndex = new Random().nextInt(boards.length);
+            String selectedIsland;
+
+            // If the next character is 'A', select the [x][1] element, otherwise select the [x][0] element
+            if (islandChar[i + 1] == 'A') {
+                selectedIsland = boards[randomIndex][1];
+            } else {
+                selectedIsland = boards[randomIndex][0];
+            }
+
+            // Convert the selected string into a 2D char array
+            String[] rows = selectedIsland.split("\n");
+            char[][] islandArray = new char[rows.length][];
+            for (int j = 0; j < rows.length; j++) {
+                islandArray[j] = rows[j].toCharArray();
+            }
+
+            boolean f = false;
+            for (int col = 0; col < boardChar[0].length; col++) {
+                for (int row = 0; row < boardChar.length; row++) {
+                    if (boardChar[row][col] == '0') {
+                        startX = row;
+                        startY = col;
+                        f = true;
+                        break;
+                    }
+                }
+                if (f) {
+                    break;
+                }
+            }
+
+            // Fit the islandArray into the boardChar array
+            for (int row = 0; row < islandArray.length; row++) {
+                for (int col = 0; col < islandArray[0].length; col++) {
+                    boardChar[row + startX][col + startY] = islandArray[row][col];
+                }
+            }
+            // print out the boardChar (For debugging use)
+//            for (int row = 0; row < boardChar.length; row++) {
+//                for (int col = 0; col < boardChar[0].length; col++) {
+//                    System.out.print(boardChar[row][col]);
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
+        }
+
 
 
 
