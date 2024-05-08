@@ -170,10 +170,60 @@ public class Challenge {
         return raftSubstring;
     }
 
+    /**
+     * Given a challenge string, construct an initial board state of the island and return
+     *
+     * @author Simon Liu
+     * @param challengeString string
+     * @return Island substring
+     */
+    public static String getIsland(String challengeString) {
+        Challenge challenge = new Challenge(challengeString);
+        String islandChallenge = challenge.getIsland();
+
+        int width = 0;
+        int height = 0;
+        char[] islandChar = islandChallenge.toCharArray();
+
+        for (int i = 0; i < islandChar.length; i += 2) {
+            if (i == 0) {
+                if (islandChar[i] == 'L') {
+                    width += 9;
+                    height += 9;
+                } else if (islandChar[i] == 'S') {
+                    width += 9;
+                    height += 6;
+                }
+            }
+            if (i == 2) {
+                if (islandChar[i] == 'L') {
+                    height += 9;
+                } else if (islandChar[i] == 'S') {
+                    height += 6;
+                }
+            }
+            if (i == 4) {
+                width += 9;
+            }
+        }
+
+        char[][] boardChar = new char[height][width];
+
+
+
+
+
+        return Board.charBoardToString(boardChar);
+    }
+
+
     public static void main(String[] args) {
         // Example usage to create a Challenge object and access its substrings
         String challengeString = "LNSNLASAF000300060012001503030903C112033060340009R01215"; // Example challenge string
         Challenge challenge = new Challenge(challengeString);
+
+        getIsland(challengeString); // Call getIsland method to extract island substring (not implemented yet)
+
 
         System.out.println("Island: " + challenge.getIsland());
         System.out.println("Fire Substring: " + challenge.getFireSubstring());
