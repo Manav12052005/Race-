@@ -90,7 +90,71 @@ task7:
     reports:
       junit: junit-reports/TEST-junit-jupiter.xml
 
+task8:
+  tags:
+    - comp1110
+  stage: test
+  script:
+    - $JUNIT -c=comp1110.ass2.ApplyPlacementTest
+  allow_failure: true
+  artifacts:
+    reports:
+      junit: junit-reports/TEST-junit-jupiter.xml
 
+task9:
+  tags:
+    - comp1110
+  stage: test
+  script:
+    - $JUNIT -c=comp1110.ass2.MoveCatTest
+  allow_failure: true
+  artifacts:
+    reports:
+      junit: junit-reports/TEST-junit-jupiter.xml
+
+task10:
+  tags:
+    - comp1110
+  stage: test
+  script:
+    - $JUNIT -c=comp1110.ass2.InitialiseChallengeTest
+  allow_failure: true
+  artifacts:
+    reports:
+      junit: junit-reports/TEST-junit-jupiter.xml
+
+task12:
+  tags:
+    - comp1110
+  stage: test
+  script:
+    - $JUNIT -c=comp1110.ass2.IsPlacementValidTest
+  allow_failure: true
+  artifacts:
+    reports:
+      junit: junit-reports/TEST-junit-jupiter.xml
+
+task14:
+  tags:
+    - comp1110
+  stage: test
+  script:
+    - $JUNIT -c=comp1110.ass2.IsCatMovementValidTest
+  allow_failure: true
+  artifacts:
+    reports:
+      junit: junit-reports/TEST-junit-jupiter.xml
+
+task15:
+  tags:
+    - comp1110
+  stage: test
+  script:
+    - $JUNIT -c=comp1110.ass2.IsGameOverTest
+  allow_failure: true
+  artifacts:
+    reports:
+      junit: junit-reports/TEST-junit-jupiter.xml
 
 ## Local Variables:
 ## mode: yaml
