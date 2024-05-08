@@ -136,9 +136,9 @@ fffpgbwow
 fffgrpwww
 """;
         //fire tile b fits into 3x3 free space
-        test(new String[]{burningBoard, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"}, "b1203FN", false);
+        test(new String[]{burningBoard, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "acCDE"}, "b1203FN", false);
         //fire tile b fits into 3x3 free space if moved
-        test(new String[]{burningBoard, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"}, "b0203FN", false);
+        test(new String[]{burningBoard, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "acCDE"}, "b0203FN", false);
         //fire tile t does not fit anywhere
         test(new String[]{burningBoard, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"}, "t1003FN", true);
 
@@ -160,9 +160,9 @@ fffgrpwww
                 ffffrpwww
                 """;
         //fire tile b fits if flipped
-        test(new String[]{burningBoardFlipVariant, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"}, "b1203TN", false);
+        test(new String[]{burningBoardFlipVariant, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "arCDE"}, "b1203TN", false);
         //fire tile b can fit if flipped
-        test(new String[]{burningBoardFlipVariant, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"}, "b1203FN", false);
+        test(new String[]{burningBoardFlipVariant, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "aCDE"}, "b1203FN", false);
 
         String burningBoardRotateVariant= """
 fffbfffff
@@ -183,9 +183,9 @@ fffgrpwww
 """;
 
         //fire tile b fits if rotated
-        test(new String[]{burningBoardRotateVariant, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"}, "b1203FS", false);
+        test(new String[]{burningBoardRotateVariant, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "atCDE"}, "b1203FS", false);
         //fire tile b can fit if rotated
-        test(new String[]{burningBoardRotateVariant, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"}, "b1203FN", false);
+        test(new String[]{burningBoardRotateVariant, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "ajCDE"}, "b1203FN", false);
     }
 
     @Test
