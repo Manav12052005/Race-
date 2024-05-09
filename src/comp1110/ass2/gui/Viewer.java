@@ -22,6 +22,11 @@ public class Viewer extends Application {
     private final Group DrawBoard = new Group();
     private final Group DrawHand = new Group();
 
+    private String challenge;
+    private String hand;
+    private String boardstate;
+    private String cat;
+
     /**
      * Draw the given board and hand in the window, removing any previously drawn boards/hands.
      *
@@ -72,15 +77,10 @@ public class Viewer extends Application {
         // FIXME TASK 4
     }
 
-
-
-
-
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle(" - Race to the Raft - work by Group Mon15A3");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
-
 
         VBox vbox = new VBox();
         Label label = new Label("Select Difficulty: (from 0 to 5)");
@@ -91,9 +91,12 @@ public class Viewer extends Application {
         Button confirmButton = new Button("Start Game");
         confirmButton.setOnAction(e -> {
             Integer selectedDifficulty = choiceBox.getValue();
+            String challenge = RaceToTheRaft.chooseChallenge(selectedDifficulty);
+            Challenge challengeObj = new Challenge(RaceToTheRaft.initialiseChallenge(challenge));
             if (selectedDifficulty != null) {
-                String boardstate = RaceToTheRaft.initialiseChallenge(RaceToTheRaft.chooseChallenge(selectedDifficulty));
-                String hand = "AfhkBCDahw"; // placeholder for now
+                boardstate = RaceToTheRaft.initialiseChallenge(challenge);
+                cat = challengeObj.getCatSubstring();
+                hand = "AfhkBCDahw"; // placeholder for now
                 refresh(boardstate, hand);
             }
         });

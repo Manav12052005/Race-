@@ -30,10 +30,6 @@ public class Game extends Application {
         Scene scene = new Scene(this.root, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setScene(scene);
 
-
-
-
-
         viewer.start(stage);
         stage.show();
 
