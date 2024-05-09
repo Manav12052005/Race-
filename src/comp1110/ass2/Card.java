@@ -22,9 +22,9 @@ public class Card extends ImageView {
             double y = (i / 3) * SQUARE_WIDTH;
             Square current = new Square(x, y, chars[i]);
 
-            System.out.println(x);
-            System.out.println(y);
-            System.out.println();
+//            System.out.println(x);
+//            System.out.println(y);
+//            System.out.println();
 
 //            System.out.println(chars[i]);
             card.add(current);

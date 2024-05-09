@@ -18,7 +18,7 @@ public class Viewer extends Application {
     private static final double MARGIN_X = 20;
     private static final double MARGIN_Y = 10;
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
-    private static final double shiftX = 300;
+    private static final double shiftX = 320;
 
     private final Label cursorPosition = new Label();
 
@@ -41,8 +41,8 @@ public class Viewer extends Application {
         // Draw the game board with given boardstate string
         Board board = new Board(boardstate);
 //        DrawBoard.setLayoutX(VIEWER_WIDTH - 18 * SQUARE_WIDTH);
-        DrawBoard.setLayoutX(shiftX);
-        DrawBoard.setLayoutY(0);
+        DrawBoard.setLayoutX(shiftX + MARGIN_X);
+        DrawBoard.setLayoutY(MARGIN_Y);
         DrawBoard.getChildren().clear();
         for (Square square : board.getSquares()) {
             square.setLayoutX(square.getValueX());
@@ -63,10 +63,15 @@ public class Viewer extends Application {
         DrawHand.setLayoutX(MARGIN_X);
         DrawHand.setLayoutY(MARGIN_Y);
         DrawHand.getChildren().clear();
-        double i = 0.0;
+        int i = 0;
         for (Card card : hands.getCards()) {
-            double outerX = (i % 2) * 3 * SQUARE_WIDTH + (i % 2) * 10,
-                    outerY = (i / 2) * 3 * SQUARE_WIDTH + (i / 2) * 10;
+            double outerX = (double) (i % 2) * 3 * SQUARE_WIDTH + (double) (i % 2) * 10,
+                    outerY = (double) (i / 2) * 3 * SQUARE_WIDTH + (double) (i / 2) * 10;
+
+            System.out.println(outerX);
+            System.out.println(outerY);
+            System.out.println();
+
             for (Square square : card.getCard()) {
                 square.setLayoutX(square.getValueX() + outerX);
                 square.setLayoutY(square.getValueY() + outerY);
@@ -111,7 +116,7 @@ public class Viewer extends Application {
                 boardstate = RaceToTheRaft.initialiseChallenge(challenge);
                 cat = challengeObj.getCatSubstring();
 //                hand = new String("");
-                hand = "AbcdDefg";
+                hand = "Abbbccc";
 
                 refresh(boardstate, hand);
                 root.getChildren().remove(vbox);
