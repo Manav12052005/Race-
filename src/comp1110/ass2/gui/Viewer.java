@@ -165,8 +165,31 @@ public class Viewer extends Application {
         stage.show();
 
 
+        // Add a restart button to the root group
+        Button restartButton = new Button("Restart Game");
+
+        restartButton.setOnAction(e -> {
+            // Clear the game state
+            boardstate = null;
+            hand = null;
+            cat = null;
+            DrawBoard.getChildren().clear();
+            DrawHand.getChildren().clear();
+
+            // Show the challenge selection part again
+            if (!root.getChildren().contains(vbox)) {
+                root.getChildren().add(vbox);
+            }
+        });
+
+        restartButton.setLayoutX(VIEWER_WIDTH - 95); // Adjust these values as needed
+        restartButton.setLayoutY(VIEWER_HEIGHT - 30); // Position the button at the bottom of the viewer
+
+        root.getChildren().add(restartButton);
+
+
         // Add the cursor position label to the root group
-        cursorPosition.setLayoutX(VIEWER_WIDTH - 100); // Adjust these values as needed
+        cursorPosition.setLayoutX(10); // Adjust these values as needed
         cursorPosition.setLayoutY(VIEWER_HEIGHT - 20); // Position the label at the bottom of the viewer
         root.getChildren().add(cursorPosition);
 
