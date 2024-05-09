@@ -2,6 +2,7 @@ package comp1110.ass2.gui;
 
 import comp1110.ass2.*;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,6 +20,12 @@ public class Viewer extends Application {
     private static final double MARGIN_Y = 10;
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
     private static final double shiftX = 320;
+
+    private static final double restartButtonX = VIEWER_WIDTH - 95;
+    private static final double restartButtonY = VIEWER_HEIGHT - 30;
+
+    private static final double cursorPositionX = 10;
+    private static final double cursorPositionY = VIEWER_HEIGHT - 20;
 
     private final Label cursorPosition = new Label();
 
@@ -131,12 +138,15 @@ public class Viewer extends Application {
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
 
         VBox vbox = new VBox();
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(10);
+
         Label label = new Label("Select Difficulty: (from 0 to 5)");
         ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
         for (int i = 0; i <= 5; i++) {
             choiceBox.getItems().add(i);
         }
-        Button confirmButton = new Button("Start Game");
+        Button confirmButton = new Button("Start Game!");
         confirmButton.setOnAction(e -> {
             Integer selectedDifficulty = choiceBox.getValue();
             String challenge = RaceToTheRaft.chooseChallenge(selectedDifficulty);
@@ -182,15 +192,15 @@ public class Viewer extends Application {
             }
         });
 
-        restartButton.setLayoutX(VIEWER_WIDTH - 95); // Adjust these values as needed
-        restartButton.setLayoutY(VIEWER_HEIGHT - 30); // Position the button at the bottom of the viewer
+        restartButton.setLayoutX(restartButtonX); // Adjust these values as needed
+        restartButton.setLayoutY(restartButtonY); // Position the button at the bottom of the viewer
 
         root.getChildren().add(restartButton);
 
 
         // Add the cursor position label to the root group
-        cursorPosition.setLayoutX(10); // Adjust these values as needed
-        cursorPosition.setLayoutY(VIEWER_HEIGHT - 20); // Position the label at the bottom of the viewer
+        cursorPosition.setLayoutX(cursorPositionX); // Adjust these values as needed
+        cursorPosition.setLayoutY(cursorPositionY); // Position the label at the bottom of the viewer
         root.getChildren().add(cursorPosition);
 
         // Set up a mouse moved event handler to update the cursor position label
