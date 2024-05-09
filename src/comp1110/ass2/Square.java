@@ -87,24 +87,30 @@ public class Square extends ImageView {
         }
 
         setOnMousePressed((MouseEvent event) -> {
-            mouseX = event.getSceneX();
-            mouseY = event.getSceneY();
+            if (isCat()) {
+                mouseX = event.getSceneX();
+                mouseY = event.getSceneY();
+            }
         });
 
         setOnMouseDragged((MouseEvent event) -> {
-            double deltaX = event.getSceneX() - mouseX;
-            double deltaY = event.getSceneY() - mouseY;
-            setLayoutX(getLayoutX() + deltaX);
-            setLayoutY(getLayoutY() + deltaY);
-            mouseX = event.getSceneX();
-            mouseY = event.getSceneY();
+            if (isCat()) {
+                double deltaX = event.getSceneX() - mouseX;
+                double deltaY = event.getSceneY() - mouseY;
+                setLayoutX(getLayoutX() + deltaX);
+                setLayoutY(getLayoutY() + deltaY);
+                mouseX = event.getSceneX();
+                mouseY = event.getSceneY();
+            }
         });
 
         setOnMouseReleased((MouseEvent event) -> {
-            double newX = Math.round(getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
-            double newY = Math.round(getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
-            setLayoutX(newX);
-            setLayoutY(newY);
+            if (isCat()) {
+                double newX = Math.round(getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
+                double newY = Math.round(getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
+                setLayoutX(newX);
+                setLayoutY(newY);
+            }
         });
 
 //        setOnMousePressed((MouseEvent event) -> {

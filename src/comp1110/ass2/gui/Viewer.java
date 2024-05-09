@@ -68,6 +68,8 @@ public class Viewer extends Application {
             double outerX = (double) (i % 2) * 3 * SQUARE_WIDTH + (double) (i % 2) * 10,
                     outerY = (double) (i / 2) * 3 * SQUARE_WIDTH + (double) (i / 2) * 10;
 
+            // Create a new group for each card
+            Group cardGroup = new Group();
 
             for (Square square : card.getCard()) {
                 square.setLayoutX(square.getValueX() + outerX);
@@ -86,8 +88,32 @@ public class Viewer extends Application {
 //                System.out.println("Adding square of type: " + square.getT());
 //                System.out.println("Image: " + square.getImage());
 
-                DrawHand.getChildren().add(square);
+//                DrawHand.getChildren().add(square);
+                cardGroup.getChildren().add(square);
             }
+
+            // Add mouse event handlers to the card group
+            final double[] dragDelta = new double[2];
+            cardGroup.setOnMousePressed(mouseEvent -> {
+                dragDelta[0] = cardGroup.getLayoutX() - mouseEvent.getSceneX();
+                dragDelta[1] = cardGroup.getLayoutY() - mouseEvent.getSceneY();
+            });
+
+            cardGroup.setOnMouseDragged(mouseEvent -> {
+                cardGroup.setLayoutX(mouseEvent.getSceneX() + dragDelta[0]);
+                cardGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
+            });
+
+            cardGroup.setOnMouseReleased(mouseEvent -> {
+                double newX = Math.round(cardGroup.getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
+                double newY = Math.round(cardGroup.getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
+                cardGroup.setLayoutX(newX);
+                cardGroup.setLayoutY(newY);
+            });
+
+            // Add the card group to the DrawHand group
+            DrawHand.getChildren().add(cardGroup);
+
             i++;
         }
         // FIXME TASK 4
