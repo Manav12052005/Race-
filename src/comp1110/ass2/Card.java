@@ -18,9 +18,14 @@ public class Card extends ImageView {
         char[] chars = str.toCharArray();
 
         for (int i = 0; i < chars.length; i++) {
-            double x = (i % 3) * SQUARE_WIDTH;
+            double x = ((double) i % 3) * SQUARE_WIDTH;
             double y = (i / 3) * SQUARE_WIDTH;
             Square current = new Square(x, y, chars[i]);
+
+            System.out.println(x);
+            System.out.println(y);
+            System.out.println();
+
 //            System.out.println(chars[i]);
             card.add(current);
         }

@@ -15,6 +15,8 @@ public class Game extends Application {
     private static final int WINDOW_WIDTH = 1100;
     private static final int WINDOW_HEIGHT = 650;
 
+
+
     // FIXME TASK 11 Basic game
 
     private Viewer viewer = new Viewer();
@@ -32,8 +34,6 @@ public class Game extends Application {
 
         viewer.start(stage);
         stage.show();
-
-        //
 
 //        String boardstate = RaceToTheRaft.initialiseChallenge(RaceToTheRaft.chooseChallenge(0));
 //        String hand = "AfhkBCDahw";

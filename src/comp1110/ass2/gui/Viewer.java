@@ -13,11 +13,14 @@ import javafx.stage.Stage;
 public class Viewer extends Application {
 
     private final Group root = new Group();
-    private static final int VIEWER_WIDTH = 1100;
-    private static final int VIEWER_HEIGHT = 650;
-    private static final int MARGIN_X = 20;
-    private static final int MARGIN_Y = 10;
+    private static final double VIEWER_WIDTH = 1100;
+    private static final double VIEWER_HEIGHT = 650;
+    private static final double MARGIN_X = 20;
+    private static final double MARGIN_Y = 10;
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
+    private static final double shiftX = 300;
+
+    private final Label cursorPosition = new Label();
 
     private final Group DrawBoard = new Group();
     private final Group DrawHand = new Group();
@@ -37,13 +40,18 @@ public class Viewer extends Application {
     void displayState(String boardstate, String hand) {
         // Draw the game board with given boardstate string
         Board board = new Board(boardstate);
-        DrawBoard.setLayoutX(VIEWER_WIDTH - 18 * SQUARE_WIDTH);
-//        DrawBoard.setLayoutX(300);
+//        DrawBoard.setLayoutX(VIEWER_WIDTH - 18 * SQUARE_WIDTH);
+        DrawBoard.setLayoutX(shiftX);
         DrawBoard.setLayoutY(0);
         DrawBoard.getChildren().clear();
         for (Square square : board.getSquares()) {
             square.setLayoutX(square.getValueX());
             square.setLayoutY(square.getValueY());
+
+//            System.out.println(square.getValueX());
+//            System.out.println(square.getValueY());
+//            System.out.println();
+
             square.setImage(square.getImg());
             square.setFitWidth(SQUARE_WIDTH);
             square.setFitHeight(SQUARE_WIDTH);
@@ -55,13 +63,19 @@ public class Viewer extends Application {
         DrawHand.setLayoutX(MARGIN_X);
         DrawHand.setLayoutY(MARGIN_Y);
         DrawHand.getChildren().clear();
-        int i = 0;
+        double i = 0.0;
         for (Card card : hands.getCards()) {
             double outerX = (i % 2) * 3 * SQUARE_WIDTH + (i % 2) * 10,
                     outerY = (i / 2) * 3 * SQUARE_WIDTH + (i / 2) * 10;
             for (Square square : card.getCard()) {
                 square.setLayoutX(square.getValueX() + outerX);
                 square.setLayoutY(square.getValueY() + outerY);
+
+//             For debugging use
+//                System.out.println(square.getValueX() + outerX);
+//                System.out.println(square.getValueY() + outerY);
+//                System.out.println();
+
                 square.setImage(square.getImg());
                 square.setFitWidth(SQUARE_WIDTH);
                 square.setFitHeight(SQUARE_WIDTH);
@@ -96,8 +110,11 @@ public class Viewer extends Application {
             if (selectedDifficulty != null) {
                 boardstate = RaceToTheRaft.initialiseChallenge(challenge);
                 cat = challengeObj.getCatSubstring();
-                hand = "AfhkBCDahw"; // placeholder for now
+//                hand = new String("");
+                hand = "AbcdDefg";
+
                 refresh(boardstate, hand);
+                root.getChildren().remove(vbox);
             }
         });
         vbox.getChildren().addAll(label, choiceBox, confirmButton);
@@ -113,6 +130,20 @@ public class Viewer extends Application {
         stage.setScene(scene);
         stage.show();
 
+
+        // Add the cursor position label to the root group
+        cursorPosition.setLayoutX(VIEWER_WIDTH - 100); // Adjust these values as needed
+        cursorPosition.setLayoutY(VIEWER_HEIGHT - 20); // Position the label at the bottom of the viewer
+        root.getChildren().add(cursorPosition);
+
+        // Set up a mouse moved event handler to update the cursor position label
+        root.setOnMouseMoved(event -> {
+            double x = event.getX();
+            double y = event.getY();
+            String formattedX = String.format("%.2f", x);
+            String formattedY = String.format("%.2f", y);
+            cursorPosition.setText("x: " + formattedX + ", y: " + formattedY);
+        });
     }
 
     public void refresh(String boardstate, String hand) {

@@ -259,11 +259,11 @@ public class Board {
     public Board(String boardString) {
         ArrayList<Square> squares = new ArrayList<>();
         boardString.lines().forEach(line -> {
-            double x = 0, y = (squares.size() / line.length()) * SQUARE_WIDTH;
+            double x = 0, y = ((double) squares.size() / line.length()) * SQUARE_WIDTH;
             for (char ch : line.toCharArray()) {
                 Square current = new Square(x, y, ch);
                 squares.add(current);
-                x += 38;
+                x += SQUARE_WIDTH;
             }
         });
         this.squares = squares;

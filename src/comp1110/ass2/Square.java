@@ -1,8 +1,11 @@
 package comp1110.ass2;
 
+import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 
 /**
@@ -13,8 +16,8 @@ import javafx.scene.input.MouseEvent;
  */
 public class Square extends ImageView {
     public static final double SQUARE_WIDTH = 40;
-    private final double x;
-    private final double y;
+    private double x;
+    private double y;
     private double mouseX, mouseY;
     public enum type {
         BLUE, GREEN, PURPLE, RED, YELLOW,
@@ -23,6 +26,8 @@ public class Square extends ImageView {
     }
     private final type t;
     private final Image img;
+
+    public static Square selectedSquare = null;
 
     public Square(double x, double y, char t) {
         this.x = x;
@@ -85,36 +90,44 @@ public class Square extends ImageView {
         }
 
         setOnMousePressed((MouseEvent event) -> {
-            if (isCat()) {
-                mouseX = event.getSceneX();
-                mouseY = event.getSceneY();
-            }
+            mouseX = event.getSceneX();
+            mouseY = event.getSceneY();
         });
 
         setOnMouseDragged((MouseEvent event) -> {
-            if (isCat()) {
-                double deltaX = event.getSceneX() - mouseX;
-                double deltaY = event.getSceneY() - mouseY;
-                setLayoutX(getValueX() + deltaX);
-                setLayoutY(getValueY() + deltaY);
-            }
+            double deltaX = event.getSceneX() - mouseX;
+            double deltaY = event.getSceneY() - mouseY;
+            setLayoutX(getLayoutX() + deltaX);
+            setLayoutY(getLayoutY() + deltaY);
+            mouseX = event.getSceneX();
+            mouseY = event.getSceneY();
         });
-
-//        setOnMouseReleased((MouseEvent event) -> {
-//            double newX = Math.round(getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
-//            double newY = Math.round(getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
-//            setLayoutX(newX);
-//            setLayoutY(newY);
-//        });
 
         setOnMouseReleased((MouseEvent event) -> {
-            if (isCat()) {
-                double newX = Math.round((getLayoutX() + SQUARE_WIDTH / 2) / SQUARE_WIDTH) * SQUARE_WIDTH;
-                double newY = Math.round((getLayoutY() + SQUARE_WIDTH / 2) / SQUARE_WIDTH) * SQUARE_WIDTH;
-                setLayoutX(newX);
-                setLayoutY(newY);
-            }
+            double newX = Math.round(getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
+            double newY = Math.round(getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
+            setLayoutX(newX);
+            setLayoutY(newY);
         });
+
+//        setOnMousePressed((MouseEvent event) -> {
+//            if (Square.selectedSquare != null) {
+//                Square.selectedSquare.setEffect(null); // remove highlight from previously selected square
+//            }
+//            Square.selectedSquare = this;
+//            this.setEffect(new DropShadow(20, Color.WHITE)); // highlight the selected square
+//        });
+//
+//        setOnMouseClicked(event -> {
+//            if (Square.selectedSquare != null) {
+//                double newX = Math.floor((event.getSceneX() / Square.SQUARE_WIDTH)) * Square.SQUARE_WIDTH;
+//                double newY = Math.floor((event.getSceneY() / Square.SQUARE_WIDTH)) * Square.SQUARE_WIDTH;
+//                Square.selectedSquare.setLayoutX(newX);
+//                Square.selectedSquare.setLayoutY(newY);
+//                Square.selectedSquare.setEffect(null); // remove highlight
+//                Square.selectedSquare = null; // deselect the square
+//            }
+//        });
     }
 
     public static type charToType(char t){
