@@ -65,8 +65,8 @@ public class Viewer extends Application {
         DrawHand.getChildren().clear();
         int i = 0;
         for (Card card : hands.getCards()) {
-            double outerX = (double) (i % 2) * 3 * SQUARE_WIDTH + (double) (i % 2) * 10,
-                    outerY = (double) (i / 2) * 3 * SQUARE_WIDTH + (double) (i / 2) * 10;
+            double outerX = (double) (i % 2) * 3 * SQUARE_WIDTH + (double) (i % 2) * SQUARE_WIDTH,
+                    outerY = (double) (i / 2) * 3 * SQUARE_WIDTH + (double) (i / 2) * SQUARE_WIDTH;
 
             // Create a new group for each card
             Group cardGroup = new Group();
@@ -104,9 +104,15 @@ public class Viewer extends Application {
                 cardGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
             });
 
+//            cardGroup.setOnMouseReleased(mouseEvent -> {
+//                double newX = Math.round(cardGroup.getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
+//                double newY = Math.round(cardGroup.getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
+//                cardGroup.setLayoutX(newX);
+//                cardGroup.setLayoutY(newY);
+//            });
             cardGroup.setOnMouseReleased(mouseEvent -> {
-                double newX = Math.round(cardGroup.getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
-                double newY = Math.round(cardGroup.getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
+                double newX = Math.round((cardGroup.getLayoutX() - outerX) / SQUARE_WIDTH) * SQUARE_WIDTH + outerX;
+                double newY = Math.round((cardGroup.getLayoutY() - outerY) / SQUARE_WIDTH) * SQUARE_WIDTH + outerY;
                 cardGroup.setLayoutX(newX);
                 cardGroup.setLayoutY(newY);
             });
