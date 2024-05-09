@@ -68,9 +68,6 @@ public class Viewer extends Application {
             double outerX = (double) (i % 2) * 3 * SQUARE_WIDTH + (double) (i % 2) * 10,
                     outerY = (double) (i / 2) * 3 * SQUARE_WIDTH + (double) (i / 2) * 10;
 
-            System.out.println(outerX);
-            System.out.println(outerY);
-            System.out.println();
 
             for (Square square : card.getCard()) {
                 square.setLayoutX(square.getValueX() + outerX);
