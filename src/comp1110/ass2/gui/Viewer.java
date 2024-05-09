@@ -1,16 +1,13 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.Board;
-import comp1110.ass2.Card;
-import comp1110.ass2.Hand;
-import comp1110.ass2.Square;
+import comp1110.ass2.*;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Viewer extends Application {
@@ -22,11 +19,8 @@ public class Viewer extends Application {
     private static final int MARGIN_Y = 10;
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
 
-    private final Group controls = new Group();
     private final Group DrawBoard = new Group();
     private final Group DrawHand = new Group();
-    private TextArea handTextField;
-    private TextArea boardTextField;
 
     /**
      * Draw the given board and hand in the window, removing any previously drawn boards/hands.
@@ -78,73 +72,47 @@ public class Viewer extends Application {
         // FIXME TASK 4
     }
 
-    /**
-     * Generate controls for Viewer
-     */
-    private void makeControls() {
-        Label playerLabel = new Label("Cards in hand:");
-        handTextField = new TextArea();
-        handTextField.setPrefWidth(100);
-        Label boardLabel = new Label("Board State:");
-        boardTextField = new TextArea();
-        boardTextField.setPrefWidth(100);
-        Button button = refreshButton();
-        button.setLayoutY(VIEWER_HEIGHT - 250);
-        button.setLayoutX(MARGIN_X);
-        HBox fields = new HBox();
-        fields.getChildren().addAll(handTextField, boardTextField);
-        fields.setSpacing(20);
-        fields.setLayoutX(MARGIN_X);
-        fields.setLayoutY(VIEWER_HEIGHT - 200);
-        HBox labels = new HBox();
-        labels.getChildren().addAll(playerLabel, boardLabel);
-        labels.setSpacing(45);
-        labels.setLayoutX(MARGIN_X);
-        labels.setLayoutY(VIEWER_HEIGHT - 220);
-        controls.getChildren().addAll(fields, labels, button);
-    }
 
-    /**
-     * Create refresh button. Upon pressing, capture the textFields and call displayState
-     * @return the created button
-     */
-    private Button refreshButton() {
-        Button button = new Button("Refresh");
-        button.setOnAction(e -> {
-            String boardText = boardTextField.getText();
-            String handCards = handTextField.getText();
-            displayState(boardText, handCards);
-        });
-        return button;
-    }
+
+
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setTitle("Race to the Raft Game - Group Mon15A3");
+        stage.setTitle(" - Race to the Raft - work by Group Mon15A3");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
-        makeControls();
-        displayState("""
-            fffffffffrrfffffff
-            fffffffffrRfffffff
-            fffffffffrrfffffff
-            fffgffyrgpygyrygbr
-            fffgGfggyygprbprpg
-            fffgggbgprbpygbpyb
-            ffffffbpbpgrbrrbgy
-            ffffffgygybpgygprb
-            ffffffbrrrybgygybg
-            ffffffgpbbyrprgbbp
-            ffffffbyrbpybgpryg
-            ffffffpgyrggrbgyby
-            fffffybgbpryybpgyp
-            ffffYyybpgbprygrow
-            fffyyyyryygbygybww"""
-            , "AfhkDahw");
-        root.getChildren().add(controls);
+
+
+        VBox vbox = new VBox();
+        Label label = new Label("Select Difficulty: (from 0 to 5)");
+        ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
+        for (int i = 0; i <= 5; i++) {
+            choiceBox.getItems().add(i);
+        }
+        Button confirmButton = new Button("Start Game");
+        confirmButton.setOnAction(e -> {
+            Integer selectedDifficulty = choiceBox.getValue();
+            if (selectedDifficulty != null) {
+                String boardstate = RaceToTheRaft.initialiseChallenge(RaceToTheRaft.chooseChallenge(selectedDifficulty));
+                String hand = "AfhkBCDahw"; // placeholder for now
+                refresh(boardstate, hand);
+            }
+        });
+        vbox.getChildren().addAll(label, choiceBox, confirmButton);
+        root.getChildren().add(vbox);
+
+        vbox.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
+            vbox.setLayoutX((VIEWER_WIDTH - newValue.getWidth()) / 2);
+            vbox.setLayoutY((VIEWER_HEIGHT - newValue.getHeight()) / 2);
+        });
+
         root.getChildren().add(DrawBoard);
         root.getChildren().add(DrawHand);
-        makeControls();
         stage.setScene(scene);
         stage.show();
+
+    }
+
+    public void refresh(String boardstate, String hand) {
+        displayState(boardstate, hand);
     }
 }

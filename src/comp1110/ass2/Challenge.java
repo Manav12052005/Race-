@@ -1,8 +1,5 @@
 package comp1110.ass2;
 
-import jdk.jshell.execution.Util;
-
-import java.util.Arrays;
 import java.util.Random;
 
 public class Challenge {

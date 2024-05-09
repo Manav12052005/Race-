@@ -1,8 +1,5 @@
 package comp1110.ass2;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.time.temporal.ChronoField;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
