@@ -13,6 +13,8 @@ import javafx.scene.effect.Glow;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 public class Viewer extends Application {
 
     private final Group root = new Group();
@@ -232,8 +234,11 @@ public class Viewer extends Application {
                 deckD = Utility.DECK_D;
 
                 cat = challengeObj.getCatSubstring();
-                hand = new String("");
-                hand = "Abbbccc";
+
+//                hand = new String("");
+//                hand = "Abbbccc";
+//                hand = "AbdfBcCaDe";
+                hand = Hand.generateHand();
 
                 refresh(boardstate, hand);
                 root.getChildren().remove(vbox);
@@ -264,6 +269,9 @@ public class Viewer extends Application {
 
 // Add the ChoiceBox and Button to the root node
         root.getChildren().addAll(deckChoiceBox, drawCardButton);
+
+        // Perform the draw card action here
+//        Draw(gameState, hand);
 
 
         vbox.getChildren().addAll(label, choiceBox, confirmButton);
@@ -344,5 +352,17 @@ public class Viewer extends Application {
         return new int[] {gridX, gridY};
     }
 
+    public String Draw(String[] gameState, String hand) {
+
+        StringBuilder sb = new StringBuilder(hand);
+        while (sb.length() < 12) {
+
+
+        }
+
+
+
+        return sb.toString();
+    }
 
 }

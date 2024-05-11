@@ -1,6 +1,6 @@
 package comp1110.ass2;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Hand {
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
@@ -58,13 +58,48 @@ public class Hand {
         return cards;
     }
 
-    // for testing use
-//    public static void main(String[] args) {
+    public static String generateHand() {
+        Map<Character, List<Character>> handMap = new HashMap<>();
+        List<Character> lowerCaseChars = new ArrayList<>();
+        for (char c = 'a'; c <= 'f'; c++) {
+            lowerCaseChars.add(c);
+        }
+        Collections.shuffle(lowerCaseChars);
+
+        List<Character> upperCaseChars = Arrays.asList('A', 'B', 'C', 'D');
+        Collections.shuffle(upperCaseChars);
+
+        for (int i = 0; i < 6; i++) {
+            Character upperCaseChar = upperCaseChars.get(new Random().nextInt(upperCaseChars.size()));
+            if (!lowerCaseChars.isEmpty()) {
+                char lowerCaseChar = lowerCaseChars.remove(lowerCaseChars.size() - 1);
+                handMap.putIfAbsent(upperCaseChar, new ArrayList<>());
+                handMap.get(upperCaseChar).add(lowerCaseChar);
+            }
+        }
+
+        StringBuilder hand = new StringBuilder();
+        upperCaseChars.sort(Comparator.naturalOrder());
+        for (Character upperCaseChar : upperCaseChars) {
+            if (handMap.containsKey(upperCaseChar)) {
+                hand.append(upperCaseChar);
+                for (Character lowerCaseChar : handMap.get(upperCaseChar)) {
+                    hand.append(lowerCaseChar);
+                }
+            }
+        }
+
+        return hand.toString();
+    }
+
+//     for testing use
+    public static void main(String[] args) {
+        System.out.println(generateHand());
 //        String hand = "AfhkDahw";
 //        ArrayList<String> list = new ArrayList<>();
 //        list = handToCards(hand);
 //        for (String str : list) {
 //            System.out.println(str);
 //        }
-//    }
+    }
 }
