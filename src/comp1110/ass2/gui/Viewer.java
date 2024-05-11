@@ -4,10 +4,12 @@ import comp1110.ass2.*;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Glow;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -23,6 +25,9 @@ public class Viewer extends Application {
 
     private static final double restartButtonX = VIEWER_WIDTH - 95;
     private static final double restartButtonY = VIEWER_HEIGHT - 30;
+
+    private static final double rotateButton_X = 10;
+    private static final double rotateButton_Y = VIEWER_HEIGHT - 50;
 
     private static final double cursorPositionX = 10;
     private static final double cursorPositionY = VIEWER_HEIGHT - 20;
@@ -129,6 +134,46 @@ public class Viewer extends Application {
 
             i++;
         }
+
+        Button rotateButton = new Button("Rotate");
+        rotateButton.setLayoutX(rotateButton_X);
+        rotateButton.setLayoutY(rotateButton_Y);
+        root.getChildren().add(rotateButton);
+
+        Group[] selectedCardGroup = new Group[1];
+        rotateButton.setOnAction(e -> {
+            if (selectedCardGroup[0] != null) {
+                selectedCardGroup[0].setRotate(selectedCardGroup[0].getRotate() + 90);
+            }
+        });
+
+        for (Node node : DrawHand.getChildren()) {
+            if (node instanceof Group) {
+                Group cardGroup = (Group) node;
+                cardGroup.setOnMouseClicked(e -> {
+                    // Check if the clicked cardGroup is already the selected one
+                    if (selectedCardGroup[0] == cardGroup) {
+                        // Deselect the cardGroup
+                        cardGroup.setEffect(null);
+                        selectedCardGroup[0] = null;
+                    } else {
+                        // Remove highlight from previously selected cardGroup
+                        if (selectedCardGroup[0] != null) {
+                            selectedCardGroup[0].setEffect(null);
+                        }
+
+                        // Highlight the clicked cardGroup
+                        Glow glow = new Glow();
+                        glow.setLevel(0.8); // Adjust the level as needed
+                        cardGroup.setEffect(glow);
+
+                        // Store the clicked cardGroup as the selected cardGroup
+                        selectedCardGroup[0] = cardGroup;
+                    }
+                });
+            }
+        }
+
         // FIXME TASK 4
     }
 
@@ -161,6 +206,8 @@ public class Viewer extends Application {
                 root.getChildren().remove(vbox);
             }
         });
+
+
         vbox.getChildren().addAll(label, choiceBox, confirmButton);
         root.getChildren().add(vbox);
 
@@ -212,6 +259,7 @@ public class Viewer extends Application {
             cursorPosition.setText("x: " + formattedX + ", y: " + formattedY);
         });
     }
+
 
     public void refresh(String boardstate, String hand) {
         displayState(boardstate, hand);
