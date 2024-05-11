@@ -90,6 +90,7 @@ public class Square extends ImageView {
             if (isCat()) {
                 mouseX = event.getSceneX();
                 mouseY = event.getSceneY();
+                toFront(); // bring the square to the front
             }
         });
 

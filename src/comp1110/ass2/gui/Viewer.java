@@ -132,6 +132,12 @@ public class Viewer extends Application {
             // Add the card group to the DrawHand group
             DrawHand.getChildren().add(cardGroup);
 
+            cardGroup.setOnMousePressed(mouseEvent -> {
+                dragDelta[0] = cardGroup.getLayoutX() - mouseEvent.getSceneX();
+                dragDelta[1] = cardGroup.getLayoutY() - mouseEvent.getSceneY();
+                cardGroup.toFront(); // bring the card to the front
+            });
+
             i++;
         }
 
