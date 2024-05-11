@@ -33,9 +33,9 @@ public class ChallengeTest {
 
     // Test parsing of island substring
     @Test
-    void testGetIsland() {
+    void testGetBoardSubstring() {
         // Assert the expected island substring
-        assertEquals("LNSNLASA", challenge.getIsland());
+        assertEquals("LNSNLASA", challenge.getBoardSubstring());
     }
 
     // Test parsing of fire substring

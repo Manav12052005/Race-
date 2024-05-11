@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import comp1110.ass2.gui.Viewer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -25,6 +26,7 @@ public class Square extends ImageView {
     private final Image img;
 
     public static Square selectedSquare = null;
+    private boolean canDrag = true;
 
     public Square(double x, double y, char t) {
         this.x = x;
@@ -87,7 +89,7 @@ public class Square extends ImageView {
         }
 
         setOnMousePressed((MouseEvent event) -> {
-            if (isCat()) {
+            if (isCat() && canDrag) {
                 mouseX = event.getSceneX();
                 mouseY = event.getSceneY();
                 toFront(); // bring the square to the front
@@ -95,7 +97,7 @@ public class Square extends ImageView {
         });
 
         setOnMouseDragged((MouseEvent event) -> {
-            if (isCat()) {
+            if (isCat() && canDrag) {
                 double deltaX = event.getSceneX() - mouseX;
                 double deltaY = event.getSceneY() - mouseY;
                 setLayoutX(getLayoutX() + deltaX);
@@ -106,11 +108,15 @@ public class Square extends ImageView {
         });
 
         setOnMouseReleased((MouseEvent event) -> {
-            if (isCat()) {
+            if (isCat() && canDrag) {
                 double newX = Math.round(getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
                 double newY = Math.round(getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
                 setLayoutX(newX);
                 setLayoutY(newY);
+
+                // Calculate and print the grid index
+                int[] gridIndex = Viewer.getGridIndex(getLayoutX(), getLayoutY());
+                System.out.println("Grid index: [" + gridIndex[0] + "][" + gridIndex[1] + "]");
             }
         });
 
@@ -169,7 +175,7 @@ public class Square extends ImageView {
         return y;
     }
 
-    private boolean isCat() {
+     boolean isCat() {
         return t == type.blueCAT || t == type.greenCAT || t == type.purpleCAT || t == type.redCAT || t == type.yellowCAT;
     }
 }

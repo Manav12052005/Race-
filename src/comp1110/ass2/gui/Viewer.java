@@ -29,6 +29,11 @@ public class Viewer extends Application {
     private static final double rotateButton_X = 10;
     private static final double rotateButton_Y = VIEWER_HEIGHT - 50;
 
+    private static final double deckChoiceBox_X = 100;
+    private static final double deckChoiceBox_Y = VIEWER_HEIGHT - 50;
+    private static final double drawCardButton_X = 150;
+    private static final double drawCardButton_Y = VIEWER_HEIGHT - 50;
+
     private static final double cursorPositionX = 10;
     private static final double cursorPositionY = VIEWER_HEIGHT - 20;
 
@@ -36,6 +41,11 @@ public class Viewer extends Application {
 
     private final Group DrawBoard = new Group();
     private final Group DrawHand = new Group();
+
+    private String[] deckA;
+    private String[] deckB;
+    private String[] deckC;
+    private String[] deckD;
 
     private String challenge;
     private String hand;
@@ -192,6 +202,15 @@ public class Viewer extends Application {
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
 
+        // Initialize the game state
+        String[] gameState = new String[5];
+        // Set the initial values for the game state
+        gameState[0] = "board state";
+        gameState[1] = "deck state";
+        gameState[2] = "hand state";
+        gameState[3] = "exhausted cats state";
+        gameState[4] = "fire tile bag state";
+
         Label label = new Label("Select Difficulty: (from 0 to 5)");
         ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
         for (int i = 0; i <= 5; i++) {
@@ -203,15 +222,48 @@ public class Viewer extends Application {
             String challenge = RaceToTheRaft.chooseChallenge(selectedDifficulty);
             Challenge challengeObj = new Challenge(RaceToTheRaft.initialiseChallenge(challenge));
             if (selectedDifficulty != null) {
-                boardstate = RaceToTheRaft.initialiseChallenge(challenge);
+                gameState[0] = RaceToTheRaft.initialiseChallenge(challenge);
+                boardstate = gameState[0];
+
+                // initialise the deck
+                deckA = Utility.DECK_A;
+                deckB = Utility.DECK_B;
+                deckC = Utility.DECK_C;
+                deckD = Utility.DECK_D;
+
                 cat = challengeObj.getCatSubstring();
-//                hand = new String("");
+                hand = new String("");
                 hand = "Abbbccc";
 
                 refresh(boardstate, hand);
                 root.getChildren().remove(vbox);
             }
         });
+
+// Create a ChoiceBox
+        ChoiceBox<String> deckChoiceBox = new ChoiceBox<>();
+        deckChoiceBox.getItems().addAll("A", "B", "C", "D");
+
+// Create a Button
+        Button drawCardButton = new Button("Draw Card");
+
+// Add action event to the button
+        drawCardButton.setOnAction(e -> {
+            String selectedDeck = deckChoiceBox.getValue();
+            if (selectedDeck != null) {
+                // Perform the draw card action here
+                System.out.println("Draw card from deck: " + selectedDeck);
+            }
+        });
+
+// Set the layout for Button
+        deckChoiceBox.setLayoutX(deckChoiceBox_X);
+        deckChoiceBox.setLayoutY(deckChoiceBox_Y);
+        drawCardButton.setLayoutX(drawCardButton_X);
+        drawCardButton.setLayoutY(drawCardButton_Y);
+
+// Add the ChoiceBox and Button to the root node
+        root.getChildren().addAll(deckChoiceBox, drawCardButton);
 
 
         vbox.getChildren().addAll(label, choiceBox, confirmButton);
@@ -224,6 +276,7 @@ public class Viewer extends Application {
 
         root.getChildren().add(DrawBoard);
         root.getChildren().add(DrawHand);
+
         stage.setScene(scene);
         stage.show();
 
@@ -266,8 +319,30 @@ public class Viewer extends Application {
         });
     }
 
-
     public void refresh(String boardstate, String hand) {
         displayState(boardstate, hand);
     }
+
+    public void printGameState(String gamestate) {
+        String[] rows = gamestate.split("\n");
+        for (String row : rows) {
+            System.out.println(row);
+        }
+    }
+
+    public static int[] getGridIndex(double cursorX, double cursorY) {
+        double startX = shiftX + MARGIN_X;
+        double startY = MARGIN_Y;
+        double squareWidth = SQUARE_WIDTH;
+
+        double relativeX = cursorX - startX;
+        double relativeY = cursorY - startY;
+
+        int gridX = (int) Math.floor(relativeX / squareWidth) + 9;
+        int gridY = (int) Math.floor(relativeY / squareWidth) + 1;
+
+        return new int[] {gridX, gridY};
+    }
+
+
 }

@@ -156,7 +156,7 @@ public class Challenge {
         return name;
     }
 
-    public String getIsland() {
+    public String getBoardSubstring() {
         return island;
     }
 
@@ -179,9 +179,9 @@ public class Challenge {
      * @param challengeString string
      * @return Island substring
      */
-    public static String getIsland(String challengeString) {
+    public static String getBoardSubstring(String challengeString) {
         Challenge challenge = new Challenge(challengeString);
-        String islandChallenge = challenge.getIsland();
+        String islandChallenge = challenge.getBoardSubstring();
 
         // Print out the islandChallenge (For debugging use)
 //        System.out.println(islandChallenge);
@@ -408,10 +408,10 @@ public class Challenge {
         String challengeString = "LNSNLASAF000300060012001503030903C112033060340009R01215"; // Example challenge string
         Challenge challenge = new Challenge(challengeString);
 
-        getIsland(challengeString); // Call getIsland method to extract island substring (not implemented yet)
+        getBoardSubstring(challengeString); // Call getIsland method to extract island substring (not implemented yet)
 
 
-        System.out.println("Island: " + challenge.getIsland());
+        System.out.println("Island: " + challenge.getBoardSubstring());
         System.out.println("Fire Substring: " + challenge.getFireSubstring());
         System.out.println("Cat Substring: " + challenge.getCatSubstring());
         System.out.println("Raft Substring: " + challenge.getRaftSubstring());

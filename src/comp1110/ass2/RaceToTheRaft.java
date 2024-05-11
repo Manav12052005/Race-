@@ -259,7 +259,7 @@ public class RaceToTheRaft {
      * @return A board string for this challenge.
      */
     public static String initialiseChallenge(String challengeString) {
-        return Challenge.getIsland(challengeString);  // FIXME 10
+        return Challenge.getBoardSubstring(challengeString);  // FIXME 10
     }
 
 
