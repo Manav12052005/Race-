@@ -362,6 +362,7 @@ public class Viewer extends Application {
             cat = null;
             DrawBoard.getChildren().clear();
             DrawHand.getChildren().clear();
+            CatGroup.getChildren().clear();
 
             // Show the challenge selection part again
             if (!root.getChildren().contains(vbox)) {
