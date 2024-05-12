@@ -181,28 +181,47 @@ public class Viewer extends Application {
             }
         });
 
+        boolean[] isDragged = new boolean[1];
+        final double[] dragDelta = new double[2];
+
         for (Node node : DrawHand.getChildren()) {
             if (node instanceof Group) {
                 Group cardGroup = (Group) node;
+
+                cardGroup.setOnMousePressed(mouseEvent -> {
+                    dragDelta[0] = cardGroup.getLayoutX() - mouseEvent.getSceneX();
+                    dragDelta[1] = cardGroup.getLayoutY() - mouseEvent.getSceneY();
+                    cardGroup.toFront(); // bring the card to the front
+                    isDragged[0] = false; // reset the flag when mouse is pressed
+                });
+
+                cardGroup.setOnMouseDragged(mouseEvent -> {
+                    cardGroup.setLayoutX(mouseEvent.getSceneX() + dragDelta[0]);
+                    cardGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
+                    isDragged[0] = true; // set the flag when mouse is dragged
+                });
+
                 cardGroup.setOnMouseClicked(e -> {
-                    // Check if the clicked cardGroup is already the selected one
-                    if (selectedCardGroup[0] == cardGroup) {
-                        // Deselect the cardGroup
-                        cardGroup.setEffect(null);
-                        selectedCardGroup[0] = null;
-                    } else {
-                        // Remove highlight from previously selected cardGroup
-                        if (selectedCardGroup[0] != null) {
-                            selectedCardGroup[0].setEffect(null);
+                    if (!isDragged[0]) { // check the flag in the click event
+                        // Check if the clicked cardGroup is already the selected one
+                        if (selectedCardGroup[0] == cardGroup) {
+                            // Deselect the cardGroup
+                            cardGroup.setEffect(null);
+                            selectedCardGroup[0] = null;
+                        } else {
+                            // Remove highlight from previously selected cardGroup
+                            if (selectedCardGroup[0] != null) {
+                                selectedCardGroup[0].setEffect(null);
+                            }
+
+                            // Highlight the clicked cardGroup
+                            Glow glow = new Glow();
+                            glow.setLevel(0.4);
+                            cardGroup.setEffect(glow);
+
+                            // Store the clicked cardGroup as the selected cardGroup
+                            selectedCardGroup[0] = cardGroup;
                         }
-
-                        // Highlight the clicked cardGroup
-                        Glow glow = new Glow();
-                        glow.setLevel(0.8); // Adjust the level as needed
-                        cardGroup.setEffect(glow);
-
-                        // Store the clicked cardGroup as the selected cardGroup
-                        selectedCardGroup[0] = cardGroup;
                     }
                 });
             }
