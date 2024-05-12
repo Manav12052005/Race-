@@ -44,6 +44,7 @@ public class Viewer extends Application {
 
     private final Group DrawBoard = new Group();
     private final Group DrawHand = new Group();
+    private final Group CatGroup = new Group();
 
     private String[] deckA;
     private String[] deckB;
@@ -68,19 +69,27 @@ public class Viewer extends Application {
         DrawBoard.setLayoutX(shiftX + MARGIN_X);
         DrawBoard.setLayoutY(MARGIN_Y);
         DrawBoard.getChildren().clear();
+
+        // First add all the squareImageViews
         for (Square square : board.getSquares()) {
             ImageView squareImageView = square.getSquareImageView();
-            ImageView catImageView = square.getCatImageView();
-
             squareImageView.setLayoutX(square.getValueX());
             squareImageView.setLayoutY(square.getValueY());
+            DrawBoard.getChildren().add(squareImageView);
+        }
 
+
+        CatGroup.setLayoutX(shiftX + MARGIN_X);
+        CatGroup.setLayoutY(MARGIN_Y);
+        CatGroup.getChildren().clear();
+        // Then add all the catImageViews
+        for (Square square : board.getSquares()) {
             if (square.isCat()) {
+                ImageView catImageView = square.getCatImageView();
                 catImageView.setLayoutX(square.getValueX());
                 catImageView.setLayoutY(square.getValueY());
+                CatGroup.getChildren().add(catImageView);
             }
-
-            DrawBoard.getChildren().addAll(squareImageView, catImageView);
         }
 
         // Draw the cards in hand with given hand string
@@ -297,6 +306,7 @@ public class Viewer extends Application {
 
         root.getChildren().add(DrawBoard);
         root.getChildren().add(DrawHand);
+        root.getChildren().add(CatGroup);
 
         stage.setScene(scene);
         stage.show();
