@@ -26,6 +26,9 @@ public class Viewer extends Application {
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
     private static final double shiftX = 320;
 
+    private static double BOARD_WIDTH = 18 * SQUARE_WIDTH;
+    private static double BOARD_HEIGHT = 18 * SQUARE_WIDTH;
+
     private static final double restartButtonX = VIEWER_WIDTH - 95;
     private static final double restartButtonY = VIEWER_HEIGHT - 30;
 
@@ -201,8 +204,23 @@ public class Viewer extends Application {
                     isDragged[0] = true; // set the flag when mouse is dragged
                 });
 
+                cardGroup.setOnMousePressed(mouseEvent -> {
+                    if (!isOnBoard(cardGroup.getLayoutX(), cardGroup.getLayoutY())) {
+                        dragDelta[0] = cardGroup.getLayoutX() - mouseEvent.getSceneX();
+                        dragDelta[1] = cardGroup.getLayoutY() - mouseEvent.getSceneY();
+                        cardGroup.toFront(); // bring the card to the front
+                    }
+                });
+
+                cardGroup.setOnMouseDragged(mouseEvent -> {
+                    if (!isOnBoard(cardGroup.getLayoutX(), cardGroup.getLayoutY())) {
+                        cardGroup.setLayoutX(mouseEvent.getSceneX() + dragDelta[0]);
+                        cardGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
+                    }
+                });
+
                 cardGroup.setOnMouseClicked(e -> {
-                    if (!isDragged[0]) { // check the flag in the click event
+                    if (!isDragged[0] && !isOnBoard(cardGroup.getLayoutX(), cardGroup.getLayoutY())) { // check the flag in the click event and if the card is on the board
                         // Check if the clicked cardGroup is already the selected one
                         if (selectedCardGroup[0] == cardGroup) {
                             // Deselect the cardGroup
@@ -261,6 +279,9 @@ public class Viewer extends Application {
             if (selectedDifficulty != null) {
                 gameState[0] = RaceToTheRaft.initialiseChallenge(challenge);
                 boardstate = gameState[0];
+
+                BOARD_WIDTH = boardstate.split("\n")[0].length() * SQUARE_WIDTH;
+                BOARD_HEIGHT = boardstate.split("\n").length * SQUARE_WIDTH;
 
                 // initialise the deck
                 deckA = Utility.DECK_A;
@@ -396,17 +417,18 @@ public class Viewer extends Application {
         return new int[] {gridX, gridY};
     }
 
-    public String Draw(String[] gameState, String hand) {
+    private boolean isOnBoard(double layoutX, double layoutY) {
+        // Define the boundaries of the board
+        double boardMinX = shiftX + MARGIN_X;
+        double boardMaxX = boardMinX + BOARD_WIDTH;
+        double boardMinY = MARGIN_Y;
+        double boardMaxY = boardMinY + BOARD_HEIGHT;
 
-        StringBuilder sb = new StringBuilder(hand);
-        while (sb.length() < 12) {
+        System.out.println("Board boundaries: " + boardMinX + ", " + boardMaxX + ", " + boardMinY + ", " + boardMaxY);
+        System.out.println("Card layout: " + layoutX + ", " + layoutY);
 
-
-        }
-
-
-
-        return sb.toString();
+        // Check if the card's layout X and Y coordinates are within the boundaries of the board
+        return layoutX >= boardMinX && layoutX <= boardMaxX && layoutY >= boardMinY && layoutY <= boardMaxY;
     }
 
 }
