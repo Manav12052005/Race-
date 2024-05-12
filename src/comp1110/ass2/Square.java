@@ -1,6 +1,7 @@
 package comp1110.ass2;
 
 import comp1110.ass2.gui.Viewer;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,7 +13,7 @@ import javafx.scene.input.MouseEvent;
  *fire
  *raft
  */
-public class Square extends ImageView {
+public class Square extends Group {
     public static final double SQUARE_WIDTH = 40;
     private double x;
     private double y;
@@ -23,7 +24,8 @@ public class Square extends ImageView {
         FIRE, OBJECTIVE, WILD, wildOCCUPIED, NONE
     }
     private final type t;
-    private final Image img;
+    private final ImageView squareImageView;
+    private final ImageView catImageView;
 
     public static Square selectedSquare = null;
     private boolean canDrag = true;
@@ -31,94 +33,147 @@ public class Square extends ImageView {
     public Square(double x, double y, char t) {
         this.x = x;
         this.y = y;
+        Image squareImage;
+        Image catImage = null;
+
+
         switch (t) {
             case 'b':
                 this.t = type.BLUE;
-                img = new Image("comp1110/ass2/gui/assets/blue.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/blue.png");
                 break;
             case 'g':
                 this.t = type.GREEN;
-                img = new Image("comp1110/ass2/gui/assets/green.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/green.png");
                 break;
             case 'p':
                 this.t = type.PURPLE;
-                img = new Image("comp1110/ass2/gui/assets/purple.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/purple.png");
                 break;
             case 'r':
                 this.t = type.RED;
-                img = new Image("comp1110/ass2/gui/assets/red.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/red.png");
                 break;
             case 'y':
                 this.t = type.YELLOW;
-                img = new Image("comp1110/ass2/gui/assets/yellow.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/yellow.png");
                 break;
             case 'B':
                 this.t = type.blueCAT;
-                img = new Image("comp1110/ass2/gui/assets/blueCat.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/blue.png");
+                catImage = new Image("comp1110/ass2/gui/assets/blueCat.png");
                 break;
             case 'G':
                 this.t = type.greenCAT;
-                img = new Image("comp1110/ass2/gui/assets/greenCat.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/green.png");
+                catImage = new Image("comp1110/ass2/gui/assets/greenCat.png");
                 break;
             case 'P':
                 this.t = type.purpleCAT;
-                img = new Image("comp1110/ass2/gui/assets/purpleCat.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/purple.png");
+                catImage = new Image("comp1110/ass2/gui/assets/purpleCat.png");
                 break;
             case 'R':
                 this.t = type.redCAT;
-                img = new Image("comp1110/ass2/gui/assets/redCat.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/red.png");
+                catImage = new Image("comp1110/ass2/gui/assets/redCat.png");
                 break;
             case 'Y':
                 this.t = type.yellowCAT;
-                img = new Image("comp1110/ass2/gui/assets/yellowCat.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/yellow.png");
+                catImage = new Image("comp1110/ass2/gui/assets/yellowCat.png");
                 break;
             case 'f':
                 this.t = type.FIRE;
-                img = new Image("comp1110/ass2/gui/assets/fire.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/fire.png");
                 break;
             case 'o':
             case 'w':
             case 'W':
                 this.t = type.OBJECTIVE;
-                img = new Image("comp1110/ass2/gui/assets/objective.png");
+                squareImage = new Image("comp1110/ass2/gui/assets/objective.png");
                 break;
             default:
                 this.t = type.NONE;
-                img = null;
+                squareImage = null;
                 break;
         }
 
-        setOnMousePressed((MouseEvent event) -> {
+        squareImageView = new ImageView(squareImage);
+        squareImageView.setFitWidth(SQUARE_WIDTH); // set fit width for squareImageView
+        squareImageView.setFitHeight(SQUARE_WIDTH); // set fit height for squareImageView
+
+        catImageView = new ImageView(catImage);
+        catImageView.setFitWidth(SQUARE_WIDTH); // set fit width for catImageView
+        catImageView.setFitHeight(SQUARE_WIDTH); // set fit height for squareImageView
+
+        getChildren().addAll(squareImageView, catImageView);
+
+
+        // Set event handlers for catImageView
+        catImageView.setOnMousePressed((MouseEvent event) -> {
             if (isCat() && canDrag) {
                 mouseX = event.getSceneX();
                 mouseY = event.getSceneY();
-                toFront(); // bring the square to the front
+                catImageView.toFront(); // bring the cat to the front
             }
         });
 
-        setOnMouseDragged((MouseEvent event) -> {
+        catImageView.setOnMouseDragged((MouseEvent event) -> {
             if (isCat() && canDrag) {
                 double deltaX = event.getSceneX() - mouseX;
                 double deltaY = event.getSceneY() - mouseY;
-                setLayoutX(getLayoutX() + deltaX);
-                setLayoutY(getLayoutY() + deltaY);
+                catImageView.setLayoutX(catImageView.getLayoutX() + deltaX);
+                catImageView.setLayoutY(catImageView.getLayoutY() + deltaY);
                 mouseX = event.getSceneX();
                 mouseY = event.getSceneY();
             }
         });
 
-        setOnMouseReleased((MouseEvent event) -> {
+        catImageView.setOnMouseReleased((MouseEvent event) -> {
             if (isCat() && canDrag) {
-                double newX = Math.round(getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
-                double newY = Math.round(getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
-                setLayoutX(newX);
-                setLayoutY(newY);
+                double newX = Math.round(catImageView.getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
+                double newY = Math.round(catImageView.getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
+                catImageView.setLayoutX(newX);
+                catImageView.setLayoutY(newY);
 
                 // Calculate and print the grid index
-                int[] gridIndex = Viewer.getGridIndex(getLayoutX(), getLayoutY());
+                int[] gridIndex = Viewer.getGridIndex(catImageView.getLayoutX(), catImageView.getLayoutY());
                 System.out.println("Grid index: [" + gridIndex[0] + "][" + gridIndex[1] + "]");
             }
         });
+
+//        setOnMousePressed((MouseEvent event) -> {
+//            if (isCat() && canDrag) {
+//                mouseX = event.getSceneX();
+//                mouseY = event.getSceneY();
+//                toFront(); // bring the square to the front
+//            }
+//        });
+//
+//        setOnMouseDragged((MouseEvent event) -> {
+//            if (isCat() && canDrag) {
+//                double deltaX = event.getSceneX() - mouseX;
+//                double deltaY = event.getSceneY() - mouseY;
+//                setLayoutX(getLayoutX() + deltaX);
+//                setLayoutY(getLayoutY() + deltaY);
+//                mouseX = event.getSceneX();
+//                mouseY = event.getSceneY();
+//            }
+//        });
+//
+//        setOnMouseReleased((MouseEvent event) -> {
+//            if (isCat() && canDrag) {
+//                double newX = Math.round(getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
+//                double newY = Math.round(getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
+//                setLayoutX(newX);
+//                setLayoutY(newY);
+//
+//                // Calculate and print the grid index
+//                int[] gridIndex = Viewer.getGridIndex(getLayoutX(), getLayoutY());
+//                System.out.println("Grid index: [" + gridIndex[0] + "][" + gridIndex[1] + "]");
+//            }
+//        });
 
 //        setOnMousePressed((MouseEvent event) -> {
 //            if (Square.selectedSquare != null) {
@@ -164,7 +219,15 @@ public class Square extends ImageView {
     }
 
     public Image getImg() {
-        return img;
+        return squareImageView.getImage();
+    }
+
+    public ImageView getSquareImageView() {
+        return squareImageView;
+    }
+
+    public ImageView getCatImageView() {
+        return catImageView;
     }
 
     public double getValueX() {
@@ -175,7 +238,7 @@ public class Square extends ImageView {
         return y;
     }
 
-     boolean isCat() {
+    public boolean isCat() {
         return t == type.blueCAT || t == type.greenCAT || t == type.purpleCAT || t == type.redCAT || t == type.yellowCAT;
     }
 }

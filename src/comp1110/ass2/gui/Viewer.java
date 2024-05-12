@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -64,22 +65,22 @@ public class Viewer extends Application {
     void displayState(String boardstate, String hand) {
         // Draw the game board with given boardstate string
         Board board = new Board(boardstate);
-//        DrawBoard.setLayoutX(VIEWER_WIDTH - 18 * SQUARE_WIDTH);
         DrawBoard.setLayoutX(shiftX + MARGIN_X);
         DrawBoard.setLayoutY(MARGIN_Y);
         DrawBoard.getChildren().clear();
         for (Square square : board.getSquares()) {
-            square.setLayoutX(square.getValueX());
-            square.setLayoutY(square.getValueY());
+            ImageView squareImageView = square.getSquareImageView();
+            ImageView catImageView = square.getCatImageView();
 
-//            System.out.println(square.getValueX());
-//            System.out.println(square.getValueY());
-//            System.out.println();
+            squareImageView.setLayoutX(square.getValueX());
+            squareImageView.setLayoutY(square.getValueY());
 
-            square.setImage(square.getImg());
-            square.setFitWidth(SQUARE_WIDTH);
-            square.setFitHeight(SQUARE_WIDTH);
-            DrawBoard.getChildren().add(square);
+            if (square.isCat()) {
+                catImageView.setLayoutX(square.getValueX());
+                catImageView.setLayoutY(square.getValueY());
+            }
+
+            DrawBoard.getChildren().addAll(squareImageView, catImageView);
         }
 
         // Draw the cards in hand with given hand string
@@ -104,9 +105,15 @@ public class Viewer extends Application {
 //                System.out.println(square.getValueY() + outerY);
 //                System.out.println();
 
-                square.setImage(square.getImg());
-                square.setFitWidth(SQUARE_WIDTH);
-                square.setFitHeight(SQUARE_WIDTH);
+                square.getSquareImageView().setImage(square.getImg());
+                square.getSquareImageView().setFitWidth(SQUARE_WIDTH);
+                square.getSquareImageView().setFitHeight(SQUARE_WIDTH);
+
+                if (square.isCat()) {
+                    square.getCatImageView().setImage(square.getImg());
+                    square.getCatImageView().setFitWidth(SQUARE_WIDTH);
+                    square.getCatImageView().setFitHeight(SQUARE_WIDTH);
+                }
 
 //             For debugging use
 //                System.out.println("Adding square of type: " + square.getT());
@@ -233,12 +240,18 @@ public class Viewer extends Application {
                 deckC = Utility.DECK_C;
                 deckD = Utility.DECK_D;
 
+                // initialise the game state
+                gameState[1] = "AabcdefghijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy";
+                gameState[2] = Hand.generateHand();
+                gameState[3] = "";
+                gameState[4] = "abcdefghijklmnopqrstuvwxyzABCDE";
+
                 cat = challengeObj.getCatSubstring();
 
 //                hand = new String("");
 //                hand = "Abbbccc";
 //                hand = "AbdfBcCaDe";
-                hand = Hand.generateHand();
+                hand = gameState[2];
 
                 refresh(boardstate, hand);
                 root.getChildren().remove(vbox);
@@ -325,6 +338,8 @@ public class Viewer extends Application {
             String formattedY = String.format("%.2f", y);
             cursorPosition.setText("x: " + formattedX + ", y: " + formattedY);
         });
+
+
     }
 
     public void refresh(String boardstate, String hand) {
