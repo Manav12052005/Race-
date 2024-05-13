@@ -10,8 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Random;
@@ -39,6 +44,9 @@ public class Viewer extends Application {
     private static final double deckChoiceBox_Y = VIEWER_HEIGHT - 50;
     private static final double drawCardButton_X = 150;
     private static final double drawCardButton_Y = VIEWER_HEIGHT - 50;
+
+    private static final double placeButton_X = 250;
+    private static final double placeButton_Y = VIEWER_HEIGHT - 50;
 
     private static final double cursorPositionX = 10;
     private static final double cursorPositionY = VIEWER_HEIGHT - 20;
@@ -204,23 +212,8 @@ public class Viewer extends Application {
                     isDragged[0] = true; // set the flag when mouse is dragged
                 });
 
-                cardGroup.setOnMousePressed(mouseEvent -> {
-                    if (!isOnBoard(cardGroup.getLayoutX(), cardGroup.getLayoutY())) {
-                        dragDelta[0] = cardGroup.getLayoutX() - mouseEvent.getSceneX();
-                        dragDelta[1] = cardGroup.getLayoutY() - mouseEvent.getSceneY();
-                        cardGroup.toFront(); // bring the card to the front
-                    }
-                });
-
-                cardGroup.setOnMouseDragged(mouseEvent -> {
-                    if (!isOnBoard(cardGroup.getLayoutX(), cardGroup.getLayoutY())) {
-                        cardGroup.setLayoutX(mouseEvent.getSceneX() + dragDelta[0]);
-                        cardGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
-                    }
-                });
-
                 cardGroup.setOnMouseClicked(e -> {
-                    if (!isDragged[0] && !isOnBoard(cardGroup.getLayoutX(), cardGroup.getLayoutY())) { // check the flag in the click event and if the card is on the board
+                    if (!isDragged[0]) { // check the flag in the click event and if the card is on the board
                         // Check if the clicked cardGroup is already the selected one
                         if (selectedCardGroup[0] == cardGroup) {
                             // Deselect the cardGroup
@@ -245,6 +238,48 @@ public class Viewer extends Application {
             }
         }
 
+        Button placeButton = new Button("Place Card");
+
+        placeButton.setLayoutX(placeButton_X); // Adjust these values as needed
+        placeButton.setLayoutY(placeButton_Y); // Position the button at the bottom of the viewer
+
+        placeButton.setOnAction(e -> {
+            if (selectedCardGroup[0] != null) {
+                // Disable the mouse event handlers of the selected card
+                selectedCardGroup[0].setOnMousePressed(null);
+                selectedCardGroup[0].setOnMouseDragged(null);
+                selectedCardGroup[0].setOnMouseClicked(null);
+
+                // Remove the glow effect from the selected card
+                selectedCardGroup[0].setEffect(null);
+
+                // Clear the selected card
+                selectedCardGroup[0] = null;
+            }
+        });
+
+        root.getChildren().add(placeButton);
+
+        ChoiceBox<String> deckChoiceBox = new ChoiceBox<>();
+        deckChoiceBox.getItems().addAll("A", "B", "C", "D");
+
+        Button drawCardButton = new Button("Draw Card");
+
+        drawCardButton.setOnAction(e -> {
+            String selectedDeck = deckChoiceBox.getValue();
+            if (selectedDeck != null) {
+                // Perform the draw card action here
+                System.out.println("Draw card from deck: " + selectedDeck);
+            }
+        });
+
+        deckChoiceBox.setLayoutX(deckChoiceBox_X);
+        deckChoiceBox.setLayoutY(deckChoiceBox_Y);
+        drawCardButton.setLayoutX(drawCardButton_X);
+        drawCardButton.setLayoutY(drawCardButton_Y);
+
+        root.getChildren().addAll(deckChoiceBox, drawCardButton);
+
         // FIXME TASK 4
     }
 
@@ -257,14 +292,21 @@ public class Viewer extends Application {
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
 
-        // Initialize the game state
         String[] gameState = new String[5];
-        // Set the initial values for the game state
         gameState[0] = "board state";
         gameState[1] = "deck state";
         gameState[2] = "hand state";
         gameState[3] = "exhausted cats state";
         gameState[4] = "fire tile bag state";
+
+        Image titleImage = new Image("comp1110/ass2/gui/assets/title.png");
+
+        ImageView titleImageView = new ImageView(titleImage);
+
+        titleImageView.setX(VIEWER_WIDTH / 2 - titleImage.getWidth() / 2);
+        titleImageView.setY(30); // Adjust this value as needed
+
+        root.getChildren().add(titleImageView);
 
         Label label = new Label("Select Difficulty: (from 0 to 5)");
         ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
@@ -304,33 +346,11 @@ public class Viewer extends Application {
 
                 refresh(boardstate, hand);
                 root.getChildren().remove(vbox);
+
+                root.getChildren().remove(titleImageView);
             }
         });
 
-// Create a ChoiceBox
-        ChoiceBox<String> deckChoiceBox = new ChoiceBox<>();
-        deckChoiceBox.getItems().addAll("A", "B", "C", "D");
-
-// Create a Button
-        Button drawCardButton = new Button("Draw Card");
-
-// Add action event to the button
-        drawCardButton.setOnAction(e -> {
-            String selectedDeck = deckChoiceBox.getValue();
-            if (selectedDeck != null) {
-                // Perform the draw card action here
-                System.out.println("Draw card from deck: " + selectedDeck);
-            }
-        });
-
-// Set the layout for Button
-        deckChoiceBox.setLayoutX(deckChoiceBox_X);
-        deckChoiceBox.setLayoutY(deckChoiceBox_Y);
-        drawCardButton.setLayoutX(drawCardButton_X);
-        drawCardButton.setLayoutY(drawCardButton_Y);
-
-// Add the ChoiceBox and Button to the root node
-        root.getChildren().addAll(deckChoiceBox, drawCardButton);
 
         // Perform the draw card action here
 //        Draw(gameState, hand);
@@ -368,6 +388,9 @@ public class Viewer extends Application {
             if (!root.getChildren().contains(vbox)) {
                 root.getChildren().add(vbox);
             }
+
+            root.getChildren().add(titleImageView);
+
         });
 
         restartButton.setLayoutX(restartButtonX); // Adjust these values as needed
@@ -416,20 +439,6 @@ public class Viewer extends Application {
         int gridY = (int) Math.floor(relativeY / squareWidth) + 1;
 
         return new int[] {gridX, gridY};
-    }
-
-    private boolean isOnBoard(double layoutX, double layoutY) {
-        // Define the boundaries of the board
-        double boardMinX = shiftX + MARGIN_X;
-        double boardMaxX = boardMinX + BOARD_WIDTH;
-        double boardMinY = MARGIN_Y;
-        double boardMaxY = boardMinY + BOARD_HEIGHT;
-
-        System.out.println("Board boundaries: " + boardMinX + ", " + boardMaxX + ", " + boardMinY + ", " + boardMaxY);
-        System.out.println("Card layout: " + layoutX + ", " + layoutY);
-
-        // Check if the card's layout X and Y coordinates are within the boundaries of the board
-        return layoutX >= boardMinX && layoutX <= boardMaxX && layoutY >= boardMinY && layoutY <= boardMaxY;
     }
 
 }
