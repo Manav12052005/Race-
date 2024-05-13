@@ -419,28 +419,38 @@ public class Challenge {
     public static boolean gameOver(String[] gameState, String action) {
         char firstChar = action.charAt(0);
         char secondChar = action.charAt(1);
-        // check if firstChar is a cat and secondChar is a number
+
+//        System.out.println(firstChar);
+//        System.out.println(secondChar);
+//
+//        System.out.println(Character.isDigit(secondChar));
+
+        // check if action is catmovement or placement
         if ((firstChar == 'Y' || firstChar == 'B' || firstChar == 'R' || firstChar == 'G' || firstChar == 'P')
-                && Character.isDigit(secondChar)) { // the action is a movement
+                && Character.isDigit(secondChar) && action.length() > 8) { // the action is a movement
+
+//            System.out.println(RaceToTheRaft.isCatMovementValid(gameState, action));
+
             if (RaceToTheRaft.isCatMovementValid(gameState, action)) {
                 gameState = RaceToTheRaft.moveCat(gameState, action);
                 // if every cat is on the raft, the game is won
                 // the cats are on the raft if it's around 'o' character
                 String[] rows = gameState[0].split("\n");
-                boolean catLeft = false;
+                boolean catAllOnRaft = true;
                 for (int y = 0; y < rows.length; y++) {
                     for (int x = 0; x < rows[0].length(); x++) {
                         if (isCharCat(rows[y].charAt(x))) {
-                            if (Cat.isCatOnRaft(gameState, x, y)) {
-                                return false;
-                            } else {
-                                catLeft = true;
+                            if (!Cat.isCatOnRaft(gameState, x, y)) {
+
+                                System.out.println("Not on raft");
+
+                                catAllOnRaft = false;
                             }
                         }
                     }
-                    if (!catLeft) {
-                        return true;
-                    }
+                }
+                if (catAllOnRaft) {
+                    return true;
                 }
             }
         } else { // the action is a placement
@@ -471,12 +481,12 @@ public class Challenge {
                                         System.out.println(j + " " + k);
 
                                         catString = catString + String.format("%02d%02d", j, k);
-                                        if (RaceToTheRaft.isCatMovementValid(gameState, catString)) {
-
-                                            System.out.println("Valid");
-
-                                            flag = true;
-                                        }
+//                                        if (RaceToTheRaft.isCatMovementValid(gameState, catString)) {
+//
+//                                            System.out.println("Valid");
+//
+//                                            flag = true;
+//                                        }
                                     }
                                 }
                             }

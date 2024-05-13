@@ -70,6 +70,9 @@ public class Cat {
         int destY = Integer.parseInt(movementString.substring(5, 7));
         int destX = Integer.parseInt(movementString.substring(7, 9));
 
+        // for debugging
+//        System.out.println(destY+ " " + destX);
+
         String[] rows = gameState[0].split("\n");
 
         int width = rows[0].length();
@@ -82,7 +85,8 @@ public class Cat {
 
         char[] destRow = rows[destY].toCharArray();
 
-        if (destRow[destX] != Character.toLowerCase(cat)) {
+        char dest = destRow[destX];
+        if (dest != Character.toLowerCase(cat) && dest != 'w') {
             return false;
         }
 
@@ -130,8 +134,13 @@ public class Cat {
 
                 if (newY >= 0 && newY < height && newX >= 0 && newX < width
                         && !visited[newY][newX] &&
-                        (tiles[newY][newX] == Character.toLowerCase(cat) || tiles[newY][newX] == Character.toUpperCase(cat))) {
+                        (tiles[newY][newX] == Character.toLowerCase(cat) || tiles[newY][newX] == Character.toUpperCase(cat)
+                || tiles[newY][newX] == 'w' || tiles[newY][newX] == 'W')) {
+
                     visited[newY][newX] = true;
+
+//                    System.out.println(newY + " " + newX);
+
                     queue.add(new int[]{newY, newX});
                 }
             }
