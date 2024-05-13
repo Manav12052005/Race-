@@ -23,7 +23,8 @@ public class Viewer extends Application {
     private static final double MARGIN_X = 20;
     private static final double MARGIN_Y = 10;
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
-    private static final double shiftX = 320;
+    public static final double shiftX = 320;
+    public static final double shiftY = -20;
 
     private static double BOARD_WIDTH = 18 * SQUARE_WIDTH;
     private static double BOARD_HEIGHT = 18 * SQUARE_WIDTH;
@@ -45,6 +46,8 @@ public class Viewer extends Application {
     private static final double cursorPositionX = 10;
     private static final double cursorPositionY = VIEWER_HEIGHT - 20;
 
+    public static int catStartX, catStartY, endX, endY;
+
     private final Label cursorPosition = new Label();
 
     private final Group DrawBoard = new Group();
@@ -60,6 +63,9 @@ public class Viewer extends Application {
     private String hand;
     private String boardstate;
     private String cat;
+    public static String catColor;
+
+    private static String[] gamestate;
 
     /**
      * Draw the given board and hand in the window, removing any previously drawn boards/hands.
@@ -170,6 +176,8 @@ public class Viewer extends Application {
                 dragDelta[1] = cardGroup.getLayoutY() - mouseEvent.getSceneY();
                 cardGroup.toFront(); // bring the card to the front
             });
+
+
 
             i++;
         }
@@ -287,12 +295,12 @@ public class Viewer extends Application {
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
 
-        String[] gameState = new String[5];
-        gameState[0] = "board state";
-        gameState[1] = "deck state";
-        gameState[2] = "hand state";
-        gameState[3] = "exhausted cats state";
-        gameState[4] = "fire tile bag state";
+        gamestate = new String[5];
+        gamestate[0] = "board state";
+        gamestate[1] = "deck state";
+        gamestate[2] = "hand state";
+        gamestate[3] = "exhausted cats state";
+        gamestate[4] = "fire tile bag state";
 
         Image titleImage = new Image("comp1110/ass2/gui/assets/title.png");
 
@@ -314,8 +322,8 @@ public class Viewer extends Application {
             String challenge = RaceToTheRaft.chooseChallenge(selectedDifficulty);
             Challenge challengeObj = new Challenge(RaceToTheRaft.initialiseChallenge(challenge));
             if (selectedDifficulty != null) {
-                gameState[0] = RaceToTheRaft.initialiseChallenge(challenge);
-                boardstate = gameState[0];
+                gamestate[0] = RaceToTheRaft.initialiseChallenge(challenge);
+                boardstate = gamestate[0];
 
                 BOARD_WIDTH = boardstate.split("\n")[0].length() * SQUARE_WIDTH;
                 BOARD_HEIGHT = boardstate.split("\n").length * SQUARE_WIDTH;
@@ -327,17 +335,17 @@ public class Viewer extends Application {
                 deckD = Utility.DECK_D;
 
                 // initialise the game state
-                gameState[1] = "AabcdefghijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy";
-                gameState[2] = Hand.generateHand();
-                gameState[3] = "";
-                gameState[4] = "abcdefghijklmnopqrstuvwxyzABCDE";
+                gamestate[1] = "AabcdefghijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy";
+                gamestate[2] = Hand.generateHand();
+                gamestate[3] = "";
+                gamestate[4] = "abcdefghijklmnopqrstuvwxyzABCDE";
 
                 cat = challengeObj.getCatSubstring();
 
 //                hand = new String("");
 //                hand = "Abbbccc";
 //                hand = "AbdfBcCaDe";
-                hand = gameState[2];
+                hand = gamestate[2];
 
                 refresh(boardstate, hand);
                 root.getChildren().remove(vbox);
@@ -408,6 +416,9 @@ public class Viewer extends Application {
             cursorPosition.setText("x: " + formattedX + ", y: " + formattedY);
         });
 
+//        while (true) {
+//
+//        }
 
     }
 
@@ -434,6 +445,10 @@ public class Viewer extends Application {
         int gridY = (int) Math.floor(relativeY / squareWidth) + 1;
 
         return new int[] {gridX, gridY};
+    }
+
+    public static String[] getGameState() {
+        return gamestate;
     }
 
 }
