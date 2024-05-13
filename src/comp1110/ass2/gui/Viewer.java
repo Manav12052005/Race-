@@ -255,7 +255,8 @@ public class Viewer extends Application {
         root.getChildren().add(placeButton);
 
         ChoiceBox<String> deckChoiceBox = new ChoiceBox<>();
-        deckChoiceBox.getItems().addAll("A", "B", "C", "D");
+        // cross (✕) represents deck A, square (□) represents deck B, circle (◯) represents deck C, triangle (△) represents deck D
+        deckChoiceBox.getItems().addAll("✕", "□", "◯", "△");
 
         Button drawCardButton = new Button("Draw Card");
 
