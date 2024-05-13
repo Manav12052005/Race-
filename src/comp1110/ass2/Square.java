@@ -179,6 +179,10 @@ public class Square extends Group {
 
                 String[] gamestate = Viewer.getGameState();
                 if (RaceToTheRaft.isCatMovementValid(gamestate, move)) {
+                    Viewer.setGameState(RaceToTheRaft.moveCat(gamestate, move));
+
+                    Viewer.printGameState(Viewer.getGameState());
+
                     catImageView.setLayoutX(newX);
                     catImageView.setLayoutY(newY);
                 } else {

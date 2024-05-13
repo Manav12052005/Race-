@@ -426,8 +426,8 @@ public class Viewer extends Application {
         displayState(boardstate, hand);
     }
 
-    public void printGameState(String gamestate) {
-        String[] rows = gamestate.split("\n");
+    public static void printGameState(String[] gamestate) {
+        String[] rows = gamestate[0].split("\n");
         for (String row : rows) {
             System.out.println(row);
         }
@@ -448,6 +448,11 @@ public class Viewer extends Application {
     }
 
     public static String[] getGameState() {
+        return gamestate;
+    }
+
+    public static String[] setGameState(String[] newGameState) {
+        gamestate = newGameState;
         return gamestate;
     }
 
