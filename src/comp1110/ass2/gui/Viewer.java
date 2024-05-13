@@ -13,13 +13,7 @@ import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.util.Random;
 
 public class Viewer extends Application {
 
@@ -361,7 +355,7 @@ public class Viewer extends Application {
 
         vbox.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
             vbox.setLayoutX((VIEWER_WIDTH - newValue.getWidth()) / 2);
-            vbox.setLayoutY((VIEWER_HEIGHT - newValue.getHeight()) / 2);
+            vbox.setLayoutY((VIEWER_HEIGHT - newValue.getHeight()) / 2 + 25);
         });
 
         root.getChildren().add(DrawBoard);
