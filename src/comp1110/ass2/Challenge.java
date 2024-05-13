@@ -11,6 +11,7 @@ public class Challenge {
     private String fireSubstring;
     private String catSubstring;
     private String raftSubstring;
+
     // Add constants or enums for challenge identifiers
     private enum ChallengeId {
         FIRST_STEPS("LNSNLASAF000300060012001503030903C112033060340009R01215", "First steps"),
@@ -175,9 +176,9 @@ public class Challenge {
     /**
      * Given a challenge string, construct an initial board state of the island and return
      *
-     * @author Simon Liu
      * @param challengeString string
      * @return Island substring
+     * @author Simon Liu
      */
     public static String getBoardSubstring(String challengeString) {
         Challenge challenge = new Challenge(challengeString);
@@ -257,7 +258,6 @@ public class Challenge {
 //                System.out.println();
 //            }
 //            System.out.println();
-
 
 
             // Rotate the islandArray according to the challenge string
@@ -352,55 +352,54 @@ public class Challenge {
         }
 
 
-
         // print out the boardChar (For debugging use)
 //        System.out.println(Board.charBoardToString(boardChar));
 
         return Board.charBoardToString(boardChar);
     }
 
-   public static char[][] rotateIslandArray(char[][] islandArray, char size, char direction) {
-    char[][] rotatedArray;
-    switch (direction) {
-        case 'N':
-            return islandArray;
-        case 'E':
-            rotatedArray = new char[islandArray[0].length][islandArray.length];
-            for (int i = 0; i < islandArray.length; i++) {
-                for (int j = 0; j < islandArray[0].length; j++) {
-                    rotatedArray[j][islandArray.length - 1 - i] = islandArray[i][j];
+    public static char[][] rotateIslandArray(char[][] islandArray, char size, char direction) {
+        char[][] rotatedArray;
+        switch (direction) {
+            case 'N':
+                return islandArray;
+            case 'E':
+                rotatedArray = new char[islandArray[0].length][islandArray.length];
+                for (int i = 0; i < islandArray.length; i++) {
+                    for (int j = 0; j < islandArray[0].length; j++) {
+                        rotatedArray[j][islandArray.length - 1 - i] = islandArray[i][j];
+                    }
                 }
-            }
-            return rotatedArray;
-        case 'S':
-            rotatedArray = new char[islandArray.length][islandArray[0].length];
-            for (int i = 0; i < islandArray.length; i++) {
-                for (int j = 0; j < islandArray[0].length; j++) {
-                    rotatedArray[islandArray.length - 1 - i][islandArray[0].length - 1 - j] = islandArray[i][j];
+                return rotatedArray;
+            case 'S':
+                rotatedArray = new char[islandArray.length][islandArray[0].length];
+                for (int i = 0; i < islandArray.length; i++) {
+                    for (int j = 0; j < islandArray[0].length; j++) {
+                        rotatedArray[islandArray.length - 1 - i][islandArray[0].length - 1 - j] = islandArray[i][j];
+                    }
                 }
-            }
-            return rotatedArray;
-        case 'W':
-            rotatedArray = new char[islandArray[0].length][islandArray.length];
-            for (int i = 0; i < islandArray.length; i++) {
-                for (int j = 0; j < islandArray[0].length; j++) {
-                    rotatedArray[islandArray[0].length - 1 - j][i] = islandArray[i][j];
+                return rotatedArray;
+            case 'W':
+                rotatedArray = new char[islandArray[0].length][islandArray.length];
+                for (int i = 0; i < islandArray.length; i++) {
+                    for (int j = 0; j < islandArray[0].length; j++) {
+                        rotatedArray[islandArray[0].length - 1 - j][i] = islandArray[i][j];
+                    }
                 }
-            }
-            return rotatedArray;
-        case 'A':
-            char[] validDirections = new char[0];
-            if (size == 'S') {
-                validDirections = new char[]{'N', 'S'};
-            } else if (size == 'L') {
-                validDirections = new char[]{'N', 'E', 'S', 'W'};
-            }
-            Random random = new Random();
-            return rotateIslandArray(islandArray, size, validDirections[random.nextInt(validDirections.length)]);
-        default:
-            return islandArray;
+                return rotatedArray;
+            case 'A':
+                char[] validDirections = new char[0];
+                if (size == 'S') {
+                    validDirections = new char[]{'N', 'S'};
+                } else if (size == 'L') {
+                    validDirections = new char[]{'N', 'E', 'S', 'W'};
+                }
+                Random random = new Random();
+                return rotateIslandArray(islandArray, size, validDirections[random.nextInt(validDirections.length)]);
+            default:
+                return islandArray;
+        }
     }
-}
 
 
     public static void main(String[] args) {
@@ -415,5 +414,95 @@ public class Challenge {
         System.out.println("Fire Substring: " + challenge.getFireSubstring());
         System.out.println("Cat Substring: " + challenge.getCatSubstring());
         System.out.println("Raft Substring: " + challenge.getRaftSubstring());
+    }
+
+    public static boolean gameOver(String[] gameState, String action) {
+        char firstChar = action.charAt(0);
+        char secondChar = action.charAt(1);
+        // check if firstChar is a cat and secondChar is a number
+        if ((firstChar == 'Y' || firstChar == 'B' || firstChar == 'R' || firstChar == 'G' || firstChar == 'P')
+                && Character.isDigit(secondChar)) { // the action is a movement
+            if (RaceToTheRaft.isCatMovementValid(gameState, action)) {
+                gameState = RaceToTheRaft.moveCat(gameState, action);
+                // if every cat is on the raft, the game is won
+                // the cats are on the raft if it's around 'o' character
+                String[] rows = gameState[0].split("\n");
+                boolean catLeft = false;
+                for (int y = 0; y < rows.length; y++) {
+                    for (int x = 0; x < rows[0].length(); x++) {
+                        if (isCharCat(rows[y].charAt(x))) {
+                            if (Cat.isCatOnRaft(gameState, x, y)) {
+                                return false;
+                            } else {
+                                catLeft = true;
+                            }
+                        }
+                    }
+                    if (!catLeft) {
+                        return true;
+                    }
+                }
+            }
+        } else { // the action is a placement
+            if (RaceToTheRaft.isPlacementValid(gameState, action)) {
+                gameState = RaceToTheRaft.applyPlacement(gameState, action);
+                if (gameState[4].isEmpty()) {
+                    // there's no more fire tiles left, the game is lost
+                    return true;
+                }
+                if (gameState[1].isEmpty()) {
+                    // there's no more cards left, the game is lost
+                    return true;
+                }
+                // Check if any cat can still move
+                boolean flag = false;
+                String[] rows = gameState[0].split("\n");
+                for (int y = 0; y < rows.length; y++) {
+                    for (int x = 0; x < rows[0].length(); x++) {
+                        if (isCharCat(rows[y].charAt(x))) {
+                            String catString = new String(new char[]{rows[y].charAt(x)}) + String.format("%02d%02d", x, y);
+
+                            System.out.println(catString);
+
+                            for (int j = 0; j < rows.length; j++) {
+                                for (int k = 0; k < rows[0].length(); k++) {
+                                    if (isRaft(rows[j].charAt(k))) {
+
+                                        System.out.println(j + " " + k);
+
+                                        catString = catString + String.format("%02d%02d", j, k);
+                                        if (RaceToTheRaft.isCatMovementValid(gameState, catString)) {
+
+                                            System.out.println("Valid");
+
+                                            flag = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (flag == false) {
+                    return true;
+                }
+            }
+
+
+        }
+
+        return false;
+    }
+
+    public static boolean isCharCat(char c) {
+        if (c == 'Y' || c == 'B' || c == 'R' || c == 'G' || c == 'P') {
+            return true;
+        } else return false;
+    }
+
+    public static boolean isRaft(char c) {
+        if (c == 'o' || c == 'w') {
+            return true;
+        } else return false;
     }
 }

@@ -366,7 +366,7 @@ public class RaceToTheRaft {
      * @return True if the game is over (regardless of whether it is won or lost), otherwise False.
      */
     public static boolean isGameOver(String[] gameState, String action) {
-        return false;     // FIXME TASK 15
+        return Challenge.gameOver(gameState, action);     // FIXME TASK 15
     }
 
 

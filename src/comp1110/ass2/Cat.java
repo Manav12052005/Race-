@@ -25,7 +25,13 @@ public class Cat {
         startRow[startX] = Character.toLowerCase(cat);
         rows[startY] = new String(startRow);
         char[] destRow = rows[destY].toCharArray();
-        destRow[destX] = Character.toUpperCase(cat);
+        // If the destination is a cat, turn it to uppercase
+        // If the destination is 'w', turn it to 'W'
+        if (destRow[destX] == 'w') {
+            destRow[destX] = 'W';
+        } else {
+            destRow[destX] = Character.toUpperCase(cat);
+        }
         rows[destY] = new String(destRow);
         boardState = String.join("\n", rows) + "\n";
 
@@ -133,5 +139,17 @@ public class Cat {
 
 
         return false;
+    }
+
+    public static boolean isCatOnRaft(String[] gamestate, int x, int y) {
+        char[][] board = Board.charBoard(gamestate[0]);
+        // the cat is on the raft if the squares around it contains an 'o'
+        return (x > 0 && board[y][x - 1] == 'o') || (x < board[0].length - 1 && board[y][x + 1] == 'o') ||
+                (y > 0 && board[y - 1][x] == 'o') || (y < board.length - 1 && board[y + 1][x] == 'o') ||
+                (x > 0 && y > 0 && board[y - 1][x - 1] == 'o') ||
+                (x < board[0].length - 1 && y < board.length - 1 && board[y + 1][x + 1] == 'o') ||
+                (x > 0 && y < board.length - 1 && board[y + 1][x - 1] == 'o') ||
+                (x < board[0].length - 1 && y > 0 && board[y - 1][x + 1] == 'o');
+
     }
 }
