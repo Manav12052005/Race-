@@ -6,6 +6,10 @@ import java.util.Random;
 import static comp1110.ass2.Board.charBoardToString;
 import static comp1110.ass2.PathwayCard.Direction.*;
 
+/**
+ * This class constructs fire tiles, and handles rotation and placement in the game.
+ * Authored primarily by Tom.
+ */
 public class FireTile {
     private char[][] tiles; // char representation array
     private Boolean isHorizontal; // y > x ?
@@ -15,11 +19,9 @@ public class FireTile {
         this.isHorizontal = isHorizontal;
     }
 
+    // Converts an action string to a FireTile object
     public static FireTile actionStringToFT(String string){
         char tileID = string.charAt(0);
-
-//        System.out.println("tileID: " + tileID);
-
         char flip = 'F'; // Default flip value
         PathwayCard.Direction direction = PathwayCard.Direction.NORTH; // Default direction
 
@@ -31,20 +33,9 @@ public class FireTile {
         }
 
         String card = tileFinder(Utility.FIRE_TILES, tileID);
-
-//        System.out.println("card: " + card);
-
         int[] intArray = toIntArray(card.substring(1));
-
-//        System.out.println("intArray: " + Arrays.toString(intArray));
-
         int[] dim = findDimensions(intArray);
-
-        System.out.println("dim: " + Arrays.toString(dim));
-
         char[][] cardArray = tileBuilder(defaultArray(dim), intArray);
-
-        System.out.println("cardArray: " + Arrays.deepToString(cardArray));
 
         boolean horiz = dim[1] > dim[0];
         FireTile tile = new FireTile(cardArray, horiz);
@@ -65,7 +56,7 @@ public class FireTile {
         return tile;
     }
 
-
+    // Places a FireTile on the game board (string)
     public static String placeOnBoardFT(FireTile tile, char[][] board, int[] loc) {
         int startX = loc[0];
         int startY = loc[1];
@@ -76,11 +67,12 @@ public class FireTile {
                 int boardCol = startY + tileCol;
                 if (tiles[tileRow][tileCol] != 'N') {
                     board[boardRow][boardCol] = tiles[tileRow][tileCol];
-            }}
+                }}
         }
         return charBoardToString(board);
     }
 
+    // Finds a tile in the deck based on its ID
     public static String tileFinder(String[] deck, char c){
         for (String card : deck) {
             if (card.charAt(0) == c) {
@@ -90,6 +82,7 @@ public class FireTile {
         return null;
     }
 
+    // Builds a tile from an array of coordinates
     public static char[][] tileBuilder(char[][] blank, int[] array){
         for(int i = 0; i < array.length; i += 2){
             int x = array[i];
@@ -99,6 +92,7 @@ public class FireTile {
         return blank;
     }
 
+    // Converts a string of integers to an int array
     public static int[] toIntArray(String intString){
         if (intString.isEmpty()){
             throw new IllegalArgumentException("card to cardBuilder is empty");
@@ -111,6 +105,7 @@ public class FireTile {
         return intArray;
     };
 
+    // Finds the dimensions of a tile based on its coordinates
     public static int[] findDimensions(int[] coordinates) {
         int maxX = 0;
         int maxY = 0;
@@ -123,6 +118,7 @@ public class FireTile {
         return new int[] {maxX + 1, maxY + 1};
     }
 
+    // Creates a default char array filled with 'N'
     public static char[][] defaultArray(int[] dimension){
         int x = dimension[0];
         int y = dimension[1];
@@ -135,6 +131,7 @@ public class FireTile {
         return array;
     }
 
+    // Rotates the FireTile based on the given direction
     public void rotate(PathwayCard.Direction direction) {
         char[][] rotatedTiles;
         if (direction != FLIP) {
@@ -162,31 +159,36 @@ public class FireTile {
         tiles = rotatedTiles;
     }
 
+    // Checks if the FireTile overlaps with fire on the game board
     public static boolean isOverlappingFireFT(char[][] subBoard, char[][] tile){
         for (int row = 0; row < subBoard.length; row++) {
             for (int col = 0; col < subBoard[row].length; col++) {
                 if (subBoard[row][col] == 'f' && tile[row][col] == 'f') {
-                    return true; // 'f' found at the same index
+                    return true;
                 }
             }
         }
         return false;
     }
+
+    // Checks if the FireTile overlaps with a cat on the game board
     public static boolean isOverlappingCatFT(char[][] subBoard, char[][] tile){
         for (int row = 0; row < subBoard.length; row++) {
             for (int col = 0; col < subBoard[row].length; col++) {
                 if (Character.isUpperCase(subBoard[row][col]) && tile[row][col] == 'f') {
-                    return true; // 'f' found at the same index
+                    return true;
                 }
             }
         }
         return false;
     }
+
+    // Checks if the FireTile overlaps with a raft on the game board
     public static boolean isOverlappingRaftFT(char[][] subBoard, char[][] tile){
         for (int row = 0; row < subBoard.length; row++) {
             for (int col = 0; col < subBoard[row].length; col++) {
                 if (subBoard[row][col] == 'o' && tile[row][col] == 'f') {
-                    return true; // 'f' found at the same index
+                    return true;
                 }
             }
         }
@@ -199,6 +201,8 @@ public class FireTile {
         }
         return false;
     }
+
+    // Checks if the FireTile will be adjacent to fire on the game board.
     public static boolean isAdjacentToFire(char[][] board, char[][] tile, int x, int y){
         int cardRows = tile.length;
         int cardCols = tile[0].length;
@@ -209,9 +213,9 @@ public class FireTile {
         }
         for (int row = 0; row < cardRows; row++) {
             for (int col = 0; col < cardCols; col++) {
-                    tempBoard[row][col] = tile[row][col];
-                }
+                tempBoard[row][col] = tile[row][col];
             }
+        }
         int[][] offsets = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         for (int row = 0; row < cardRows; row++) {
             for (int col = 0; col < cardCols; col++) {
@@ -233,6 +237,7 @@ public class FireTile {
         return false; //
     }
 
+    // Picks a random FireTile from the string bag
     public static String pickFire (String stringBag){
         Random random = new Random();
         int randomIndex = random.nextInt(stringBag.length());
@@ -241,18 +246,18 @@ public class FireTile {
         for (String fireTile : Utility.FIRE_TILES) {
             if (fireTile.charAt(0) == randomChar) {
                 return fireTile; // returns the unique fireTile based on the ID
-                }
             }
-        return null;
         }
+        return null;
+    }
 
     public char[][] getTiles () {
         return tiles;
-        }
+    }
 
     public boolean getIsHorizontal () {
         return isHorizontal;
-        }
+    }
 
     public static void main(String[] args) {
         FireTile tile = actionStringToFT("D");
@@ -263,4 +268,3 @@ public class FireTile {
         }
     }
 }
-

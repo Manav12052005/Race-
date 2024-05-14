@@ -6,42 +6,64 @@ import java.util.Random;
 import static comp1110.ass2.Board.charBoardToString;
 import static comp1110.ass2.PathwayCard.Direction.*;
 
-
-public class PathwayCard { ;
+/**
+ * PathwayCard class represents a pathway card in the game, and handles placement and rotation.
+ * Authored primarily by Tom.
+ */
+public class PathwayCard {
     private char[][] tiles;
     private int[] rowcol;
-    public PathwayCard(char[][] tiles, int[] xy){
+
+    public PathwayCard(char[][] tiles, int[] xy) {
         this.tiles = tiles;
         this.rowcol = xy;
     }
+
     public char[][] getTiles() {
         return tiles;
     }
 
-    public enum Direction{
+    /**
+     * Enum representing the possible directions of a pathway card.
+     */
+    public enum Direction {
         NORTH, EAST, SOUTH, WEST, FLIP;
+
         public static boolean isValidDirection(char c) {
             return c == 'N' || c == 'E' || c == 'S' || c == 'W';
         }
     }
 
-    public static Direction charToDirection(char c){
-        switch(c){
-            case 'N' -> {return NORTH;}
-            case 'E' -> {return EAST;}
-            case 'S' -> {return SOUTH;}
-            case 'W' -> {return WEST;}
-            case 'F' -> {return FLIP;}
+    // Converts a character to its corresponding Direction enum value
+    public static Direction charToDirection(char c) {
+        switch (c) {
+            case 'N' -> {
+                return NORTH;
+            }
+            case 'E' -> {
+                return EAST;
+            }
+            case 'S' -> {
+                return SOUTH;
+            }
+            case 'W' -> {
+                return WEST;
+            }
+            case 'F' -> {
+                return FLIP;
+            }
             default -> throw new IllegalArgumentException("charToDirection input invalid");
         }
     }
-    public static PathwayCard actionStringToPWC(String string){
+
+    // Converts an action string to a PathwayCard object
+    public static PathwayCard actionStringToPWC(String string) {
         char deckID = string.charAt(0);
         char cardID = string.charAt(1);
-        int[] rowcol = new int[]{Integer.parseInt(string.substring(2,4)),Integer.parseInt(string.substring(4,6))};
+        int[] rowcol = new int[]{Integer.parseInt(string.substring(2, 4)), Integer.parseInt(string.substring(4, 6))};
         Direction direction = charToDirection(string.charAt(6));
         String[] deck;
-        deck = switch (deckID){
+        deck = switch (deckID) {
             case 'A' -> Utility.DECK_A;
             case 'B' -> Utility.DECK_B;
             case 'C' -> Utility.DECK_C;
@@ -51,10 +73,10 @@ public class PathwayCard { ;
         String card = cardFinder(deck, cardID);
         char[][] cardArray = cardBuilder(card);
         PathwayCard wayCard = new PathwayCard(cardArray, rowcol);
-        if (direction == EAST){
+        if (direction == EAST) {
             wayCard.rotate(EAST);
         }
-        if (direction == WEST){
+        if (direction == WEST) {
             wayCard.rotate(WEST);
         }
         if (direction == SOUTH) {
@@ -64,18 +86,21 @@ public class PathwayCard { ;
         return wayCard;
     }
 
-    public static String placeOnBoardPWC(PathwayCard card, char[][] board){
+    // Places a PathwayCard on the game board
+    public static String placeOnBoardPWC(PathwayCard card, char[][] board) {
         int row = card.rowcol[0];
         int col = card.rowcol[1];
         char[][] tiles = card.tiles;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                    board[row + i][col + j] = tiles[i][j];
+                board[row + i][col + j] = tiles[i][j];
             }
         }
         return charBoardToString(board);
     }
-    public static String cardFinder(String[] deck, char c){
+
+    // Finds a card in the deck based on its ID
+    public static String cardFinder(String[] deck, char c) {
         for (String card : deck) {
             if (card.charAt(0) == c) {
                 return card.substring(1);
@@ -84,8 +109,9 @@ public class PathwayCard { ;
         return null;
     }
 
-    public static char[][] cardBuilder(String string){
-        if (string.isEmpty()){
+    // Builds a card from a string representation
+    public static char[][] cardBuilder(String string) {
+        if (string.isEmpty()) {
             throw new IllegalArgumentException("card to cardBuilder is empty");
         }
         char[] row1 = {string.charAt(0), string.charAt(1), string.charAt(2)};
@@ -93,10 +119,10 @@ public class PathwayCard { ;
         char[] row3 = {string.charAt(6), string.charAt(7), string.charAt(8)};
         char[][] card = new char[][]{row1, row2, row3};
         return card;
-    };
+    }
 
+    // Rotates the PathwayCard based on the given direction
     public void rotate(Direction direction) {
-
         char[][] rotatedCard = new char[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -109,16 +135,18 @@ public class PathwayCard { ;
                 }
             }
         }
-
         tiles = rotatedCard; // Update the card's tiles
     }
 
-    public static boolean isOffBoard(char[][] board, char[][] tile, int x, int y){
+    // Checks if the PathwayCard is placed off the game board
+    public static boolean isOffBoard(char[][] board, char[][] tile, int x, int y) {
         return x < 0 || y < 0 ||
                 y + tile[0].length > board[0].length ||
                 x + tile.length > board.length;
     }
-    public static boolean isOverlappingFirePWC(char[][] board){
+
+    // Checks if the PathwayCard overlaps with fire on the game board
+    public static boolean isOverlappingFirePWC(char[][] board) {
         for (char[] chars : board) {
             for (char aChar : chars) {
                 if (aChar == 'f') {
@@ -128,7 +156,9 @@ public class PathwayCard { ;
         }
         return false;
     }
-    public static boolean isOverlappingCatPWC(char[][] board){
+
+    // Checks if the PathwayCard overlaps with a cat on the game board
+    public static boolean isOverlappingCatPWC(char[][] board) {
         for (char[] chars : board) {
             for (char aChar : chars) {
                 if (Character.isUpperCase(aChar)) {
@@ -138,7 +168,9 @@ public class PathwayCard { ;
         }
         return false;
     }
-    public static boolean isOverlappingRaftPWC(char[][] board){
+
+    // Checks if the PathwayCard overlaps with a raft on the game board
+    public static boolean isOverlappingRaftPWC(char[][] board) {
         for (char[] chars : board) {
             for (char aChar : chars) {
                 if (aChar == 'o') {
@@ -149,6 +181,7 @@ public class PathwayCard { ;
         return false;
     }
 
+    // Extracts a sub-board from the game board based on the PathwayCard's position
     public static char[][] extractSubBoard(char[][] board, char[][] card, int x, int y) {
         int cardRows = card.length;
         int cardCols = card[0].length;
@@ -156,35 +189,33 @@ public class PathwayCard { ;
         System.out.println("card dimensions: " + cardRows + "x" + cardCols);
         System.out.println("placement coordinates (x, y): " + x + ", " + y);
 
-        // Create a new char array to hold the extracted sub-board
+        // Creates a new char array to hold the extracted sub-board
         char[][] subBoard = new char[cardRows][cardCols];
         for (int row = 0; row < cardRows; row++) {
             for (int col = 0; col < cardCols; col++) {
-                // Calculate the corresponding index in the larger board
                 int boardRow = x + row;
                 int boardCol = y + col;
-//                System.out.println("Accessing board[" + boardRow + "][" + boardCol + "]");
-                // Extract the character from the larger board
                 subBoard[row][col] = board[boardRow][boardCol];
             }
         }
         System.out.println("");
         return subBoard;
     }
-    public static String[] cardPickUp(String decks, String hand, String drawRequest) {
 
-        //Creating individual deck strings
+    // Picks up cards from the decks based on the draw request
+    public static String[] cardPickUp(String decks, String hand, String drawRequest) {
+        // Creating individual deck strings
         String deckA = decks.substring(decks.indexOf('A'), decks.indexOf('B'));
         String deckB = decks.substring(decks.indexOf('B'), decks.indexOf('C'));
         String deckC = decks.substring(decks.indexOf('C'), decks.indexOf('D'));
         String deckD = decks.substring(decks.indexOf('D'));
 
-        int[] requests = new int[]{0, 0, 0, 0}; // Default: 0 for each deck (A, B, C, D)
+        int[] requests = new int[]{0, 0, 0, 0};
 
         for (int i = 0; i < drawRequest.length(); i++) {
             char currentChar = drawRequest.charAt(i);
 
-            if (Character.isDigit(currentChar)) { // Skip any non-digit characters
+            if (Character.isDigit(currentChar)) {
                 continue;
             }
 
@@ -211,16 +242,16 @@ public class PathwayCard { ;
                     break;
             }
 
-            i = nextIndex - 1; // Move the index to the last digit parsed
+            i = nextIndex - 1;
         }
 
-        if((deckA.length()-1) < requests[0] || (deckB.length()-1) < requests[1] || (deckC.length()-1) < requests[2] ||
-                (deckD.length()-1) < requests[3]){
+        if ((deckA.length() - 1) < requests[0] || (deckB.length() - 1) < requests[1] || (deckC.length() - 1) < requests[2] ||
+                (deckD.length() - 1) < requests[3]) {
             return new String[]{decks, hand};
         }
 
         String newHand = "";
-        String modifiedDecks = ""; // Will hold all modified decks
+        String modifiedDecks = "";
 
         // Sends each deck and its associated request to our cardPick function
         String[] deckA_results = cardPick(requests[0], deckA);
@@ -241,24 +272,23 @@ public class PathwayCard { ;
         modifiedDecks += deckD_results[0];
 
         return new String[]{modifiedDecks, newHand};
-
     }
 
-    private static String[] cardPick(int request, String deck) { //receives seperated decks and requests
+    // Picks cards from a specific deck based on the request
+    private static String[] cardPick(int request, String deck) {
         StringBuilder pickedCards = new StringBuilder();
-        pickedCards.append(deck.charAt(0)); //adds deck ID to our picked cards
+        pickedCards.append(deck.charAt(0));
         StringBuilder modDeck = new StringBuilder(deck);
         Random random = new Random();
 
         for (int i = 0; i < request; i++) {
             int randomIndex = random.nextInt(modDeck.length() - 1) + 1;
-            char pickedCard = modDeck.charAt(randomIndex); //Chooses random card from deck
-            pickedCards.append(pickedCard); //adds chosen card to picked cards
+            char pickedCard = modDeck.charAt(randomIndex);
+            pickedCards.append(pickedCard);
 
-            modDeck.deleteCharAt(randomIndex); //removes chosen card from deck
+            modDeck.deleteCharAt(randomIndex);
         }
 
-        return new String[]{modDeck.toString(), pickedCards.toString()}; //returns modified deck and full hand.
-
+        return new String[]{modDeck.toString(), pickedCards.toString()};
     }
 }
