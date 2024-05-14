@@ -591,6 +591,14 @@ public class Viewer extends Application {
                 drawnCardGroup.getChildren().add(squareImageView);
             }
 
+            // Add the drawn card group to the drawn card container
+            DrawnCard.getChildren().add(drawnCardGroup);
+
+            // Add the drawn card container to the root or any parent group if not added already
+            if (!root.getChildren().contains(DrawnCard)) {
+                root.getChildren().add(DrawnCard);
+            }
+
             // Add mouse event handlers to the drawn card group for moving the card
             final double[] dragDelta = new double[2];
             drawnCardGroup.setOnMousePressed(mouseEvent -> {
@@ -603,35 +611,8 @@ public class Viewer extends Application {
                 drawnCardGroup.setLayoutX(mouseEvent.getSceneX() + dragDelta[0]);
                 drawnCardGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
             });
-
-            drawnCardGroup.setOnMouseReleased(mouseEvent -> {
-                // Calculate the new position for the drawn card
-                double newX = Math.round((drawnCardGroup.getLayoutX() - MARGIN_X) / SQUARE_WIDTH) * SQUARE_WIDTH + MARGIN_X;
-                double newY = Math.round((drawnCardGroup.getLayoutY() - MARGIN_Y) / SQUARE_WIDTH) * SQUARE_WIDTH + MARGIN_Y;
-
-                // Check if the drawn card is placed on the board and fits within bounds
-                if (newX >= MARGIN_X && newX < MARGIN_X + BOARD_WIDTH &&
-                        newY >= MARGIN_Y && newY < MARGIN_Y + BOARD_HEIGHT) {
-                    // Update the board state with the placed card
-                    // Assuming there is a method called updateBoardState() to update the board state
-                    updateBoardState(newX, newY); // Pass the new position to update the board state
-                } else {
-                    // If the drawn card doesn't fit within the board bounds, snap it back to its original position
-                    drawnCardGroup.setLayoutX(cardX);
-                    drawnCardGroup.setLayoutY(cardY);
-                }
-            });
-
-            // Add the drawn card group to the drawn card container
-            DrawnCard.getChildren().add(drawnCardGroup);
-
-            // Add the drawn card container to the root or any parent group if not added already
-            if (!root.getChildren().contains(DrawnCard)) {
-                root.getChildren().add(DrawnCard);
-            }
         }
     }
-
     private void renderFireTile(String fireTileString) {
         drawnFireTileGroup.getChildren().clear();
 
