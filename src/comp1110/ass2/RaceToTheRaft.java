@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+import comp1110.ass2.gui.Viewer;
+
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -418,7 +420,6 @@ public class RaceToTheRaft {
                     }
                 }
                 if (!catAllOnRaft) {
-                    gameResult = true; // Set the flag to true
                     return false; // Game is won, return immediately
                 }
             }
@@ -429,6 +430,44 @@ public class RaceToTheRaft {
             // Iterate over all possible coordinates and rotations
 
             String[] rows = boardState.split("\n");
+
+            if (isPlacementValid(gameState, action)) {
+
+                applyPlacement(gameState, action);
+
+                for (int r = 0; r < rows.length; r++) {
+                    for (int c = 0; c < rows[0].length(); c++) {
+                        if (Challenge.isCharCat(rows[r].charAt(c))) {
+                            char cat = rows[r].charAt(c);
+
+                            for (int row = 0; row < rows.length; row++) {
+                                for (int col = 0; col < rows[0].length(); col++) {
+
+                                    if (rows[row].charAt(col) == 'o' || rows[row].charAt(col) == 'w' ||
+                                        rows[row].charAt(col) == 'W') {
+
+                                        StringBuilder sb = new StringBuilder();
+                                        sb.append(cat);
+                                        sb.append(String.format("%02d%02d", r, c));
+                                        sb.append(String.format("%02d%02d", row, col));
+
+                                        if (isCatMovementValid(gameState, sb.toString())) {
+                                            System.out.println("cat can move to the raft!");
+                                            System.out.println(sb.toString());
+                                            return false;
+                                        }
+
+
+                                    }
+
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+            }
 
             for (int row = 0; row < rows.length; row++) {
                 for (int col = 0; col < rows[0].length(); col++) {
@@ -455,7 +494,8 @@ public class RaceToTheRaft {
 
 
                             if (isPlacementValid(gameState, currentAction)) {
-                                System.out.println("we get a false");
+
+
                                 return false; // At least one valid placement, game is not over
                             }
                         }
