@@ -327,29 +327,29 @@ public class RaceToTheRaft {
         }
 
     } // FIXME TASK 12
-    public static void main(String[] args) {
-        // Example usage to create a Challenge object and access its substrings
-        String placementString = "l0003TW";
-        String board = """
-            fffpgyyrbgrgpybygr
-            fffpBbrypgyprpgbyb
-            fffbgypgbbrbbrbgyr
-            fffyybyrggypgpypbg
-            fffbgrggypbrrbgpry
-            fffgpgbgpygppyRygb
-            fffbgybpbbpyrggbpg
-            fffpyrgygbrypbyryb
-            fffgppbRrgybgybrgy
-            fffygybgygyybgpgpb
-            fffgyrpbgprbyrgbyr
-            fffPbyyrpyprgybpgy
-            fffgbrggrggybrrwww
-            fffpgbypbbrgpygwow
-            fffgrprybbprgpbwww
-            """;
-        String[] gameState = new String[]{board, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"};
-        System.out.println("isPlacementValid: " + isPlacementValid(gameState, placementString));
-    }
+//    public static void main(String[] args) {
+//        // Example usage to create a Challenge object and access its substrings
+//        String placementString = "l0003TW";
+//        String board = """
+//            fffpgyyrbgrgpybygr
+//            fffpBbrypgyprpgbyb
+//            fffbgypgbbrbbrbgyr
+//            fffyybyrggypgpypbg
+//            fffbgrggypbrrbgpry
+//            fffgpgbgpygppyRygb
+//            fffbgybpbbpyrggbpg
+//            fffpyrgygbrypbyryb
+//            fffgppbRrgybgybrgy
+//            fffygybgygyybgpgpb
+//            fffgyrpbgprbyrgbyr
+//            fffPbyyrpyprgybpgy
+//            fffgbrggrggybrrwww
+//            fffpgbypbbrgpygwow
+//            fffgrprybbprgpbwww
+//            """;
+//        String[] gameState = new String[]{board, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"};
+//        System.out.println("isPlacementValid: " + isPlacementValid(gameState, placementString));
+//    }
 
 
 
@@ -445,8 +445,8 @@ public class RaceToTheRaft {
                             currentActionBuilder.append(flippe);
                             currentActionBuilder.append(orient);
 
-                            System.out.println("flip: " + flippe);
-                            System.out.println("orient: " + orient);
+//                            System.out.println("flip: " + flippe);
+//                            System.out.println("orient: " + orient);
 
                             System.out.println(currentActionBuilder.toString());
 
@@ -474,6 +474,32 @@ public class RaceToTheRaft {
         }
     }
 
+    public static void main(String[] args) {
+        String[] gamestate = new String[]{
+            """
+        fffbfffff
+        ffffgffff
+        fffffffff
+        ffffffyff
+        ffffffrrf
+        fffffffff
+        fffbfyfff
+        ffffffgff
+        fffgpffff
+        ffffffbfy
+        ffffyrfff
+        ffffffyRp
+        fffgbrwww
+        fffpgbwow
+        fffgrpwww
+"""
+            , "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "" , "abCD"};
+        boolean test = isPlacementValid(gamestate, "t1003FN");
+
+        System.out.println("placement: " + test);
+
+
+    }
 
 
 }

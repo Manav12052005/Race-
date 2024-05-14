@@ -160,7 +160,7 @@ public class PathwayCard { ;
                 // Calculate the corresponding index in the larger board
                 int boardRow = x + row;
                 int boardCol = y + col;
-                System.out.println("Accessing board[" + boardRow + "][" + boardCol + "]");
+//                System.out.println("Accessing board[" + boardRow + "][" + boardCol + "]");
                 // Extract the character from the larger board
                 subBoard[row][col] = board[boardRow][boardCol];
             }
