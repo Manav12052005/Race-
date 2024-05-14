@@ -386,16 +386,20 @@ public class Viewer extends Application {
         rotateFireTileButton.setLayoutY(rotateFireTileButton_Y);
         root.getChildren().add(rotateFireTileButton);
 
+        rotateFireTileButton.setOpacity(0);
+
         Button flipFireTileButton = new Button("Flip Fire Tile");
         flipFireTileButton.setLayoutX(flipFireTileButton_X);
         flipFireTileButton.setLayoutY(flipFireTileButton_Y);
         root.getChildren().add(flipFireTileButton);
 
+        flipFireTileButton.setOpacity(0);
+
         rotateFireTileButton.setDisable(true);
         flipFireTileButton.setDisable(true);
 
         rotateFireTileButton.setOnAction(e -> {
-            if (drawnFireTile != null) {
+            if (drawnFireTile != null && !drawnFireTileGroup.getChildren().isEmpty()) {
                 drawnFireTile.rotate(PathwayCard.Direction.EAST); // Rotate the FireTile object
                 drawnFireTileGroup.getChildren().clear();
                 // Re-render the rotated fire tile
@@ -416,7 +420,7 @@ public class Viewer extends Application {
         });
 
         flipFireTileButton.setOnAction(e -> {
-            if (drawnFireTile != null) {
+            if (drawnFireTile != null && !drawnFireTileGroup.getChildren().isEmpty()) {
                 drawnFireTile.rotate(PathwayCard.Direction.FLIP); // Flip the FireTile object
                 drawnFireTileGroup.getChildren().clear();
                 // Re-render the flipped fire tile
@@ -472,6 +476,8 @@ public class Viewer extends Application {
 //                hand = "AbdfBcCaDe";
                 hand = gamestate[2];
                 drawFireTileButton.setOpacity(1);
+                rotateFireTileButton.setOpacity(1);
+                flipFireTileButton.setOpacity(1);
 
                 // Set the action event handler for the drawFireTileButton
                 drawFireTileButton.setOnAction(fireTileEvent -> {
