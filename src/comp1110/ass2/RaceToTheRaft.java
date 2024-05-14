@@ -1,7 +1,5 @@
 package comp1110.ass2;
 
-import comp1110.ass2.gui.Viewer;
-
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -398,8 +396,6 @@ public class RaceToTheRaft {
         String fireTileBag = gameState[4]; // Gets fireTileBag from gameState
         String boardState = gameState[0]; // Gets the current state of the game board
 
-        boolean gameResult = false; // Flag to track game result
-
         if ((firstChar == 'Y' || firstChar == 'B' || firstChar == 'R' || firstChar == 'G' || firstChar == 'P')
                 && Character.isDigit(secondChar) && action.length() > 8) { // the action is a movement
 
@@ -423,24 +419,32 @@ public class RaceToTheRaft {
                     return false; // Game is won, return immediately
                 }
             }
-        } else if (!gameResult && fireTileBag.isEmpty()) {
-            gameResult = true; // Set the flag to true
+        } else if (fireTileBag.isEmpty()) {
             return true; // No tiles left, game is lost, return immediately
-        } else if (!gameResult && isFireTile(action)) {
+        } else if (isFireTile(action)) {
             // Iterate over all possible coordinates and rotations
 
             String[] rows = boardState.split("\n");
 
             if (isPlacementValid(gameState, action)) {
 
-                applyPlacement(gameState, action);
+
+                System.out.println(gameState[0]);
+                System.out.println(action + " true!!!");
+
+                String[] newGameState = applyPlacement(gameState, action);
+
+                System.out.println("after placement");
+                System.out.println(newGameState[0]);
 
                 for (int r = 0; r < rows.length; r++) {
                     for (int c = 0; c < rows[0].length(); c++) {
                         if (Challenge.isCharCat(rows[r].charAt(c))) {
                             char cat = rows[r].charAt(c);
 
-                            boolean flag = false;
+                            System.out.println("cat: " + cat);
+
+                            boolean catToRaft = false;
 
                             for (int row = 0; row < rows.length; row++) {
                                 for (int col = 0; col < rows[0].length(); col++) {
@@ -453,20 +457,27 @@ public class RaceToTheRaft {
                                         sb.append(String.format("%02d%02d", r, c));
                                         sb.append(String.format("%02d%02d", row, col));
 
-                                        if (isCatMovementValid(gameState, sb.toString())) {
-                                            System.out.println("cat can move to the raft!");
-                                            System.out.println(sb.toString());
-                                            flag = true;
+//                                        if (Cat.checkIfBlocked(newGameState, sb.toString())) {
+                                          if (Cat.checkMovementValid(newGameState, sb.toString())) {
+                                                System.out.println("cat can move to the raft!");
+                                                System.out.println(sb.toString());
+                                                catToRaft = true;
+                                                break;
                                         }
 
 
                                     }
 
                                 }
+                                if (catToRaft) {
+                                    break;
+                                }
                             }
-                            if (!flag) {
-                                System.out.println("TRUE");
+
+                            if (!catToRaft) {
                                 return true;
+                            } else {
+                                return false;
                             }
                         }
 
@@ -505,6 +516,8 @@ public class RaceToTheRaft {
                     }
                 }
             }
+        } else {
+            return false;
         }
 
         return true;
@@ -513,7 +526,8 @@ public class RaceToTheRaft {
 
 
     public static boolean isFireTile(String action) {
-        if (action.length() >= 7 || Character.isLetter(action.charAt(1))) {
+        if (action.length() == 7 && Character.isDigit(action.charAt(1))) {
+            System.out.println("FireTile" + action);
             return true;
         } else {
             return false;

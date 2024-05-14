@@ -17,6 +17,9 @@ public class FireTile {
 
     public static FireTile actionStringToFT(String string){
         char tileID = string.charAt(0);
+
+//        System.out.println("tileID: " + tileID);
+
         char flip = 'F'; // Default flip value
         PathwayCard.Direction direction = PathwayCard.Direction.NORTH; // Default direction
 
@@ -28,9 +31,21 @@ public class FireTile {
         }
 
         String card = tileFinder(Utility.FIRE_TILES, tileID);
+
+//        System.out.println("card: " + card);
+
         int[] intArray = toIntArray(card.substring(1));
+
+//        System.out.println("intArray: " + Arrays.toString(intArray));
+
         int[] dim = findDimensions(intArray);
+
+        System.out.println("dim: " + Arrays.toString(dim));
+
         char[][] cardArray = tileBuilder(defaultArray(dim), intArray);
+
+        System.out.println("cardArray: " + Arrays.deepToString(cardArray));
+
         boolean horiz = dim[1] > dim[0];
         FireTile tile = new FireTile(cardArray, horiz);
 
@@ -51,7 +66,7 @@ public class FireTile {
     }
 
 
-    public static String placeOnBoardFT(FireTile tile, char[][] board, int[] loc){
+    public static String placeOnBoardFT(FireTile tile, char[][] board, int[] loc) {
         int startX = loc[0];
         int startY = loc[1];
         char[][] tiles = tile.tiles;
@@ -65,6 +80,7 @@ public class FireTile {
         }
         return charBoardToString(board);
     }
+
     public static String tileFinder(String[] deck, char c){
         for (String card : deck) {
             if (card.charAt(0) == c) {
@@ -237,5 +253,14 @@ public class FireTile {
     public boolean getIsHorizontal () {
         return isHorizontal;
         }
+
+    public static void main(String[] args) {
+        FireTile tile = actionStringToFT("D");
+        char[][] board = tile.tiles;
+        // print board
+        for (char[] row : board) {
+            System.out.println(Arrays.toString(row));
+        }
+    }
 }
 
