@@ -14,6 +14,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.util.Arrays;
+import java.util.List;
+import javafx.application.Platform;
+
+
+import java.util.Random;
+
 
 public class Viewer extends Application {
 
@@ -106,7 +113,7 @@ public class Viewer extends Application {
         }
 
         // Draw the cards in hand with given hand string
-        Hand hands = new Hand(hand);
+        Hand hands = new Hand("");
         DrawHand.setLayoutX(MARGIN_X);
         DrawHand.setLayoutY(MARGIN_Y);
         DrawHand.getChildren().clear();
@@ -270,13 +277,51 @@ public class Viewer extends Application {
 
         Button drawCardButton = new Button("Draw Card");
 
+        // Convert String[] arrays to List<String>
+        List<String> deckAList = Arrays.asList(Utility.DECK_A);
+        List<String> deckBList = Arrays.asList(Utility.DECK_B);
+        List<String> deckCList = Arrays.asList(Utility.DECK_C);
+        List<String> deckDList = Arrays.asList(Utility.DECK_D);
+
+        Deck deckAObj = new Deck('A', deckAList);
+        Deck deckBObj = new Deck('B', deckBList);
+        Deck deckCObj = new Deck('C', deckCList);
+        Deck deckDObj = new Deck('D', deckDList);
+
         drawCardButton.setOnAction(e -> {
             String selectedDeck = deckChoiceBox.getValue();
             if (selectedDeck != null) {
+                String drawnCard = null;
+                switch (selectedDeck) {
+                    case "✕":
+                        drawnCard = Deck.drawCard(deckAObj);
+                        break;
+                    case "□":
+                        drawnCard = Deck.drawCard(deckBObj);
+                        break;
+                    case "◯":
+                        drawnCard = Deck.drawCard(deckCObj);
+                        break;
+                    case "△":
+                        drawnCard = Deck.drawCard(deckDObj);
+                        break;
+                }
+                if (drawnCard != null) {
+                    // Create a Card object from the drawn card string
+                    Card card = new Card(drawnCard);
+                    // Get the Group containing the card's image views
+                    Group cardGroup = new Group(card);
+                    // Adjust position as needed
+                    cardGroup.setLayoutX(400);
+                    cardGroup.setLayoutY(100);
+                    // Add the card's group to the root
+                    root.getChildren().add(cardGroup);
+                }
                 // Perform the draw card action here
                 System.out.println("Draw card from deck: " + selectedDeck);
             }
         });
+
 
         deckChoiceBox.setLayoutX(deckChoiceBox_X);
         deckChoiceBox.setLayoutY(deckChoiceBox_Y);
