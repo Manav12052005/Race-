@@ -51,7 +51,10 @@ public class Viewer extends Application {
     private static final double placeButton_Y = VIEWER_HEIGHT - 50;
     private static final double drawFireTileButton_X = drawCardButton_X;
     private static final double drawFireTileButton_Y = drawCardButton_Y - 30;
-
+    private static final double rotateFireTileButton_X = drawFireTileButton_X + 83;
+    private static final double rotateFireTileButton_Y = drawFireTileButton_Y - 30;
+    private static final double flipFireTileButton_X = drawFireTileButton_X + 100;
+    private static final double flipFireTileButton_Y = drawFireTileButton_Y;
     private static final double cursorPositionX = 10;
     private static final double cursorPositionY = VIEWER_HEIGHT - 20;
 
@@ -67,7 +70,7 @@ public class Viewer extends Application {
     private String[] deckB = Utility.DECK_B;
     private String[] deckC = Utility.DECK_C;
     private String[] deckD = Utility.DECK_D;
-
+    private FireTile drawnFireTile;
     private String challenge;
     private String hand;
     private String boardstate;
@@ -367,6 +370,61 @@ public class Viewer extends Application {
 
         drawFireTileButton.setOpacity(0);
 
+        Button rotateFireTileButton = new Button("Rotate Fire Tile");
+        rotateFireTileButton.setLayoutX(rotateFireTileButton_X);
+        rotateFireTileButton.setLayoutY(rotateFireTileButton_Y);
+        root.getChildren().add(rotateFireTileButton);
+
+        Button flipFireTileButton = new Button("Flip Fire Tile");
+        flipFireTileButton.setLayoutX(flipFireTileButton_X);
+        flipFireTileButton.setLayoutY(flipFireTileButton_Y);
+        root.getChildren().add(flipFireTileButton);
+
+        rotateFireTileButton.setDisable(true);
+        flipFireTileButton.setDisable(true);
+
+        rotateFireTileButton.setOnAction(e -> {
+            if (drawnFireTile != null) {
+                drawnFireTile.rotate(PathwayCard.Direction.EAST); // Rotate the FireTile object
+                drawnFireTileGroup.getChildren().clear();
+                // Re-render the rotated fire tile
+                char[][] tiles = drawnFireTile.getTiles();
+                for (int row = 0; row < tiles.length; row++) {
+                    for (int col = 0; col < tiles[0].length; col++) {
+                        if (tiles[row][col] == 'f') {
+                            ImageView fireTileImageView = new ImageView(new Image("comp1110/ass2/gui/assets/fire.png"));
+                            fireTileImageView.setFitWidth(SQUARE_WIDTH);
+                            fireTileImageView.setFitHeight(SQUARE_WIDTH);
+                            fireTileImageView.setLayoutX(col * SQUARE_WIDTH);
+                            fireTileImageView.setLayoutY(row * SQUARE_WIDTH);
+                            drawnFireTileGroup.getChildren().add(fireTileImageView);
+                        }
+                    }
+                }
+            }
+        });
+
+        flipFireTileButton.setOnAction(e -> {
+            if (drawnFireTile != null) {
+                drawnFireTile.rotate(PathwayCard.Direction.FLIP); // Flip the FireTile object
+                drawnFireTileGroup.getChildren().clear();
+                // Re-render the flipped fire tile
+                char[][] tiles = drawnFireTile.getTiles();
+                for (int row = 0; row < tiles.length; row++) {
+                    for (int col = 0; col < tiles[0].length; col++) {
+                        if (tiles[row][col] == 'f') {
+                            ImageView fireTileImageView = new ImageView(new Image("comp1110/ass2/gui/assets/fire.png"));
+                            fireTileImageView.setFitWidth(SQUARE_WIDTH);
+                            fireTileImageView.setFitHeight(SQUARE_WIDTH);
+                            fireTileImageView.setLayoutX(col * SQUARE_WIDTH);
+                            fireTileImageView.setLayoutY(row * SQUARE_WIDTH);
+                            drawnFireTileGroup.getChildren().add(fireTileImageView);
+                        }
+                    }
+                }
+            }
+        });
+
         Label label = new Label("Select Difficulty: (from 0 to 5)");
         ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
         for (int i = 0; i <= 5; i++) {
@@ -411,6 +469,8 @@ public class Viewer extends Application {
                         String drawnFireTile = FireTile.pickFire(fireTileBag);
                         gamestate[4] = fireTileBag.replace(drawnFireTile.substring(0, 1), "");
                         renderFireTile(drawnFireTile);
+                        rotateFireTileButton.setDisable(false);
+                        flipFireTileButton.setDisable(false);
                     }
                 });
 
@@ -492,6 +552,7 @@ public class Viewer extends Application {
         drawnFireTileGroup.getChildren().clear();
 
         FireTile fireTile = FireTile.actionStringToFT(fireTileString);
+        drawnFireTile = fireTile;
         char[][] tiles = fireTile.getTiles();
 
         for (int row = 0; row < tiles.length; row++) {
