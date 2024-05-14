@@ -24,6 +24,8 @@ import java.util.Random;
 
 public class Viewer extends Application {
 
+    private final Group DrawnCard = new Group();
+
     private final Group root = new Group();
     private static final double VIEWER_WIDTH = 1100;
     private static final double VIEWER_HEIGHT = 650;
@@ -190,7 +192,6 @@ public class Viewer extends Application {
             });
 
 
-
             i++;
         }
 
@@ -291,51 +292,45 @@ public class Viewer extends Application {
         Deck deckCObj = new Deck('C', deckCList);
         Deck deckDObj = new Deck('D', deckDList);
 
+
         drawCardButton.setOnAction(e -> {
             String selectedDeck = deckChoiceBox.getValue();
             if (selectedDeck != null) {
-                String drawnCard = null;
+                // Determine which Deck object corresponds to the selected deck
+                Deck selectedDeckObj = null;
                 switch (selectedDeck) {
                     case "✕":
-                        drawnCard = Deck.drawCard(deckAObj);
+                        selectedDeckObj = deckAObj;
                         break;
                     case "□":
-                        drawnCard = Deck.drawCard(deckBObj);
+                        selectedDeckObj = deckBObj;
                         break;
                     case "◯":
-                        drawnCard = Deck.drawCard(deckCObj);
+                        selectedDeckObj = deckCObj;
                         break;
                     case "△":
-                        drawnCard = Deck.drawCard(deckDObj);
+                        selectedDeckObj = deckDObj;
                         break;
                 }
-                if (drawnCard != null) {
-                    // Create a Card object from the drawn card string
-                    Card card = new Card(drawnCard);
-                    // Get the Group containing the card's image views
-                    Group cardGroup = new Group();
-                    // Adjust position as needed
-                    cardGroup.setLayoutX(400);
-                    cardGroup.setLayoutY(100);
-                    // Add the card's group to the root
-                    root.getChildren().add(cardGroup);
 
-                    // Add the images for each square in the card
-                    for (Square square : card.getCard()) {
-                        ImageView squareImageView = new ImageView(square.getImg());
-                        squareImageView.setLayoutX(square.getValueX());
-                        squareImageView.setLayoutY(square.getValueY());
-                        squareImageView.setFitWidth(SQUARE_WIDTH);
-                        squareImageView.setFitHeight(SQUARE_WIDTH);
-                        cardGroup.getChildren().add(squareImageView);
-                    }
+                // Draw the card from the selected deck
+                String drawnCardString = Deck.drawCard(selectedDeckObj);
+                if (drawnCardString != null) {
+                    // Convert the drawn card string to a Card object
+                    drawnCardString = drawnCardString.substring(1);
+                    System.out.println("Drawn Card: " + drawnCardString);
+                    Card drawnCard = new Card(drawnCardString);
+
+                    // Display the drawn card
+                    renderDrawnCard(drawnCard);
+
+                    // Perform the draw card action here
+                    System.out.println("Draw card from deck: " + selectedDeck);
+                } else {
+                    System.out.println("No cards left in deck: " + selectedDeck);
                 }
-                // Perform the draw card action here
-                System.out.println("Draw card from deck: " + selectedDeck);
             }
         });
-
-
 
         deckChoiceBox.setLayoutX(deckChoiceBox_X);
         deckChoiceBox.setLayoutY(deckChoiceBox_Y);
@@ -564,6 +559,59 @@ public class Viewer extends Application {
 //
 //        }
 
+    }
+
+    private void renderDrawnCard(Card drawnCard) {
+        // First, determine the total number of cards already displayed
+        int totalCardsDisplayed = DrawnCard.getChildren().size();
+
+        // If the total cards displayed is less than 6, proceed to add the new drawn card
+        if (totalCardsDisplayed < 6) {
+            // Calculate the grid dimensions based on the total cards displayed
+            int columns = 2; // Number of columns
+            double cardWidth = SQUARE_WIDTH * 3; // Width of each card
+            double cardHeight = SQUARE_WIDTH * 3; // Height of each card
+            double gap = 10; // Gap between cards
+
+            // Calculate the position for the new drawn card
+            int rowIndex = totalCardsDisplayed / columns;
+            int colIndex = totalCardsDisplayed % columns;
+            double cardX = colIndex * (cardWidth + gap) + MARGIN_X;
+            double cardY = rowIndex * (cardHeight + gap) + MARGIN_Y;
+
+            // Add the new drawn card to the drawn card group
+            Group drawnCardGroup = new Group();
+            for (Square square : drawnCard.getCard()) {
+                ImageView squareImageView = square.getSquareImageView();
+                squareImageView.setFitWidth(SQUARE_WIDTH);
+                squareImageView.setFitHeight(SQUARE_WIDTH);
+                squareImageView.setLayoutX(square.getValueX() + cardX);
+                squareImageView.setLayoutY(square.getValueY() + cardY);
+
+                drawnCardGroup.getChildren().add(squareImageView);
+            }
+
+            // Add the drawn card group to the drawn card container
+            DrawnCard.getChildren().add(drawnCardGroup);
+
+            // Add the drawn card container to the root or any parent group if not added already
+            if (!root.getChildren().contains(DrawnCard)) {
+                root.getChildren().add(DrawnCard);
+            }
+
+            // Add mouse event handlers to the drawn card group for moving the card
+            final double[] dragDelta = new double[2];
+            drawnCardGroup.setOnMousePressed(mouseEvent -> {
+                dragDelta[0] = drawnCardGroup.getLayoutX() - mouseEvent.getSceneX();
+                dragDelta[1] = drawnCardGroup.getLayoutY() - mouseEvent.getSceneY();
+                drawnCardGroup.toFront(); // Bring the card to the front when pressed
+            });
+
+            drawnCardGroup.setOnMouseDragged(mouseEvent -> {
+                drawnCardGroup.setLayoutX(mouseEvent.getSceneX() + dragDelta[0]);
+                drawnCardGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
+            });
+        }
     }
     private void renderFireTile(String fireTileString) {
         drawnFireTileGroup.getChildren().clear();
