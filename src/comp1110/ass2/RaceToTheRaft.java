@@ -298,7 +298,7 @@ public class RaceToTheRaft {
             }
             int x = Integer.parseInt(placementString.substring(1, 3));
             int y = Integer.parseInt(placementString.substring(3, 5));
-            System.out.println(isOffBoard(board, tile, x, y));
+//            System.out.println(isOffBoard(board, tile, x, y));
             if (isOffBoard(board, tile, x, y)) {
                 return false;
             }
@@ -452,7 +452,10 @@ public class RaceToTheRaft {
 
                             String currentAction = currentActionBuilder.toString();
                             // Check if the current placement is valid
-                            if (isPlacementValid(new String[]{boardState}, currentAction)) {
+
+
+                            if (isPlacementValid(gameState, currentAction)) {
+                                System.out.println("we get a false");
                                 return false; // At least one valid placement, game is not over
                             }
                         }
@@ -461,7 +464,7 @@ public class RaceToTheRaft {
             }
         }
 
-        return false;
+        return true;
     }
 
 
@@ -477,24 +480,24 @@ public class RaceToTheRaft {
     public static void main(String[] args) {
         String[] gamestate = new String[]{
             """
-        fffbfffff
-        ffffgffff
-        fffffffff
-        ffffffyff
-        ffffffrrf
-        fffffffff
-        fffbfyfff
-        ffffffgff
-        fffgpffff
-        ffffffbfy
-        ffffyrfff
-        ffffffyRp
-        fffgbrwww
-        fffpgbwow
-        fffgrpwww
+fffbfffff
+ffffgffff
+fffffffff
+ffffffyff
+ffffffrrf
+fffffffff
+fffbfyfff
+ffffffgff
+fffgpffff
+ffffffbfy
+ffffyrfff
+ffffffyRp
+fffgbrwww
+fffpgbwow
+fffgrpwww
 """
-            , "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "" , "abCD"};
-        boolean test = isPlacementValid(gamestate, "t1003FN");
+            , "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "" , "abCDE"};
+        boolean test = isPlacementValid(gamestate, "t1103FS");
 
         System.out.println("placement: " + test);
 
