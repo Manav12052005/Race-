@@ -61,10 +61,10 @@ public class Viewer extends Application {
     private final Group DrawHand = new Group();
     private final Group CatGroup = new Group();
 
-    private String[] deckA;
-    private String[] deckB;
-    private String[] deckC;
-    private String[] deckD;
+    private String[] deckA = Utility.DECK_A;
+    private String[] deckB = Utility.DECK_B;
+    private String[] deckC = Utility.DECK_C;
+    private String[] deckD = Utility.DECK_D;
 
     private String challenge;
     private String hand;
