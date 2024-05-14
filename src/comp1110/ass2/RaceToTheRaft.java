@@ -417,9 +417,9 @@ public class RaceToTheRaft {
                         }
                     }
                 }
-                if (catAllOnRaft) {
+                if (!catAllOnRaft) {
                     gameResult = true; // Set the flag to true
-                    return true; // Game is won, return immediately
+                    return false; // Game is won, return immediately
                 }
             }
         } else if (!gameResult && fireTileBag.isEmpty()) {
