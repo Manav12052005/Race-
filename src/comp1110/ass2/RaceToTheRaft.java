@@ -422,14 +422,10 @@ public class RaceToTheRaft {
                     return true; // Game is won, return immediately
                 }
             }
-        }
-
-        if (!gameResult && fireTileBag.isEmpty()) {
+        } else if (!gameResult && fireTileBag.isEmpty()) {
             gameResult = true; // Set the flag to true
             return true; // No tiles left, game is lost, return immediately
-        }
-
-        if (!gameResult && isFireTile(action)) {
+        } else if (!gameResult && isFireTile(action)) {
             // Iterate over all possible coordinates and rotations
 
             String[] rows = boardState.split("\n");
