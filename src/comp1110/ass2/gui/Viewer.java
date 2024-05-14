@@ -14,6 +14,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.util.Arrays;
+import java.util.List;
+import javafx.application.Platform;
+
+
+import java.util.Random;
+
 
 public class Viewer extends Application {
 
@@ -42,7 +49,12 @@ public class Viewer extends Application {
 
     private static final double placeButton_X = 250;
     private static final double placeButton_Y = VIEWER_HEIGHT - 50;
-
+    private static final double drawFireTileButton_X = drawCardButton_X;
+    private static final double drawFireTileButton_Y = drawCardButton_Y - 30;
+    private static final double rotateFireTileButton_X = drawFireTileButton_X + 83;
+    private static final double rotateFireTileButton_Y = drawFireTileButton_Y - 30;
+    private static final double flipFireTileButton_X = drawFireTileButton_X + 100;
+    private static final double flipFireTileButton_Y = drawFireTileButton_Y;
     private static final double cursorPositionX = 10;
     private static final double cursorPositionY = VIEWER_HEIGHT - 20;
 
@@ -53,12 +65,12 @@ public class Viewer extends Application {
     private final Group DrawBoard = new Group();
     private final Group DrawHand = new Group();
     private final Group CatGroup = new Group();
-
+    private final Group drawnFireTileGroup = new Group();
     private String[] deckA = Utility.DECK_A;
     private String[] deckB = Utility.DECK_B;
     private String[] deckC = Utility.DECK_C;
     private String[] deckD = Utility.DECK_D;
-
+    private FireTile drawnFireTile;
     private String challenge;
     private String hand;
     private String boardstate;
@@ -104,7 +116,7 @@ public class Viewer extends Application {
         }
 
         // Draw the cards in hand with given hand string
-        Hand hands = null;
+        Hand hands = new Hand("");
         DrawHand.setLayoutX(MARGIN_X);
         DrawHand.setLayoutY(MARGIN_Y);
         DrawHand.getChildren().clear();
@@ -268,13 +280,62 @@ public class Viewer extends Application {
 
         Button drawCardButton = new Button("Draw Card");
 
+        // Convert String[] arrays to List<String>
+        List<String> deckAList = Arrays.asList(Utility.DECK_A);
+        List<String> deckBList = Arrays.asList(Utility.DECK_B);
+        List<String> deckCList = Arrays.asList(Utility.DECK_C);
+        List<String> deckDList = Arrays.asList(Utility.DECK_D);
+
+        Deck deckAObj = new Deck('A', deckAList);
+        Deck deckBObj = new Deck('B', deckBList);
+        Deck deckCObj = new Deck('C', deckCList);
+        Deck deckDObj = new Deck('D', deckDList);
+
         drawCardButton.setOnAction(e -> {
             String selectedDeck = deckChoiceBox.getValue();
             if (selectedDeck != null) {
+                String drawnCard = null;
+                switch (selectedDeck) {
+                    case "✕":
+                        drawnCard = Deck.drawCard(deckAObj);
+                        break;
+                    case "□":
+                        drawnCard = Deck.drawCard(deckBObj);
+                        break;
+                    case "◯":
+                        drawnCard = Deck.drawCard(deckCObj);
+                        break;
+                    case "△":
+                        drawnCard = Deck.drawCard(deckDObj);
+                        break;
+                }
+                if (drawnCard != null) {
+                    // Create a Card object from the drawn card string
+                    Card card = new Card(drawnCard);
+                    // Get the Group containing the card's image views
+                    Group cardGroup = new Group();
+                    // Adjust position as needed
+                    cardGroup.setLayoutX(400);
+                    cardGroup.setLayoutY(100);
+                    // Add the card's group to the root
+                    root.getChildren().add(cardGroup);
+
+                    // Add the images for each square in the card
+                    for (Square square : card.getCard()) {
+                        ImageView squareImageView = new ImageView(square.getImg());
+                        squareImageView.setLayoutX(square.getValueX());
+                        squareImageView.setLayoutY(square.getValueY());
+                        squareImageView.setFitWidth(SQUARE_WIDTH);
+                        squareImageView.setFitHeight(SQUARE_WIDTH);
+                        cardGroup.getChildren().add(squareImageView);
+                    }
+                }
                 // Perform the draw card action here
                 System.out.println("Draw card from deck: " + selectedDeck);
             }
         });
+
+
 
         deckChoiceBox.setLayoutX(deckChoiceBox_X);
         deckChoiceBox.setLayoutY(deckChoiceBox_Y);
@@ -311,6 +372,74 @@ public class Viewer extends Application {
 
         root.getChildren().add(titleImageView);
 
+        Button drawFireTileButton = new Button("Draw Fire Tile");
+        drawFireTileButton.setLayoutX(drawFireTileButton_X);
+        drawFireTileButton.setLayoutY(drawFireTileButton_Y);
+        root.getChildren().add(drawFireTileButton);
+
+        root.getChildren().add(drawnFireTileGroup);
+
+        drawFireTileButton.setOpacity(0);
+
+        Button rotateFireTileButton = new Button("Rotate Fire Tile");
+        rotateFireTileButton.setLayoutX(rotateFireTileButton_X);
+        rotateFireTileButton.setLayoutY(rotateFireTileButton_Y);
+        root.getChildren().add(rotateFireTileButton);
+
+        rotateFireTileButton.setOpacity(0);
+
+        Button flipFireTileButton = new Button("Flip Fire Tile");
+        flipFireTileButton.setLayoutX(flipFireTileButton_X);
+        flipFireTileButton.setLayoutY(flipFireTileButton_Y);
+        root.getChildren().add(flipFireTileButton);
+
+        flipFireTileButton.setOpacity(0);
+
+        rotateFireTileButton.setDisable(true);
+        flipFireTileButton.setDisable(true);
+
+        rotateFireTileButton.setOnAction(e -> {
+            if (drawnFireTile != null && !drawnFireTileGroup.getChildren().isEmpty()) {
+                drawnFireTile.rotate(PathwayCard.Direction.EAST); // Rotate the FireTile object
+                drawnFireTileGroup.getChildren().clear();
+                // Re-render the rotated fire tile
+                char[][] tiles = drawnFireTile.getTiles();
+                for (int row = 0; row < tiles.length; row++) {
+                    for (int col = 0; col < tiles[0].length; col++) {
+                        if (tiles[row][col] == 'f') {
+                            ImageView fireTileImageView = new ImageView(new Image("comp1110/ass2/gui/assets/fire.png"));
+                            fireTileImageView.setFitWidth(SQUARE_WIDTH);
+                            fireTileImageView.setFitHeight(SQUARE_WIDTH);
+                            fireTileImageView.setLayoutX(col * SQUARE_WIDTH);
+                            fireTileImageView.setLayoutY(row * SQUARE_WIDTH);
+                            drawnFireTileGroup.getChildren().add(fireTileImageView);
+                        }
+                    }
+                }
+            }
+        });
+
+        flipFireTileButton.setOnAction(e -> {
+            if (drawnFireTile != null && !drawnFireTileGroup.getChildren().isEmpty()) {
+                drawnFireTile.rotate(PathwayCard.Direction.FLIP); // Flip the FireTile object
+                drawnFireTileGroup.getChildren().clear();
+                // Re-render the flipped fire tile
+                char[][] tiles = drawnFireTile.getTiles();
+                for (int row = 0; row < tiles.length; row++) {
+                    for (int col = 0; col < tiles[0].length; col++) {
+                        if (tiles[row][col] == 'f') {
+                            ImageView fireTileImageView = new ImageView(new Image("comp1110/ass2/gui/assets/fire.png"));
+                            fireTileImageView.setFitWidth(SQUARE_WIDTH);
+                            fireTileImageView.setFitHeight(SQUARE_WIDTH);
+                            fireTileImageView.setLayoutX(col * SQUARE_WIDTH);
+                            fireTileImageView.setLayoutY(row * SQUARE_WIDTH);
+                            drawnFireTileGroup.getChildren().add(fireTileImageView);
+                        }
+                    }
+                }
+            }
+        });
+
         Label label = new Label("Select Difficulty: (from 0 to 5)");
         ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
         for (int i = 0; i <= 5; i++) {
@@ -346,6 +475,21 @@ public class Viewer extends Application {
 //                hand = "Abbbccc";
 //                hand = "AbdfBcCaDe";
                 hand = gamestate[2];
+                drawFireTileButton.setOpacity(1);
+                rotateFireTileButton.setOpacity(1);
+                flipFireTileButton.setOpacity(1);
+
+                // Set the action event handler for the drawFireTileButton
+                drawFireTileButton.setOnAction(fireTileEvent -> {
+                    String fireTileBag = gamestate[4];
+                    if (!fireTileBag.isEmpty()) {
+                        String drawnFireTile = FireTile.pickFire(fireTileBag);
+                        gamestate[4] = fireTileBag.replace(drawnFireTile.substring(0, 1), "");
+                        renderFireTile(drawnFireTile);
+                        rotateFireTileButton.setDisable(false);
+                        flipFireTileButton.setDisable(false);
+                    }
+                });
 
                 refresh(boardstate, hand);
                 root.getChildren().remove(vbox);
@@ -421,7 +565,85 @@ public class Viewer extends Application {
 //        }
 
     }
+    private void renderFireTile(String fireTileString) {
+        drawnFireTileGroup.getChildren().clear();
 
+        FireTile fireTile = FireTile.actionStringToFT(fireTileString);
+        drawnFireTile = fireTile;
+        char[][] tiles = fireTile.getTiles();
+
+        for (int row = 0; row < tiles.length; row++) {
+            for (int col = 0; col < tiles[0].length; col++) {
+                if (tiles[row][col] == 'f') {
+                    ImageView fireTileImageView = new ImageView(new Image("comp1110/ass2/gui/assets/fire.png"));
+                    fireTileImageView.setFitWidth(SQUARE_WIDTH);
+                    fireTileImageView.setFitHeight(SQUARE_WIDTH);
+                    fireTileImageView.setLayoutX(col * SQUARE_WIDTH);
+                    fireTileImageView.setLayoutY(row * SQUARE_WIDTH);
+                    drawnFireTileGroup.getChildren().add(fireTileImageView);
+                }
+            }
+        }
+
+        // Position the fire tile group below the bottom left card
+        drawnFireTileGroup.setLayoutX(MARGIN_X);
+        drawnFireTileGroup.setLayoutY(MARGIN_Y + 11.5 * SQUARE_WIDTH);
+
+        // Add mouse event handlers to the drawnFireTileGroup for moving and placing the fire tile
+        final double[] dragDelta = new double[2];
+        drawnFireTileGroup.setOnMousePressed(mouseEvent -> {
+            dragDelta[0] = drawnFireTileGroup.getLayoutX() - mouseEvent.getSceneX();
+            dragDelta[1] = drawnFireTileGroup.getLayoutY() - mouseEvent.getSceneY();
+            drawnFireTileGroup.toFront(); // Bring the fire tile to the front when pressed
+        });
+
+        drawnFireTileGroup.setOnMouseDragged(mouseEvent -> {
+            drawnFireTileGroup.setLayoutX(mouseEvent.getSceneX() + dragDelta[0]);
+            drawnFireTileGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
+        });
+
+        drawnFireTileGroup.setOnMouseReleased(mouseEvent -> {
+            double newX = Math.round((drawnFireTileGroup.getLayoutX() - MARGIN_X) / SQUARE_WIDTH) * SQUARE_WIDTH + MARGIN_X;
+            double newY = Math.round((drawnFireTileGroup.getLayoutY() - MARGIN_Y) / SQUARE_WIDTH) * SQUARE_WIDTH + MARGIN_Y;
+            drawnFireTileGroup.setLayoutX(newX);
+            drawnFireTileGroup.setLayoutY(newY);
+
+            // Check if the fire tile is placed on the board
+            if (newX >= MARGIN_X + shiftX && newX < MARGIN_X + shiftX + BOARD_WIDTH &&
+                    newY >= MARGIN_Y && newY < MARGIN_Y + BOARD_HEIGHT) {
+                // Calculate the board position
+                int boardX = (int) ((newX - MARGIN_X - shiftX) / SQUARE_WIDTH);
+                int boardY = (int) ((newY - MARGIN_Y) / SQUARE_WIDTH);
+
+                // Get the board dimensions
+                char[][] charBoard = Board.charBoard(boardstate);
+                int boardRows = charBoard.length;
+                int boardCols = charBoard[0].length;
+
+                // Check if the fire tile fits within the board bounds
+                if (boardX >= 0 && boardX + fireTile.getTiles()[0].length <= boardCols &&
+                        boardY >= 0 && boardY + fireTile.getTiles().length <= boardRows) {
+                    // Update the board state with the placed fire tile
+                    String newBoardState = FireTile.placeOnBoardFT(fireTile, charBoard, new int[]{boardY, boardX});
+                    gamestate[0] = newBoardState;
+                    boardstate = newBoardState;
+
+                    // Remove the fire tile from the drawn group
+                    drawnFireTileGroup.getChildren().clear();
+
+                    refresh(boardstate, hand);
+                } else {
+                    // If the fire tile doesn't fit within the board bounds, snap it back to its original position
+                    drawnFireTileGroup.setLayoutX(MARGIN_X);
+                    drawnFireTileGroup.setLayoutY(MARGIN_Y + 11.5 * SQUARE_WIDTH);
+                }
+            } else {
+                // If the fire tile is not placed on the board, snap it back to its original position
+                drawnFireTileGroup.setLayoutX(MARGIN_X);
+                drawnFireTileGroup.setLayoutY(MARGIN_Y + 11.5 * SQUARE_WIDTH);
+            }
+        });
+    }
     public void refresh(String boardstate, String hand) {
         displayState(boardstate, hand);
     }
