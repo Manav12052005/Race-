@@ -310,17 +310,28 @@ public class Viewer extends Application {
                     // Create a Card object from the drawn card string
                     Card card = new Card(drawnCard);
                     // Get the Group containing the card's image views
-                    Group cardGroup = new Group(card);
+                    Group cardGroup = new Group();
                     // Adjust position as needed
                     cardGroup.setLayoutX(400);
                     cardGroup.setLayoutY(100);
                     // Add the card's group to the root
                     root.getChildren().add(cardGroup);
+
+                    // Add the images for each square in the card
+                    for (Square square : card.getCard()) {
+                        ImageView squareImageView = new ImageView(square.getImg());
+                        squareImageView.setLayoutX(square.getValueX());
+                        squareImageView.setLayoutY(square.getValueY());
+                        squareImageView.setFitWidth(SQUARE_WIDTH);
+                        squareImageView.setFitHeight(SQUARE_WIDTH);
+                        cardGroup.getChildren().add(squareImageView);
+                    }
                 }
                 // Perform the draw card action here
                 System.out.println("Draw card from deck: " + selectedDeck);
             }
         });
+
 
 
         deckChoiceBox.setLayoutX(deckChoiceBox_X);
