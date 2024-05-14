@@ -327,6 +327,31 @@ public class RaceToTheRaft {
         }
 
     } // FIXME TASK 12
+    public static void main(String[] args) {
+        // Example usage to create a Challenge object and access its substrings
+        String placementString = "l0003TW";
+        String board = """
+            fffpgyyrbgrgpybygr
+            fffpBbrypgyprpgbyb
+            fffbgypgbbrbbrbgyr
+            fffyybyrggypgpypbg
+            fffbgrggypbrrbgpry
+            fffgpgbgpygppyRygb
+            fffbgybpbbpyrggbpg
+            fffpyrgygbrypbyryb
+            fffgppbRrgybgybrgy
+            fffygybgygyybgpgpb
+            fffgyrpbgprbyrgbyr
+            fffPbyyrpyprgybpgy
+            fffgbrggrggybrrwww
+            fffpgbypbbrgpygwow
+            fffgrprybbprgpbwww
+            """;
+        String[] gameState = new String[]{board, "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "", "abCDE"};
+        System.out.println("isPlacementValid: " + isPlacementValid(gameState, placementString));
+    }
+
+
 
     /**
      * Given a cat movement string, check if the cat movement is valid.
@@ -366,8 +391,83 @@ public class RaceToTheRaft {
      * @return True if the game is over (regardless of whether it is won or lost), otherwise False.
      */
     public static boolean isGameOver(String[] gameState, String action) {
-        return Challenge.gameOver(gameState, action);     // FIXME TASK 15
+        char firstChar = action.charAt(0);
+        char secondChar = action.charAt(1);
+        String fireTileBag = gameState[4]; // Gets fireTileBag from gameState
+        String boardState = gameState[0]; // Gets the current state of the game board
+
+        boolean gameResult = false; // Flag to track game result
+
+        if ((firstChar == 'Y' || firstChar == 'B' || firstChar == 'R' || firstChar == 'G' || firstChar == 'P')
+                && Character.isDigit(secondChar) && action.length() > 8) { // the action is a movement
+
+            if (RaceToTheRaft.isCatMovementValid(gameState, action)) {
+                gameState = RaceToTheRaft.moveCat(gameState, action);
+                // if every cat is on the raft, the game is won
+                // the cats are on the raft if it's around 'o' character
+                String[] rows = gameState[0].split("\n");
+                boolean catAllOnRaft = true;
+                for (int y = 0; y < rows.length; y++) {
+                    for (int x = 0; x < rows[0].length(); x++) {
+                        if (Challenge.isCharCat(rows[y].charAt(x))) {
+                            if (!Cat.isCatOnRaft(gameState, x, y)) {
+                                System.out.println("Not on raft");
+                                catAllOnRaft = false;
+                            }
+                        }
+                    }
+                }
+                if (catAllOnRaft) {
+                    gameResult = true; // Set the flag to true
+                    return true; // Game is won, return immediately
+                }
+            }
+        }
+
+        if (!gameResult && fireTileBag.isEmpty()) {
+            gameResult = true; // Set the flag to true
+            return true; // No tiles left, game is lost, return immediately
+        }
+
+        if (!gameResult && isFireTile(action)) {
+            // Iterate over all possible coordinates and rotations
+            for (int row = 0; row < boardState.length(); row++) {
+                for (int col = 0; col < boardState.split("\n")[0].length(); col++) {
+                    for (char orient : new char[] {'N', 'S', 'E', 'W'}) {
+                        for (char flippe : new char[] {'T', 'F'}) {
+                            StringBuilder currentActionBuilder = new StringBuilder(action);
+                            currentActionBuilder.setCharAt(1, (char) (row / 10)); // tens digit of row
+                            currentActionBuilder.setCharAt(2, (char) (row % 10)); // units digit of row
+                            currentActionBuilder.setCharAt(3, (char) (col / 10)); // tens digit of col
+                            currentActionBuilder.setCharAt(4, (char) (col % 10)); // units digit of col
+                            currentActionBuilder.setCharAt(5, flippe);
+                            currentActionBuilder.setCharAt(6, orient);
+
+                            String currentAction = currentActionBuilder.toString();
+                            // Check if the current placement is valid
+                            if (isPlacementValid(new String[]{boardState}, currentAction)) {
+                                return false; // At least one valid placement, game is not over
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
 
+
+    public static boolean isFireTile(String action) {
+        if (action.length() >= 7 || Character.isLetter(action.charAt(1))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
 }
+// FIXME TASK 15

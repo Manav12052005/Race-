@@ -22,7 +22,7 @@ public class FireTile {
         String card = tileFinder(Utility.FIRE_TILES, tileID);
         int[] intArray = toIntArray(card.substring(1));
         int[] dim = findDimensions(intArray);
-        char[][] cardArray = tileBuilder(defualtArray(dim), intArray);
+        char[][] cardArray = tileBuilder(defaultArray(dim), intArray);
         boolean horiz = dim[1] > dim[0];
         FireTile tile = new FireTile(cardArray, horiz);
         if (flip == 'T'){
@@ -40,6 +40,7 @@ public class FireTile {
         }
         return tile;
     }
+
 
     public static String placeOnBoardFT(FireTile tile, char[][] board, int[] loc){
         int startX = loc[0];
@@ -97,7 +98,7 @@ public class FireTile {
         return new int[] {maxX + 1, maxY + 1};
     }
 
-    public static char[][] defualtArray(int[] dimension){
+    public static char[][] defaultArray(int[] dimension){
         int x = dimension[0];
         int y = dimension[1];
         char[][] array = new char[x][y];
@@ -221,3 +222,4 @@ public class FireTile {
         return isHorizontal;
         }
 }
+
