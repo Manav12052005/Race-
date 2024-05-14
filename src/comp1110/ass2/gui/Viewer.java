@@ -21,7 +21,9 @@ import javafx.application.Platform;
 
 import java.util.Random;
 
-
+/**
+ * Authored primarily by Simon, with contributions from Tom (firetile) and Manav (draw cards).
+ */
 public class Viewer extends Application {
 
     private final Group DrawnCard = new Group();
