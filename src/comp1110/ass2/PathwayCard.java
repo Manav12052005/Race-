@@ -18,7 +18,7 @@ public class PathwayCard { ;
         return tiles;
     }
 
-    enum Direction{
+    public enum Direction{
         NORTH, EAST, SOUTH, WEST, FLIP;
         public static boolean isValidDirection(char c) {
             return c == 'N' || c == 'E' || c == 'S' || c == 'W';
