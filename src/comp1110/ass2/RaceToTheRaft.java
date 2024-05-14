@@ -431,17 +431,28 @@ public class RaceToTheRaft {
 
         if (!gameResult && isFireTile(action)) {
             // Iterate over all possible coordinates and rotations
-            for (int row = 0; row < boardState.length(); row++) {
-                for (int col = 0; col < boardState.split("\n")[0].length(); col++) {
+
+            String[] rows = boardState.split("\n");
+
+            for (int row = 0; row < rows.length; row++) {
+                for (int col = 0; col < rows[0].length(); col++) {
                     for (char orient : new char[] {'N', 'S', 'E', 'W'}) {
                         for (char flippe : new char[] {'T', 'F'}) {
-                            StringBuilder currentActionBuilder = new StringBuilder(action);
-                            currentActionBuilder.setCharAt(1, (char) (row / 10)); // tens digit of row
-                            currentActionBuilder.setCharAt(2, (char) (row % 10)); // units digit of row
-                            currentActionBuilder.setCharAt(3, (char) (col / 10)); // tens digit of col
-                            currentActionBuilder.setCharAt(4, (char) (col % 10)); // units digit of col
-                            currentActionBuilder.setCharAt(5, flippe);
-                            currentActionBuilder.setCharAt(6, orient);
+                            StringBuilder currentActionBuilder = new StringBuilder();
+                            currentActionBuilder.append(action.charAt(0));
+
+                            String digits = String.format("%02d%02d", row, col);
+                            currentActionBuilder.append(digits);
+//                            currentActionBuilder.setCharAt(2, (char) (row % 10)); // units digit of row
+//                            currentActionBuilder.setCharAt(3, (char) (col / 10)); // tens digit of col
+//                            currentActionBuilder.setCharAt(4, (char) (col % 10)); // units digit of col
+                            currentActionBuilder.append(flippe);
+                            currentActionBuilder.append(orient);
+
+                            System.out.println("flip: " + flippe);
+                            System.out.println("orient: " + orient);
+
+                            System.out.println(currentActionBuilder.toString());
 
                             String currentAction = currentActionBuilder.toString();
                             // Check if the current placement is valid
