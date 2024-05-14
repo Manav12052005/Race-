@@ -24,6 +24,8 @@ import java.util.Random;
 
 public class Viewer extends Application {
 
+    private final Group DrawnCard = new Group();
+
     private final Group root = new Group();
     private static final double VIEWER_WIDTH = 1100;
     private static final double VIEWER_HEIGHT = 650;
@@ -187,7 +189,6 @@ public class Viewer extends Application {
             });
 
 
-
             i++;
         }
 
@@ -288,51 +289,45 @@ public class Viewer extends Application {
         Deck deckCObj = new Deck('C', deckCList);
         Deck deckDObj = new Deck('D', deckDList);
 
+
         drawCardButton.setOnAction(e -> {
             String selectedDeck = deckChoiceBox.getValue();
             if (selectedDeck != null) {
-                String drawnCard = null;
+                // Determine which Deck object corresponds to the selected deck
+                Deck selectedDeckObj = null;
                 switch (selectedDeck) {
                     case "✕":
-                        drawnCard = Deck.drawCard(deckAObj);
+                        selectedDeckObj = deckAObj;
                         break;
                     case "□":
-                        drawnCard = Deck.drawCard(deckBObj);
+                        selectedDeckObj = deckBObj;
                         break;
                     case "◯":
-                        drawnCard = Deck.drawCard(deckCObj);
+                        selectedDeckObj = deckCObj;
                         break;
                     case "△":
-                        drawnCard = Deck.drawCard(deckDObj);
+                        selectedDeckObj = deckDObj;
                         break;
                 }
-                if (drawnCard != null) {
-                    // Create a Card object from the drawn card string
-                    Card card = new Card(drawnCard);
-                    // Get the Group containing the card's image views
-                    Group cardGroup = new Group();
-                    // Adjust position as needed
-                    cardGroup.setLayoutX(400);
-                    cardGroup.setLayoutY(100);
-                    // Add the card's group to the root
-                    root.getChildren().add(cardGroup);
 
-                    // Add the images for each square in the card
-                    for (Square square : card.getCard()) {
-                        ImageView squareImageView = new ImageView(square.getImg());
-                        squareImageView.setLayoutX(square.getValueX());
-                        squareImageView.setLayoutY(square.getValueY());
-                        squareImageView.setFitWidth(SQUARE_WIDTH);
-                        squareImageView.setFitHeight(SQUARE_WIDTH);
-                        cardGroup.getChildren().add(squareImageView);
-                    }
+                // Draw the card from the selected deck
+                String drawnCardString = Deck.drawCard(selectedDeckObj);
+                if (drawnCardString != null) {
+                    // Convert the drawn card string to a Card object
+                    drawnCardString = drawnCardString.substring(1);
+                    System.out.println("Drawn Card: " + drawnCardString);
+                    Card drawnCard = new Card(drawnCardString);
+
+                    // Display the drawn card
+                    renderDrawnCard(drawnCard);
+
+                    // Perform the draw card action here
+                    System.out.println("Draw card from deck: " + selectedDeck);
+                } else {
+                    System.out.println("No cards left in deck: " + selectedDeck);
                 }
-                // Perform the draw card action here
-                System.out.println("Draw card from deck: " + selectedDeck);
             }
         });
-
-
 
         deckChoiceBox.setLayoutX(deckChoiceBox_X);
         deckChoiceBox.setLayoutY(deckChoiceBox_Y);
@@ -343,6 +338,31 @@ public class Viewer extends Application {
 
         // FIXME TASK 4
     }
+    private void renderDrawnCard(Card drawnCard) {
+        // Clear the drawn card group
+        DrawnCard.getChildren().clear();
+
+        // First add all the squareImageViews
+        for (Square square : drawnCard.getCard()) {
+            ImageView squareImageView = square.getSquareImageView();
+            squareImageView.setFitWidth(SQUARE_WIDTH);
+            squareImageView.setFitHeight(SQUARE_WIDTH);
+            squareImageView.setLayoutX(square.getValueX() + MARGIN_X);
+            squareImageView.setLayoutY(square.getValueY()+ MARGIN_Y);
+            // Adjust the layout position based on the position of the drawn card
+
+
+            // Add the square ImageView to the drawn card group
+            DrawnCard.getChildren().add(squareImageView);
+        }
+
+        // Add the drawn card group to the root or any parent group
+        root.getChildren().add(DrawnCard);
+    }
+
+
+
+
 
     @Override
     public void start(Stage stage) throws Exception {
