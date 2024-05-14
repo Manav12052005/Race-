@@ -165,6 +165,13 @@ public class FireTile {
                 }
             }
         }
+        for (int row = 0; row < subBoard.length; row++) {
+            for (int col = 0; col < subBoard[row].length; col++) {
+                if (subBoard[row][col] == 'w' && tile[row][col] == 'f') {
+                    return true; // 'f' found at the same index
+                }
+            }
+        }
         return false;
     }
     public static boolean isAdjacentToFire(char[][] board, char[][] tile, int x, int y){
