@@ -440,6 +440,8 @@ public class RaceToTheRaft {
                         if (Challenge.isCharCat(rows[r].charAt(c))) {
                             char cat = rows[r].charAt(c);
 
+                            boolean flag = false;
+
                             for (int row = 0; row < rows.length; row++) {
                                 for (int col = 0; col < rows[0].length(); col++) {
 
@@ -454,7 +456,7 @@ public class RaceToTheRaft {
                                         if (isCatMovementValid(gameState, sb.toString())) {
                                             System.out.println("cat can move to the raft!");
                                             System.out.println(sb.toString());
-                                            return false;
+                                            flag = true;
                                         }
 
 
@@ -462,7 +464,10 @@ public class RaceToTheRaft {
 
                                 }
                             }
-
+                            if (!flag) {
+                                System.out.println("TRUE");
+                                return true;
+                            }
                         }
 
                     }
@@ -494,8 +499,6 @@ public class RaceToTheRaft {
 
 
                             if (isPlacementValid(gameState, currentAction)) {
-
-
                                 return false; // At least one valid placement, game is not over
                             }
                         }
@@ -532,12 +535,12 @@ fffgpffff
 ffffffbfy
 ffffyrfff
 ffffffyRp
-fffgbrwww
-fffpgbwow
-fffgrpwww
+ffffffwww
+ffffgbwow
+fffffpwww
 """
             , "AabcdstuvwxyBabcdefijklotuvwxyCabcdefvwyDabcdeghijkvwxy", "AmBCqDn", "" , "abCDE"};
-        boolean test = isPlacementValid(gamestate, "t1103FS");
+        boolean test = isPlacementValid(gamestate, "b1203FN");
 
         System.out.println("placement: " + test);
 

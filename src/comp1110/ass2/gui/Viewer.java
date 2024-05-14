@@ -104,7 +104,7 @@ public class Viewer extends Application {
         }
 
         // Draw the cards in hand with given hand string
-        Hand hands = new Hand(hand);
+        Hand hands = null;
         DrawHand.setLayoutX(MARGIN_X);
         DrawHand.setLayoutY(MARGIN_Y);
         DrawHand.getChildren().clear();
