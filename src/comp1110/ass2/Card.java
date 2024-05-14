@@ -9,7 +9,7 @@ public class Card extends ImageView {
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
     private double cardX;
     private double cardY;
-    private Group img;
+    private static Group img;
 
     private ArrayList<Square> card;
 
@@ -41,7 +41,7 @@ public class Card extends ImageView {
         return cardY;
     }
 
-    public Group getImg() {
+    public static Group getImg() {
         return img;
     }
 
