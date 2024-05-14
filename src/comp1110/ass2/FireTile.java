@@ -17,14 +17,23 @@ public class FireTile {
 
     public static FireTile actionStringToFT(String string){
         char tileID = string.charAt(0);
-        char flip = string.charAt(5);
-        PathwayCard.Direction direction = PathwayCard.charToDirection(string.charAt(6));
+        char flip = 'F'; // Default flip value
+        PathwayCard.Direction direction = PathwayCard.Direction.NORTH; // Default direction
+
+        if (string.length() > 5) {
+            flip = string.charAt(5);
+        }
+        if (string.length() > 6 && PathwayCard.Direction.isValidDirection(string.charAt(6))) {
+            direction = PathwayCard.charToDirection(string.charAt(6));
+        }
+
         String card = tileFinder(Utility.FIRE_TILES, tileID);
         int[] intArray = toIntArray(card.substring(1));
         int[] dim = findDimensions(intArray);
         char[][] cardArray = tileBuilder(defaultArray(dim), intArray);
         boolean horiz = dim[1] > dim[0];
         FireTile tile = new FireTile(cardArray, horiz);
+
         if (flip == 'T'){
             tile.rotate(FLIP);
         }

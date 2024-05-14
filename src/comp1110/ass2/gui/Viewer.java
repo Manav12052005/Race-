@@ -42,6 +42,8 @@ public class Viewer extends Application {
 
     private static final double placeButton_X = 250;
     private static final double placeButton_Y = VIEWER_HEIGHT - 50;
+    private static final double drawFireTileButton_X = drawCardButton_X;
+    private static final double drawFireTileButton_Y = drawCardButton_Y - 30;
 
     private static final double cursorPositionX = 10;
     private static final double cursorPositionY = VIEWER_HEIGHT - 20;
@@ -53,7 +55,7 @@ public class Viewer extends Application {
     private final Group DrawBoard = new Group();
     private final Group DrawHand = new Group();
     private final Group CatGroup = new Group();
-
+    private final Group drawnFireTileGroup = new Group();
     private String[] deckA = Utility.DECK_A;
     private String[] deckB = Utility.DECK_B;
     private String[] deckC = Utility.DECK_C;
@@ -311,6 +313,15 @@ public class Viewer extends Application {
 
         root.getChildren().add(titleImageView);
 
+        Button drawFireTileButton = new Button("Draw Fire Tile");
+        drawFireTileButton.setLayoutX(drawFireTileButton_X);
+        drawFireTileButton.setLayoutY(drawFireTileButton_Y);
+        root.getChildren().add(drawFireTileButton);
+
+        root.getChildren().add(drawnFireTileGroup);
+
+        drawFireTileButton.setOpacity(0);
+
         Label label = new Label("Select Difficulty: (from 0 to 5)");
         ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
         for (int i = 0; i <= 5; i++) {
@@ -346,6 +357,17 @@ public class Viewer extends Application {
 //                hand = "Abbbccc";
 //                hand = "AbdfBcCaDe";
                 hand = gamestate[2];
+                drawFireTileButton.setOpacity(1);
+
+                // Set the action event handler for the drawFireTileButton
+                drawFireTileButton.setOnAction(fireTileEvent -> {
+                    String fireTileBag = gamestate[4];
+                    if (!fireTileBag.isEmpty()) {
+                        String drawnFireTile = FireTile.pickFire(fireTileBag);
+                        gamestate[4] = fireTileBag.replace(drawnFireTile.substring(0, 1), "");
+                        renderFireTile(drawnFireTile);
+                    }
+                });
 
                 refresh(boardstate, hand);
                 root.getChildren().remove(vbox);
@@ -421,7 +443,84 @@ public class Viewer extends Application {
 //        }
 
     }
+    private void renderFireTile(String fireTileString) {
+        drawnFireTileGroup.getChildren().clear();
 
+        FireTile fireTile = FireTile.actionStringToFT(fireTileString);
+        char[][] tiles = fireTile.getTiles();
+
+        for (int row = 0; row < tiles.length; row++) {
+            for (int col = 0; col < tiles[0].length; col++) {
+                if (tiles[row][col] == 'f') {
+                    ImageView fireTileImageView = new ImageView(new Image("comp1110/ass2/gui/assets/fire.png"));
+                    fireTileImageView.setFitWidth(SQUARE_WIDTH);
+                    fireTileImageView.setFitHeight(SQUARE_WIDTH);
+                    fireTileImageView.setLayoutX(col * SQUARE_WIDTH);
+                    fireTileImageView.setLayoutY(row * SQUARE_WIDTH);
+                    drawnFireTileGroup.getChildren().add(fireTileImageView);
+                }
+            }
+        }
+
+        // Position the fire tile group below the bottom left card
+        drawnFireTileGroup.setLayoutX(MARGIN_X);
+        drawnFireTileGroup.setLayoutY(MARGIN_Y + 11.5 * SQUARE_WIDTH);
+
+        // Add mouse event handlers to the drawnFireTileGroup for moving and placing the fire tile
+        final double[] dragDelta = new double[2];
+        drawnFireTileGroup.setOnMousePressed(mouseEvent -> {
+            dragDelta[0] = drawnFireTileGroup.getLayoutX() - mouseEvent.getSceneX();
+            dragDelta[1] = drawnFireTileGroup.getLayoutY() - mouseEvent.getSceneY();
+            drawnFireTileGroup.toFront(); // Bring the fire tile to the front when pressed
+        });
+
+        drawnFireTileGroup.setOnMouseDragged(mouseEvent -> {
+            drawnFireTileGroup.setLayoutX(mouseEvent.getSceneX() + dragDelta[0]);
+            drawnFireTileGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
+        });
+
+        drawnFireTileGroup.setOnMouseReleased(mouseEvent -> {
+            double newX = Math.round((drawnFireTileGroup.getLayoutX() - MARGIN_X) / SQUARE_WIDTH) * SQUARE_WIDTH + MARGIN_X;
+            double newY = Math.round((drawnFireTileGroup.getLayoutY() - MARGIN_Y) / SQUARE_WIDTH) * SQUARE_WIDTH + MARGIN_Y;
+            drawnFireTileGroup.setLayoutX(newX);
+            drawnFireTileGroup.setLayoutY(newY);
+
+            // Check if the fire tile is placed on the board
+            if (newX >= MARGIN_X + shiftX && newX < MARGIN_X + shiftX + BOARD_WIDTH &&
+                    newY >= MARGIN_Y && newY < MARGIN_Y + BOARD_HEIGHT) {
+                // Calculate the board position
+                int boardX = (int) ((newX - MARGIN_X - shiftX) / SQUARE_WIDTH);
+                int boardY = (int) ((newY - MARGIN_Y) / SQUARE_WIDTH);
+
+                // Get the board dimensions
+                char[][] charBoard = Board.charBoard(boardstate);
+                int boardRows = charBoard.length;
+                int boardCols = charBoard[0].length;
+
+                // Check if the fire tile fits within the board bounds
+                if (boardX >= 0 && boardX + fireTile.getTiles()[0].length <= boardCols &&
+                        boardY >= 0 && boardY + fireTile.getTiles().length <= boardRows) {
+                    // Update the board state with the placed fire tile
+                    String newBoardState = FireTile.placeOnBoardFT(fireTile, charBoard, new int[]{boardY, boardX});
+                    gamestate[0] = newBoardState;
+                    boardstate = newBoardState;
+
+                    // Remove the fire tile from the drawn group
+                    drawnFireTileGroup.getChildren().clear();
+
+                    refresh(boardstate, hand);
+                } else {
+                    // If the fire tile doesn't fit within the board bounds, snap it back to its original position
+                    drawnFireTileGroup.setLayoutX(MARGIN_X);
+                    drawnFireTileGroup.setLayoutY(MARGIN_Y + 11.5 * SQUARE_WIDTH);
+                }
+            } else {
+                // If the fire tile is not placed on the board, snap it back to its original position
+                drawnFireTileGroup.setLayoutX(MARGIN_X);
+                drawnFireTileGroup.setLayoutY(MARGIN_Y + 11.5 * SQUARE_WIDTH);
+            }
+        });
+    }
     public void refresh(String boardstate, String hand) {
         displayState(boardstate, hand);
     }
