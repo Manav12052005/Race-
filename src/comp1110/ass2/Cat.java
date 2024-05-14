@@ -93,23 +93,25 @@ public class Cat {
         // Check if discarded card exists in hand
         boolean flag = false;
         String hand = gameState[2];
-        char discardedDeck = movementString.charAt(9);
-        char discardedCard = movementString.charAt(10);
-        int indexDeck = hand.indexOf(discardedDeck);
-        int indexNextDeck = hand.length();
-        for (int i = indexDeck; i < hand.length(); i++) {
-            if (Character.isUpperCase(hand.charAt(i))) {
-                indexNextDeck = i;
+        if (movementString.length() > 9) {
+            char discardedDeck = movementString.charAt(9);
+            char discardedCard = movementString.charAt(10);
+            int indexDeck = hand.indexOf(discardedDeck);
+            int indexNextDeck = hand.length();
+            for (int i = indexDeck; i < hand.length(); i++) {
+                if (Character.isUpperCase(hand.charAt(i))) {
+                    indexNextDeck = i;
+                }
             }
-        }
-        for (int i = indexDeck; i < indexNextDeck; i++) {
-            if (hand.charAt(i) == discardedCard) {
-                flag = true;
-                break;
+            for (int i = indexDeck; i < indexNextDeck; i++) {
+                if (hand.charAt(i) == discardedCard) {
+                    flag = true;
+                    break;
+                }
             }
-        }
-        if (!flag) {
-            return false;
+            if (!flag) {
+                return false;
+            }
         }
 
         // Check if the cat can move to the destination

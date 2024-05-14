@@ -24,8 +24,12 @@ public class Square extends Group {
         FIRE, OBJECTIVE, WILD, wildOCCUPIED, NONE
     }
     private final type t;
+    private char cat;
     private final ImageView squareImageView;
     private final ImageView catImageView;
+
+    private double startX;
+    private double startY;
 
     public static Square selectedSquare = null;
     private boolean canDrag = true;
@@ -110,13 +114,39 @@ public class Square extends Group {
         getChildren().addAll(squareImageView, catImageView);
 
 
-        // Set event handlers for catImageView
+//        // Set event handlers for catImageView
+//        catImageView.setOnMousePressed((MouseEvent event) -> {
+//            if (isCat() && canDrag) {
+//                mouseX = event.getSceneX();
+//                mouseY = event.getSceneY();
+//                catImageView.toFront(); // bring the cat to the front
+//            }
+//        });
+//
+//
         catImageView.setOnMousePressed((MouseEvent event) -> {
             if (isCat() && canDrag) {
                 mouseX = event.getSceneX();
                 mouseY = event.getSceneY();
-                catImageView.toFront(); // bring the cat to the front
+
+                startX = Math.round(catImageView.getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
+                startY = Math.round(catImageView.getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
+
+                Viewer.catStartX = (int) Math.round((mouseX - Viewer.shiftX - SQUARE_WIDTH) / SQUARE_WIDTH);
+                Viewer.catStartY = (int) Math.round((mouseY - SQUARE_WIDTH) / SQUARE_WIDTH);
+                System.out.println("Start position: [" + Viewer.catStartX + "][" + Viewer.catStartY + "]");
             }
+
+            char cat = switch (this.t) {
+                case blueCAT -> 'B';
+                case greenCAT -> 'G';
+                case purpleCAT -> 'P';
+                case redCAT -> 'R';
+                case yellowCAT -> 'Y';
+                default -> throw new IllegalArgumentException("Not a cat");
+            };
+
+            Viewer.catColor = new String(new char[]{cat});
         });
 
         catImageView.setOnMouseDragged((MouseEvent event) -> {
@@ -134,14 +164,47 @@ public class Square extends Group {
             if (isCat() && canDrag) {
                 double newX = Math.round(catImageView.getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
                 double newY = Math.round(catImageView.getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
-                catImageView.setLayoutX(newX);
-                catImageView.setLayoutY(newY);
+//                catImageView.setLayoutX(newX);
+//                catImageView.setLayoutY(newY);
+
+                Viewer.endX = (int) (newX / SQUARE_WIDTH);
+                Viewer.endY = (int) (newY / SQUARE_WIDTH);
 
                 // Calculate and print the grid index
                 int[] gridIndex = Viewer.getGridIndex(catImageView.getLayoutX(), catImageView.getLayoutY());
+                System.out.println("Destination position: [" + Viewer.endY + "][" + Viewer.endX + "]");
                 System.out.println("Grid index: [" + gridIndex[0] + "][" + gridIndex[1] + "]");
+
+                String move = Viewer.catColor + String.format("%02d%02d", Viewer.catStartY, Viewer.catStartX) + String.format("%02d%02d", Viewer.endY, Viewer.endX);
+
+                String[] gamestate = Viewer.getGameState();
+                if (RaceToTheRaft.isCatMovementValid(gamestate, move)) {
+                    Viewer.setGameState(RaceToTheRaft.moveCat(gamestate, move));
+
+                    Viewer.printGameState(Viewer.getGameState());
+
+                    catImageView.setLayoutX(newX);
+                    catImageView.setLayoutY(newY);
+                } else {
+                    catImageView.setLayoutX(startX);
+                    catImageView.setLayoutY(startY);
+                }
             }
         });
+//
+//
+//        catImageView.setOnMouseReleased((MouseEvent event) -> {
+//            if (isCat() && canDrag) {
+//                double newX = Math.round(catImageView.getLayoutX() / SQUARE_WIDTH) * SQUARE_WIDTH;
+//                double newY = Math.round(catImageView.getLayoutY() / SQUARE_WIDTH) * SQUARE_WIDTH;
+//                catImageView.setLayoutX(newX);
+//                catImageView.setLayoutY(newY);
+//
+//                // Calculate and print the grid index
+//                int[] gridIndex = Viewer.getGridIndex(catImageView.getLayoutX(), catImageView.getLayoutY());
+//                System.out.println("Grid index: [" + gridIndex[0] + "][" + gridIndex[1] + "]");
+//            }
+//        });
 
 //        setOnMousePressed((MouseEvent event) -> {
 //            if (isCat() && canDrag) {

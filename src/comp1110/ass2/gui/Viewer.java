@@ -10,11 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Glow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Random;
 
 public class Viewer extends Application {
 
@@ -24,7 +23,8 @@ public class Viewer extends Application {
     private static final double MARGIN_X = 20;
     private static final double MARGIN_Y = 10;
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
-    private static final double shiftX = 320;
+    public static final double shiftX = 320;
+    public static final double shiftY = -20;
 
     private static double BOARD_WIDTH = 18 * SQUARE_WIDTH;
     private static double BOARD_HEIGHT = 18 * SQUARE_WIDTH;
@@ -40,8 +40,13 @@ public class Viewer extends Application {
     private static final double drawCardButton_X = 150;
     private static final double drawCardButton_Y = VIEWER_HEIGHT - 50;
 
+    private static final double placeButton_X = 250;
+    private static final double placeButton_Y = VIEWER_HEIGHT - 50;
+
     private static final double cursorPositionX = 10;
     private static final double cursorPositionY = VIEWER_HEIGHT - 20;
+
+    public static int catStartX, catStartY, endX, endY;
 
     private final Label cursorPosition = new Label();
 
@@ -58,6 +63,9 @@ public class Viewer extends Application {
     private String hand;
     private String boardstate;
     private String cat;
+    public static String catColor;
+
+    private static String[] gamestate;
 
     /**
      * Draw the given board and hand in the window, removing any previously drawn boards/hands.
@@ -169,6 +177,8 @@ public class Viewer extends Application {
                 cardGroup.toFront(); // bring the card to the front
             });
 
+
+
             i++;
         }
 
@@ -204,23 +214,8 @@ public class Viewer extends Application {
                     isDragged[0] = true; // set the flag when mouse is dragged
                 });
 
-                cardGroup.setOnMousePressed(mouseEvent -> {
-                    if (!isOnBoard(cardGroup.getLayoutX(), cardGroup.getLayoutY())) {
-                        dragDelta[0] = cardGroup.getLayoutX() - mouseEvent.getSceneX();
-                        dragDelta[1] = cardGroup.getLayoutY() - mouseEvent.getSceneY();
-                        cardGroup.toFront(); // bring the card to the front
-                    }
-                });
-
-                cardGroup.setOnMouseDragged(mouseEvent -> {
-                    if (!isOnBoard(cardGroup.getLayoutX(), cardGroup.getLayoutY())) {
-                        cardGroup.setLayoutX(mouseEvent.getSceneX() + dragDelta[0]);
-                        cardGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
-                    }
-                });
-
                 cardGroup.setOnMouseClicked(e -> {
-                    if (!isDragged[0] && !isOnBoard(cardGroup.getLayoutX(), cardGroup.getLayoutY())) { // check the flag in the click event and if the card is on the board
+                    if (!isDragged[0]) { // check the flag in the click event and if the card is on the board
                         // Check if the clicked cardGroup is already the selected one
                         if (selectedCardGroup[0] == cardGroup) {
                             // Deselect the cardGroup
@@ -245,6 +240,49 @@ public class Viewer extends Application {
             }
         }
 
+        Button placeButton = new Button("Place Card");
+
+        placeButton.setLayoutX(placeButton_X); // Adjust these values as needed
+        placeButton.setLayoutY(placeButton_Y); // Position the button at the bottom of the viewer
+
+        placeButton.setOnAction(e -> {
+            if (selectedCardGroup[0] != null) {
+                // Disable the mouse event handlers of the selected card
+                selectedCardGroup[0].setOnMousePressed(null);
+                selectedCardGroup[0].setOnMouseDragged(null);
+                selectedCardGroup[0].setOnMouseClicked(null);
+
+                // Remove the glow effect from the selected card
+                selectedCardGroup[0].setEffect(null);
+
+                // Clear the selected card
+                selectedCardGroup[0] = null;
+            }
+        });
+
+        root.getChildren().add(placeButton);
+
+        ChoiceBox<String> deckChoiceBox = new ChoiceBox<>();
+        // cross (✕) represents deck A, square (□) represents deck B, circle (◯) represents deck C, triangle (△) represents deck D
+        deckChoiceBox.getItems().addAll("✕", "□", "◯", "△");
+
+        Button drawCardButton = new Button("Draw Card");
+
+        drawCardButton.setOnAction(e -> {
+            String selectedDeck = deckChoiceBox.getValue();
+            if (selectedDeck != null) {
+                // Perform the draw card action here
+                System.out.println("Draw card from deck: " + selectedDeck);
+            }
+        });
+
+        deckChoiceBox.setLayoutX(deckChoiceBox_X);
+        deckChoiceBox.setLayoutY(deckChoiceBox_Y);
+        drawCardButton.setLayoutX(drawCardButton_X);
+        drawCardButton.setLayoutY(drawCardButton_Y);
+
+        root.getChildren().addAll(deckChoiceBox, drawCardButton);
+
         // FIXME TASK 4
     }
 
@@ -257,14 +295,21 @@ public class Viewer extends Application {
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
 
-        // Initialize the game state
-        String[] gameState = new String[5];
-        // Set the initial values for the game state
-        gameState[0] = "board state";
-        gameState[1] = "deck state";
-        gameState[2] = "hand state";
-        gameState[3] = "exhausted cats state";
-        gameState[4] = "fire tile bag state";
+        gamestate = new String[5];
+        gamestate[0] = "board state";
+        gamestate[1] = "deck state";
+        gamestate[2] = "hand state";
+        gamestate[3] = "exhausted cats state";
+        gamestate[4] = "fire tile bag state";
+
+        Image titleImage = new Image("comp1110/ass2/gui/assets/title.png");
+
+        ImageView titleImageView = new ImageView(titleImage);
+
+        titleImageView.setX(VIEWER_WIDTH / 2 - titleImage.getWidth() / 2);
+        titleImageView.setY(30); // Adjust this value as needed
+
+        root.getChildren().add(titleImageView);
 
         Label label = new Label("Select Difficulty: (from 0 to 5)");
         ChoiceBox<Integer> choiceBox = new ChoiceBox<>();
@@ -277,8 +322,8 @@ public class Viewer extends Application {
             String challenge = RaceToTheRaft.chooseChallenge(selectedDifficulty);
             Challenge challengeObj = new Challenge(RaceToTheRaft.initialiseChallenge(challenge));
             if (selectedDifficulty != null) {
-                gameState[0] = RaceToTheRaft.initialiseChallenge(challenge);
-                boardstate = gameState[0];
+                gamestate[0] = RaceToTheRaft.initialiseChallenge(challenge);
+                boardstate = gamestate[0];
 
                 BOARD_WIDTH = boardstate.split("\n")[0].length() * SQUARE_WIDTH;
                 BOARD_HEIGHT = boardstate.split("\n").length * SQUARE_WIDTH;
@@ -290,47 +335,25 @@ public class Viewer extends Application {
                 deckD = Utility.DECK_D;
 
                 // initialise the game state
-                gameState[1] = "AabcdefghijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy";
-                gameState[2] = Hand.generateHand();
-                gameState[3] = "";
-                gameState[4] = "abcdefghijklmnopqrstuvwxyzABCDE";
+                gamestate[1] = "AabcdefghijklmnopqrstuvwxyBabcdefghijklmnopqrstuvwxyCabcdefghijklmnopqrstuvwxyDabcdefghijklmnopqrstuvwxy";
+                gamestate[2] = Hand.generateHand();
+                gamestate[3] = "";
+                gamestate[4] = "abcdefghijklmnopqrstuvwxyzABCDE";
 
                 cat = challengeObj.getCatSubstring();
 
 //                hand = new String("");
 //                hand = "Abbbccc";
 //                hand = "AbdfBcCaDe";
-                hand = gameState[2];
+                hand = gamestate[2];
 
                 refresh(boardstate, hand);
                 root.getChildren().remove(vbox);
+
+                root.getChildren().remove(titleImageView);
             }
         });
 
-// Create a ChoiceBox
-        ChoiceBox<String> deckChoiceBox = new ChoiceBox<>();
-        deckChoiceBox.getItems().addAll("A", "B", "C", "D");
-
-// Create a Button
-        Button drawCardButton = new Button("Draw Card");
-
-// Add action event to the button
-        drawCardButton.setOnAction(e -> {
-            String selectedDeck = deckChoiceBox.getValue();
-            if (selectedDeck != null) {
-                // Perform the draw card action here
-                System.out.println("Draw card from deck: " + selectedDeck);
-            }
-        });
-
-// Set the layout for Button
-        deckChoiceBox.setLayoutX(deckChoiceBox_X);
-        deckChoiceBox.setLayoutY(deckChoiceBox_Y);
-        drawCardButton.setLayoutX(drawCardButton_X);
-        drawCardButton.setLayoutY(drawCardButton_Y);
-
-// Add the ChoiceBox and Button to the root node
-        root.getChildren().addAll(deckChoiceBox, drawCardButton);
 
         // Perform the draw card action here
 //        Draw(gameState, hand);
@@ -341,7 +364,7 @@ public class Viewer extends Application {
 
         vbox.layoutBoundsProperty().addListener((observable, oldValue, newValue) -> {
             vbox.setLayoutX((VIEWER_WIDTH - newValue.getWidth()) / 2);
-            vbox.setLayoutY((VIEWER_HEIGHT - newValue.getHeight()) / 2);
+            vbox.setLayoutY((VIEWER_HEIGHT - newValue.getHeight()) / 2 + 25);
         });
 
         root.getChildren().add(DrawBoard);
@@ -368,6 +391,9 @@ public class Viewer extends Application {
             if (!root.getChildren().contains(vbox)) {
                 root.getChildren().add(vbox);
             }
+
+            root.getChildren().add(titleImageView);
+
         });
 
         restartButton.setLayoutX(restartButtonX); // Adjust these values as needed
@@ -390,6 +416,9 @@ public class Viewer extends Application {
             cursorPosition.setText("x: " + formattedX + ", y: " + formattedY);
         });
 
+//        while (true) {
+//
+//        }
 
     }
 
@@ -397,8 +426,8 @@ public class Viewer extends Application {
         displayState(boardstate, hand);
     }
 
-    public void printGameState(String gamestate) {
-        String[] rows = gamestate.split("\n");
+    public static void printGameState(String[] gamestate) {
+        String[] rows = gamestate[0].split("\n");
         for (String row : rows) {
             System.out.println(row);
         }
@@ -418,18 +447,13 @@ public class Viewer extends Application {
         return new int[] {gridX, gridY};
     }
 
-    private boolean isOnBoard(double layoutX, double layoutY) {
-        // Define the boundaries of the board
-        double boardMinX = shiftX + MARGIN_X;
-        double boardMaxX = boardMinX + BOARD_WIDTH;
-        double boardMinY = MARGIN_Y;
-        double boardMaxY = boardMinY + BOARD_HEIGHT;
+    public static String[] getGameState() {
+        return gamestate;
+    }
 
-        System.out.println("Board boundaries: " + boardMinX + ", " + boardMaxX + ", " + boardMinY + ", " + boardMaxY);
-        System.out.println("Card layout: " + layoutX + ", " + layoutY);
-
-        // Check if the card's layout X and Y coordinates are within the boundaries of the board
-        return layoutX >= boardMinX && layoutX <= boardMaxX && layoutY >= boardMinY && layoutY <= boardMaxY;
+    public static String[] setGameState(String[] newGameState) {
+        gamestate = newGameState;
+        return gamestate;
     }
 
 }
