@@ -75,6 +75,11 @@ public class Viewer extends Application {
     private final Group DrawHand = new Group();
     private final Group CatGroup = new Group();
     private final Group drawnFireTileGroup = new Group();
+
+    private ChoiceBox<String> deckChoiceBox;
+    private Button drawCardButton;
+    private Button rotateButton;
+
     private String[] deckA = Utility.DECK_A;
     private String[] deckB = Utility.DECK_B;
     private String[] deckC = Utility.DECK_C;
@@ -202,7 +207,7 @@ public class Viewer extends Application {
             i++;
         }
 
-        Button rotateButton = new Button("Rotate");
+        rotateButton = new Button("Rotate");
         rotateButton.setLayoutX(rotateButton_X);
         rotateButton.setLayoutY(rotateButton_Y);
         root.getChildren().add(rotateButton);
@@ -269,33 +274,33 @@ public class Viewer extends Application {
             }
         }
 
-        Button placeButton = new Button("Place Card");
+//        Button placeButton = new Button("Place Card");
+//
+//        placeButton.setLayoutX(placeButton_X); // Adjust these values as needed
+//        placeButton.setLayoutY(placeButton_Y); // Position the button at the bottom of the viewer
+//
+//        placeButton.setOnAction(e -> {
+//            if (selectedCardGroup[0] != null) {
+//                // Disable the mouse event handlers of the selected card
+//                selectedCardGroup[0].setOnMousePressed(null);
+//                selectedCardGroup[0].setOnMouseDragged(null);
+//                selectedCardGroup[0].setOnMouseClicked(null);
+//
+//                // Remove the glow effect from the selected card
+//                selectedCardGroup[0].setEffect(null);
+//
+//                // Clear the selected card
+//                selectedCardGroup[0] = null;
+//            }
+//        });
+//
+//        root.getChildren().add(placeButton);
 
-        placeButton.setLayoutX(placeButton_X); // Adjust these values as needed
-        placeButton.setLayoutY(placeButton_Y); // Position the button at the bottom of the viewer
-
-        placeButton.setOnAction(e -> {
-            if (selectedCardGroup[0] != null) {
-                // Disable the mouse event handlers of the selected card
-                selectedCardGroup[0].setOnMousePressed(null);
-                selectedCardGroup[0].setOnMouseDragged(null);
-                selectedCardGroup[0].setOnMouseClicked(null);
-
-                // Remove the glow effect from the selected card
-                selectedCardGroup[0].setEffect(null);
-
-                // Clear the selected card
-                selectedCardGroup[0] = null;
-            }
-        });
-
-        root.getChildren().add(placeButton);
-
-        ChoiceBox<String> deckChoiceBox = new ChoiceBox<>();
+        deckChoiceBox = new ChoiceBox<>();
         // cross (✕) represents deck A, square (□) represents deck B, circle (◯) represents deck C, triangle (△) represents deck D
         deckChoiceBox.getItems().addAll("✕", "□", "◯", "△");
 
-        Button drawCardButton = new Button("Draw Card");
+        drawCardButton = new Button("Draw Card");
 
         // Convert String[] arrays to List<String>
         List<String> deckAList = Arrays.asList(Utility.DECK_A);
@@ -543,6 +548,9 @@ public class Viewer extends Application {
             CatGroup.getChildren().clear();
             drawnFireTileGroup.getChildren().clear();
             DrawnCard.getChildren().clear();
+
+
+            root.getChildren().removeAll(deckChoiceBox, drawCardButton, rotateButton, drawFireTileButton, rotateFireTileButton, flipFireTileButton);
 
             // Show the challenge selection part again
             if (!root.getChildren().contains(vbox)) {
