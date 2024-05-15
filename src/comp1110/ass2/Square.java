@@ -276,7 +276,25 @@ public class Square extends Group {
             default -> throw new IllegalArgumentException("type char ID not valid");
         };
     }
-
+    public char getTypeChar() {
+        return switch (this.t) {
+            case BLUE -> 'b';
+            case GREEN -> 'g';
+            case PURPLE -> 'p';
+            case RED -> 'r';
+            case YELLOW -> 'y';
+            case blueCAT -> 'B';
+            case greenCAT -> 'G';
+            case purpleCAT -> 'P';
+            case redCAT -> 'R';
+            case yellowCAT -> 'Y';
+            case FIRE -> 'f';
+            case OBJECTIVE -> 'o';
+            case WILD -> 'w';
+            case wildOCCUPIED -> 'W';
+            case NONE -> 'N';
+        };
+    }
     public type getT() {
         return this.t;
     }

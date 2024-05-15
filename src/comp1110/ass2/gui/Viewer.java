@@ -14,12 +14,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import javafx.application.Platform;
 
 
 import java.util.Random;
+
+import static comp1110.ass2.PathwayCard.cardBuilder;
+import static comp1110.ass2.PathwayCard.placeOnBoardPWC;
 
 /**
  * Authored primarily by Simon, with contributions from Tom (firetile) and Manav (draw cards).
@@ -621,6 +626,59 @@ public class Viewer extends Application {
             drawnCardGroup.setOnMouseDragged(mouseEvent -> {
                 drawnCardGroup.setLayoutX(mouseEvent.getSceneX() + dragDelta[0]);
                 drawnCardGroup.setLayoutY(mouseEvent.getSceneY() + dragDelta[1]);
+            });
+
+            drawnCardGroup.setOnMouseReleased(mouseEvent -> {
+                double newX = Math.round((drawnCardGroup.getLayoutX() - MARGIN_X - shiftX) / SQUARE_WIDTH) * SQUARE_WIDTH + MARGIN_X + shiftX;
+                double newY = Math.round((drawnCardGroup.getLayoutY() - MARGIN_Y) / SQUARE_WIDTH) * SQUARE_WIDTH + MARGIN_Y;
+
+                // Check if the card is placed on the board
+                if (newX >= MARGIN_X + shiftX && newX < MARGIN_X + shiftX + BOARD_WIDTH &&
+                        newY >= MARGIN_Y && newY < MARGIN_Y + BOARD_HEIGHT) {
+                    // Calculate the board position
+                    int boardX = (int) ((newX - MARGIN_X - shiftX) / SQUARE_WIDTH);
+                    int boardY = (int) ((newY - MARGIN_Y) / SQUARE_WIDTH);
+
+                    // Get the board dimensions
+                    char[][] charBoard = Board.charBoard(boardstate);
+                    int boardRows = charBoard.length;
+                    int boardCols = charBoard[0].length;
+
+                    // Check if the card fits within the board bounds
+                    if (boardX >= 0 && boardX + 3 <= boardCols && boardY >= 0 && boardY + 3 <= boardRows) {
+                        drawnCardGroup.setLayoutX(newX);
+                        drawnCardGroup.setLayoutY(newY);
+
+                        // Convert the drawn card to a PathwayCard object
+                        char[][] cardTiles = new char[3][3];
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 3; j++) {
+                                Square square = drawnCard.getCard().get(i * 3 + j);
+                                cardTiles[i][j] = square.getTypeChar();
+                            }
+                        }
+                        PathwayCard pathwayCard = new PathwayCard(cardTiles, new int[]{boardY, boardX});
+
+                        // Update the board state with the placed card
+                        String newBoardState = PathwayCard.placeOnBoardPWC(pathwayCard, charBoard);
+                        gamestate[0] = newBoardState;
+                        boardstate = newBoardState;
+
+                        // Remove the placed card from the DrawnCard group
+                        DrawnCard.getChildren().remove(drawnCardGroup);
+
+                        // Refresh the board display
+                        refresh(boardstate, hand);
+                    } else {
+                        // If the card doesn't fit within the board bounds, snap it back to its original position
+                        drawnCardGroup.setLayoutX(cardX);
+                        drawnCardGroup.setLayoutY(cardY);
+                    }
+                } else {
+                    // If the card is not placed on the board, snap it back to its original position
+                    drawnCardGroup.setLayoutX(cardX);
+                    drawnCardGroup.setLayoutY(cardY);
+                }
             });
         }
     }
