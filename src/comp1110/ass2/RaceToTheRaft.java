@@ -437,6 +437,8 @@ public class RaceToTheRaft {
                 System.out.println("after placement");
                 System.out.println(newGameState[0]);
 
+                String[] afterRows = newGameState[0].split("\n");
+
                 for (int r = 0; r < rows.length; r++) {
                     for (int c = 0; c < rows[0].length(); c++) {
                         if (Challenge.isCharCat(rows[r].charAt(c))) {
@@ -457,8 +459,20 @@ public class RaceToTheRaft {
                                         sb.append(String.format("%02d%02d", r, c));
                                         sb.append(String.format("%02d%02d", row, col));
 
-//                                        if (Cat.checkIfBlocked(newGameState, sb.toString())) {
-                                          if (Cat.checkMovementValid(newGameState, sb.toString())) {
+                                        if (Cat.checkIfBlocked(newGameState, sb.toString())) {
+
+                                            for (int n = r; n < rows.length; n++) {
+                                                for (int m = rows[0].length() - 3; m < rows[0].length() - 1; m++) {
+                                                    System.out.println("Reached here: " + rows[n].charAt(m) + rows[n].charAt(m + 1));
+                                                    if (afterRows[n].charAt(m) == 'f' && afterRows[n].charAt(m + 1) != 'f'
+                                                    && afterRows[n].charAt(m + 1) != Character.toLowerCase(cat)
+                                                    && !afterRows[n].contains("w")) {
+                                                                return true;
+                                                    }
+                                                }
+                                            }
+
+//                                          if (Cat.checkMovementValid(newGameState, sb.toString())) {
                                                 System.out.println("cat can move to the raft!");
                                                 System.out.println(sb.toString());
                                                 catToRaft = true;
