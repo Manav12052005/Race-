@@ -750,22 +750,36 @@ public class Viewer extends Application {
                 // Check if the fire tile fits within the board bounds
                 if (boardX >= 0 && boardX + fireTile.getTiles()[0].length <= boardCols &&
                         boardY >= 0 && boardY + fireTile.getTiles().length <= boardRows) {
-                    // Update the board state with the placed fire tile
-                    String newBoardState = FireTile.placeOnBoardFT(fireTile, charBoard, new int[]{boardY, boardX});
-                    gamestate[0] = newBoardState;
-                    boardstate = newBoardState;
+                    // Extract the sub-board based on the fire tile's position
+                    char[][] subBoard = PathwayCard.extractSubBoard(charBoard, fireTile.getTiles(), boardX, boardY);
 
-                    // Remove the fire tile from the drawn group
-                    drawnFireTileGroup.getChildren().clear();
+                    // Check if the placement is valid
+                    if (!PathwayCard.isOffBoard(charBoard, fireTile.getTiles(), boardX, boardY) &&
+                            !FireTile.isOverlappingFireFT(subBoard, fireTile.getTiles()) &&
+                            !FireTile.isOverlappingCatFT(subBoard, fireTile.getTiles()) &&
+                            !FireTile.isOverlappingRaftFT(subBoard, fireTile.getTiles()) &&
+                            FireTile.isAdjacentToFire(charBoard, fireTile.getTiles(), boardX, boardY)) {
+                        // Update the board state with the placed fire tile
+                        String newBoardState = FireTile.placeOnBoardFT(fireTile, charBoard, new int[]{boardY, boardX});
+                        gamestate[0] = newBoardState;
+                        boardstate = newBoardState;
 
-                    refresh(boardstate, hand);
+                        // Remove the fire tile from the drawn group
+                        drawnFireTileGroup.getChildren().clear();
+
+                        refresh(boardstate, hand);
+                    } else {
+                        // Snap the fire tile back to its original position
+                        drawnFireTileGroup.setLayoutX(MARGIN_X);
+                        drawnFireTileGroup.setLayoutY(MARGIN_Y + 11.5 * SQUARE_WIDTH);
+                    }
                 } else {
-                    // If the fire tile doesn't fit within the board bounds, snap it back to its original position
+                    // Snap the fire tile back to its original position
                     drawnFireTileGroup.setLayoutX(MARGIN_X);
                     drawnFireTileGroup.setLayoutY(MARGIN_Y + 11.5 * SQUARE_WIDTH);
                 }
             } else {
-                // If the fire tile is not placed on the board, snap it back to its original position
+                // Snap the fire tile back to its original position
                 drawnFireTileGroup.setLayoutX(MARGIN_X);
                 drawnFireTileGroup.setLayoutY(MARGIN_Y + 11.5 * SQUARE_WIDTH);
             }
