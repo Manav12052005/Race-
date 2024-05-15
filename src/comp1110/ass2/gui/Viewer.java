@@ -660,7 +660,7 @@ public class Viewer extends Application {
                     int boardY = (int) ((newY - MARGIN_Y) / SQUARE_WIDTH);
 
                     // Get the board dimensions
-                    char[][] charBoard = Board.charBoard(boardstate);
+                    char[][] charBoard = Board.charBoard(gamestate[0]);
                     int boardRows = charBoard.length;
                     int boardCols = charBoard[0].length;
 
