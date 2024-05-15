@@ -512,6 +512,16 @@ public class Viewer extends Application {
 
                 root.getChildren().remove(titleImageView);
             }
+
+            if (!root.getChildren().contains(drawFireTileButton)) {
+                root.getChildren().add(drawFireTileButton);
+            }
+            if (!root.getChildren().contains(rotateFireTileButton)) {
+                root.getChildren().add(rotateFireTileButton);
+            }
+            if (!root.getChildren().contains(flipFireTileButton)) {
+                root.getChildren().add(flipFireTileButton);
+            }
         });
 
 
