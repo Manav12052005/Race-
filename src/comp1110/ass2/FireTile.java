@@ -8,7 +8,7 @@ import static comp1110.ass2.PathwayCard.Direction.*;
 
 /**
  * This class constructs fire tiles, and handles rotation and placement in the game.
- * Authored primarily by Tom.
+ * Authored by Tom.
  */
 public class FireTile {
     private char[][] tiles; // char representation array

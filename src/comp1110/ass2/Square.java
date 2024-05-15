@@ -8,10 +8,8 @@ import javafx.scene.input.MouseEvent;
 
 
 /**
- *determines the possible square conditions
- *colour
- *fire
- *raft
+ * PathwayCard class determines the representation of squares on the game board and cards.
+ * Authored by Simon.
  */
 public class Square extends Group {
     public static final double SQUARE_WIDTH = 40;

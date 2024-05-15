@@ -8,7 +8,7 @@ import static comp1110.ass2.PathwayCard.Direction.*;
 
 /**
  * PathwayCard class represents a pathway card in the game, and handles placement and rotation.
- * Authored primarily by Tom.
+ * Authored by Tom.
  */
 public class PathwayCard {
     private char[][] tiles;

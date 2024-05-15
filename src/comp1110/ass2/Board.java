@@ -8,7 +8,8 @@ import static comp1110.ass2.Utility.SQUARE_BOARDS;
 
 
 /**
- * holds whole board state (in an ArrayList of squares)
+ * PathwayCard class handles board.
+ * Authored primarily by Simon, Tom (charBoard / charBoardToString)
  */
 public class Board {
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;

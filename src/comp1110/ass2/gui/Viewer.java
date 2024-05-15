@@ -621,11 +621,15 @@ public class Viewer extends Application {
                 ImageView squareImageView = square.getSquareImageView();
                 squareImageView.setFitWidth(SQUARE_WIDTH);
                 squareImageView.setFitHeight(SQUARE_WIDTH);
-                squareImageView.setLayoutX(square.getValueX() + cardX);
-                squareImageView.setLayoutY(square.getValueY() + cardY);
+                squareImageView.setLayoutX(square.getValueX());
+                squareImageView.setLayoutY(square.getValueY());
 
                 drawnCardGroup.getChildren().add(squareImageView);
             }
+
+            // Set the initial position of the drawn card group
+            drawnCardGroup.setLayoutX(cardX);
+            drawnCardGroup.setLayoutY(cardY);
 
             // Add the drawn card group to the drawn card container
             DrawnCard.getChildren().add(drawnCardGroup);
