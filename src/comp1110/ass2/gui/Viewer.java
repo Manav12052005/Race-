@@ -541,6 +541,8 @@ public class Viewer extends Application {
             DrawBoard.getChildren().clear();
             DrawHand.getChildren().clear();
             CatGroup.getChildren().clear();
+            drawnFireTileGroup.getChildren().clear();
+            DrawnCard.getChildren().clear();
 
             // Show the challenge selection part again
             if (!root.getChildren().contains(vbox)) {
