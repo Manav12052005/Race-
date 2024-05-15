@@ -206,6 +206,15 @@ public class Viewer extends Application {
         rotateButton.setOnAction(e -> {
             if (selectedCardGroup[0] != null) {
                 selectedCardGroup[0].setRotate(selectedCardGroup[0].getRotate() + 90);
+            } else {
+                // If no card is selected, rotate the drawn card
+                // Check if there's a drawn card
+                if (DrawnCard.getChildren().size() > 0) {
+                    // Get the last drawn card
+                    Group drawnCardGroup = (Group) DrawnCard.getChildren().get(DrawnCard.getChildren().size() - 1);
+                    // Rotate the drawn card
+                    drawnCardGroup.setRotate(drawnCardGroup.getRotate() + 90);
+                }
             }
         });
 
