@@ -32,6 +32,13 @@ public class Square extends Group {
     public static Square selectedSquare = null;
     private boolean canDrag = true;
 
+    /**
+     * Constructor for Square class
+     * @author Simon Liu
+     * @param x x-coordinate of the square
+     * @param y y-coordinate of the square
+     * @param t type of the square
+     */
     public Square(double x, double y, char t) {
         this.x = x;
         this.y = y;

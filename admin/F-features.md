@@ -18,5 +18,3 @@ of our project implements the following features:
  - Cat can be dragged and moved to its available position on the board, otherwise it snaps back to its original position
  - Cards and Firetiles can be dragged and placed onto the board, updating the gamestate accordingly
  - A basic playable game
-
-additional features...
