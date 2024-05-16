@@ -400,7 +400,7 @@ public class RaceToTheRaft {
      * @param gameState An array of strings representing the game state
      * @param action    A string representing a fire tile placement, cat movement or card placement action.
      * @return True if the game is over (regardless of whether it is won or lost), otherwise False.
-     * @author Manav and Simon
+     * @author Manav
      */
     public static boolean isGameOver(String[] gameState, String action) {
         char firstChar = action.charAt(0);
