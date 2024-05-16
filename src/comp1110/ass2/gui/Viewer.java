@@ -388,7 +388,7 @@ public class Viewer extends Application {
 
         root.getChildren().add(titleImageView);
 
-        Button drawFireTileButton = new Button("Draw Fire Tile");
+        Button drawFireTileButton = new Button("Draw Fre Tile");
         drawFireTileButton.setLayoutX(drawFireTileButton_X);
         drawFireTileButton.setLayoutY(drawFireTileButton_Y);
         root.getChildren().add(drawFireTileButton);
@@ -803,6 +803,11 @@ public class Viewer extends Application {
         displayState(boardstate, hand);
     }
 
+    /**
+     * Print the given board state to the console.
+     * @author Simon Liu
+     * @param gamestate Game state containing the board state
+     */
     public static void printGameState(String[] gamestate) {
         String[] rows = gamestate[0].split("\n");
         for (String row : rows) {
@@ -810,6 +815,13 @@ public class Viewer extends Application {
         }
     }
 
+    /**
+     * Calculate the square's index in grid with given cursor coordinates
+     * @author Simon Liu
+     * @param cursorX given cursor x coordinate
+     * @param cursorY given cursor x coordinate
+     * @return the index of the grid
+     */
     public static int[] getGridIndex(double cursorX, double cursorY) {
         double startX = shiftX + MARGIN_X;
         double startY = MARGIN_Y;

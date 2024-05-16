@@ -13,6 +13,11 @@ public class Card extends ImageView {
 
     private ArrayList<Square> card;
 
+    /**
+     * Constructor for Card
+     * @author Simon Liu
+     * @param str String representation of the card
+     */
     public Card(String str) {
         ArrayList<Square> card = new ArrayList<>();
         char[] chars = str.toCharArray();
@@ -49,6 +54,14 @@ public class Card extends ImageView {
         return card;
     }
 
+    /**
+     * Returns the string representation of the card
+     *
+     * @author Simon Liu
+     * @param handString String representation of the hand
+     * @param movementString String representation of the movement
+     * @return hand string after the movement
+     */
     public static String discardCard(String handString, String movementString) {
         String discardString = movementString.substring(9);
         char[] hand = handString.toCharArray();

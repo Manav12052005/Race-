@@ -12,6 +12,13 @@ public class Cat {
         this.exhausted = exhausted;
     }
 
+    /**
+     * Move the cat according to the movementString, and return the new board state after the movement
+     * @author Simon Liu
+     * @param boardState
+     * @param movementString
+     * @return the new board state after the movement
+     */
     public static String catMove(String boardState, String movementString) {
         char cat = movementString.charAt(0);
 
@@ -38,6 +45,13 @@ public class Cat {
         return boardState;
     }
 
+    /**
+     * According to movementString, return the exhaustedCats string after the movement
+     * @author Simon Liu
+     * @param exhaustedCats
+     * @param movementString
+     * @return the new exhaustedCats string after the movement
+     */
     public static String catExhauste(String exhaustedCats, String movementString) {
         StringBuilder sb = new StringBuilder();
         Map<Character, String> exhaustedMap = new HashMap<>();
@@ -62,6 +76,13 @@ public class Cat {
         return sb.toString();
     }
 
+    /**
+     * Check if the movement is valid to destination according to the current game state and the movementString, using
+     * a breadth-first search algorithm to check
+     * @param gameState the current game state
+     * @param movementString the movement string
+     * @return true if the movement is valid, false otherwise
+     */
     public static boolean checkMovementValid(String[] gameState, String movementString) {
         char cat = movementString.charAt(0);
 
@@ -152,6 +173,14 @@ public class Cat {
         return false;
     }
 
+    /**
+     * Check if the movement is blocked according to the current game state and the movementString, using
+     * a breadth-first search algorithm to check like checkMovementValid
+     * @author Simon Liu
+     * @param gameState the current game state
+     * @param movementString the movement string
+     * @return true if the movement is valid, false otherwise
+     */
     public static boolean checkIfBlocked(String[] gameState, String movementString) {
         char cat = movementString.charAt(0);
 
@@ -240,9 +269,17 @@ public class Cat {
 
         return false;
     }
+
+    /**
+     * Check if the cat is on the raft according to the current game state and the given coordinates of the cat
+     * @auther Simon Liu
+     * @param gamestate the current game state
+     * @param x the x coordinate of the cat on the board
+     * @param y the y coordinate of the cat on the board
+     * @return true if the cat is on the raft, false otherwise
+     */
     public static boolean isCatOnRaft(String[] gamestate, int x, int y) {
         char[][] board = Board.charBoard(gamestate[0]);
-        // the cat is on the raft if the squares around it contains an 'o'
         return (x > 0 && board[y][x - 1] == 'o') || (x < board[0].length - 1 && board[y][x + 1] == 'o') ||
                 (y > 0 && board[y - 1][x] == 'o') || (y < board.length - 1 && board[y + 1][x] == 'o') ||
                 (x > 0 && y > 0 && board[y - 1][x - 1] == 'o') ||
