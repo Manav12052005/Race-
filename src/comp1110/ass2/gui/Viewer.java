@@ -682,7 +682,14 @@ public class Viewer extends Application {
                         }
                         PathwayCard pathwayCard = new PathwayCard(cardTiles, new int[]{boardY, boardX});
 
-                        // Update the board state with the placed card
+                        // Apply the rotation to the PathwayCard object based on the drawnCardGroup's rotation
+                        double rotation = drawnCardGroup.getRotate();
+                        while (rotation >= 90) {
+                            pathwayCard.rotate(PathwayCard.Direction.EAST);
+                            rotation -= 90;
+                        }
+
+                        // Update the board state with the placed and rotated card
                         String newBoardState = PathwayCard.placeOnBoardPWC(pathwayCard, charBoard);
                         gamestate[0] = newBoardState;
                         boardstate = newBoardState;
