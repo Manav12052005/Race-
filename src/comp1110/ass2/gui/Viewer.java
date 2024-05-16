@@ -596,9 +596,8 @@ public class Viewer extends Application {
 //        }
 
     }
-
     private void renderDrawnCard(Card drawnCard) {
-        // First, determine the total number of cards already displayed
+        // Determine the total number of cards already displayed
         int totalCardsDisplayed = DrawnCard.getChildren().size();
 
         // If the total cards displayed is less than 6, proceed to add the new drawn card
@@ -706,6 +705,8 @@ public class Viewer extends Application {
             });
         }
     }
+
+    //Renders the drawn fire tile on the screen and handles its placement
     private void renderFireTile(String fireTileString) {
         drawnFireTileGroup.getChildren().clear();
 
