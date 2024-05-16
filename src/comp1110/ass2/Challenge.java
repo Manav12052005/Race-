@@ -2,6 +2,11 @@ package comp1110.ass2;
 
 import java.util.Random;
 
+/**
+ * Constructor for Challenge
+ * @author Manav Singh
+ * Implemented object-oriented programming
+ */
 public class Challenge {
 
     private int difficulty;
@@ -11,6 +16,7 @@ public class Challenge {
     private String fireSubstring;
     private String catSubstring;
     private String raftSubstring;
+
 
     // Add constants or enums for challenge identifiers
     private enum ChallengeId {

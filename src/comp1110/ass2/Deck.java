@@ -3,7 +3,10 @@ package comp1110.ass2;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+/**
+ * Deck class handles card in Deck.
+ * Authored primarily by Tom, Manav
+ */
 public class Deck {
     private final char id; // Deck identifier (A, B, C, D)
     private final List<String> cards; // List to store card representations

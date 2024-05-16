@@ -1,5 +1,9 @@
 package comp1110.ass2;
 
+/**
+ * represents the location
+ * @author Manav
+ */
 public class Location {
     private int row;
     private int column;

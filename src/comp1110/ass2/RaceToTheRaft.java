@@ -41,8 +41,10 @@ public class RaceToTheRaft {
      *
      * @param boardString A string representing the boardState
      * @return True if the boardState is well-formed, otherwise false.
+     * @author Simon
      */
     //Simon Task
+
     public static boolean isBoardStringWellFormed(String boardString) {
         if (!boardString.endsWith("\n")) return false;
         if (boardString.lines().count() != 12 && boardString.lines().count() != 15 &&
@@ -69,6 +71,7 @@ public class RaceToTheRaft {
     }
     /**
      * Make Constructors for each of your objects.
+     * @author manav
      */
     // FIXME TASK 3
     //Manav Task - Done in respective classes
@@ -79,6 +82,7 @@ public class RaceToTheRaft {
      * @param gameState the current state of the game, including the fire tile bag
      * @return a random fire tile from those remaining, in string form. If there are no tiles remaining, return the
      * empty string.
+     * @author Tom
      */
     public static String drawFireTile(String[] gameState) {
         // Tom task
@@ -99,6 +103,7 @@ public class RaceToTheRaft {
      *
      * @param difficulty the desired difficulty of the challenge
      * @return a random challenge of the given difficulty
+     * @author Simon
      */
     public static String chooseChallenge(int difficulty) {
         int index = 0; // The index of string in Utility.CHALLENGES that will be returned
@@ -152,6 +157,7 @@ public class RaceToTheRaft {
      * @return The updated gameState array after the cards have     been drawn. (Remove all cards drawn from decks and
      * add them to the Hand string). If it is not possible
      * to draw all the specified cards, you should return the original gameState.
+     * @author Thomas
      */
     public static String[] drawHand(String[] gameState, String drawRequest) {
         // Tom task
@@ -186,6 +192,7 @@ public class RaceToTheRaft {
      * @param gameState       An array representing the game state.
      * @param placementString A string representing a Fire Tile Placement or a Card Placement.
      * @return the updated gameState array after this placement has been made
+     * @author Thomas
      */
     public static String[] applyPlacement(String[] gameState, String placementString) {
         String board = gameState[0];
@@ -234,6 +241,7 @@ public class RaceToTheRaft {
      * @param gameState      An array representing the game state.
      * @param movementString A string representing the movement of a cat and the cards discarded to allow this move.
      * @return the updated gameState array after this movement has been made.
+     * @author Simon
      */
     public static String[] moveCat(String[] gameState, String movementString) {
         String[] ret = gameState;
@@ -257,6 +265,7 @@ public class RaceToTheRaft {
      *
      * @param challengeString A string representing the challenge to initialise
      * @return A board string for this challenge.
+     * @author Simon
      */
     public static String initialiseChallenge(String challengeString) {
         return Challenge.getBoardSubstring(challengeString);  // FIXME 10
@@ -286,6 +295,7 @@ public class RaceToTheRaft {
      * @param gameState       An array representing the gameState
      * @param placementString A string representing a card placement or a fire tile placement
      * @return True if the placement is valid, otherwise false.
+     * @author Thomas
      */
     public static boolean isPlacementValid(String[] gameState, String placementString) {
         char[][] tile;
@@ -365,6 +375,7 @@ public class RaceToTheRaft {
      * @param gameState         An array representing the gameState
      * @param catMovementString A string representing a cat movement.
      * @return True if the cat movement is valid, otherwise false
+     * @author Simon
      */
     public static boolean isCatMovementValid(String[] gameState, String catMovementString) {
         return Cat.checkMovementValid(gameState, catMovementString);    // FIXME TASK 14
@@ -389,6 +400,7 @@ public class RaceToTheRaft {
      * @param gameState An array of strings representing the game state
      * @param action    A string representing a fire tile placement, cat movement or card placement action.
      * @return True if the game is over (regardless of whether it is won or lost), otherwise False.
+     * @author Manav and Simon
      */
     public static boolean isGameOver(String[] gameState, String action) {
         char firstChar = action.charAt(0);
@@ -538,7 +550,7 @@ public class RaceToTheRaft {
     }
 
 
-
+/**@author Manav*/
     public static boolean isFireTile(String action) {
         if (action.length() == 7 && Character.isDigit(action.charAt(1))) {
             System.out.println("FireTile" + action);

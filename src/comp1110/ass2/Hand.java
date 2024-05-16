@@ -2,6 +2,10 @@ package comp1110.ass2;
 
 import java.util.*;
 
+/**
+ * Hand class handles card in hand.
+ * Authored primarily by Simon
+ */
 public class Hand {
     private static final double SQUARE_WIDTH = Square.SQUARE_WIDTH;
 

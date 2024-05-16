@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * represents the game board
  * converted from Island substring from challenge string
- *
+ * @author Manav
  */
 public class Island {
     private String island;
