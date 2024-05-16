@@ -1,12 +1,8 @@
 package comp1110.ass2.gui;
 
-import comp1110.ass2.RaceToTheRaft;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
